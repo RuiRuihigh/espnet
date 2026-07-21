@@ -35,7 +35,7 @@ fi
 set -euo pipefail
 
 # NOTE(kan-bayashi): p315 will not be used since it lacks txt data
-spks=$(find "${db}/wav48_silence_trimmed" -maxdepth 1 -name "p*" -exec basename {} \; | sort | grep -v p315)
+spks=$(find "${db}/wav48" -maxdepth 1 -name "p*" -exec basename {} \; | sort | grep -v p315)
 train_data_dirs=""
 dev_data_dirs=""
 eval_data_dirs=""
@@ -60,22 +60,10 @@ for spk in ${spks}; do
     #[ -e "${segments}" ] && rm "${segments}"
 
     # make scp, text, and segments
-    # NOTE: VCTK 0.92 provides up to two mic recordings per utterance
-    # (mic1/mic2); prefer mic2 (better quality) and fall back to mic1 for
-    # the handful of utterances/speakers that only have mic1.
-    find "${db}/wav48_silence_trimmed/${spk}" -follow -name "*.flac" | \
-        sed -e "s/_mic[12]\.flac$//" | sort -u | while read -r base; do
-        id=$(basename "${base}")
+    find "${db}/wav48/${spk}" -follow -name "*.wav" | sort | while read -r wav; do
+        id=$(basename "${wav}" | sed -e "s/\.[^\.]*$//g")
         lab=${db}/lab/mono/${spk}/${id}.lab
         txt=${db}/txt/${spk}/${id}.txt
-
-        if [ -e "${base}_mic2.flac" ]; then
-            wav="${base}_mic2.flac"
-        elif [ -e "${base}_mic1.flac" ]; then
-            wav="${base}_mic1.flac"
-        else
-            continue
-        fi
 
         # check lab existence
         if [ ! -e "${lab}" ]; then
@@ -92,6 +80,31 @@ for spk in ${spks}; do
         echo "${id} $(cat ${txt})" >> "${text}"
 
         utils/utt2spk_to_spk2utt.pl "${utt2spk}" > "${spk2utt}"
+
+        # parse start and end time from HTS-style mono label
+        # idx=1
+        # while true; do
+        #     next_idx=$((idx+1))
+        #     next_symbol=$(sed -n "${next_idx}p" "${lab}" | awk '{print $3}')
+        #     if [ "${next_symbol}" != "pau" ]; then
+        #         start_nsec=$(sed -n "${idx}p" "${lab}" | awk '{print $2}')
+        #         break
+        #     fi
+        #     idx=${next_idx}
+        # done
+        # idx=$(wc -l < "${lab}")
+        # while true; do
+        #     prev_idx=$((idx-1))
+        #     prev_symbol=$(sed -n "${prev_idx}p" "${lab}" | awk '{print $3}')
+        #     if [ "${prev_symbol}" != "pau" ]; then
+        #         end_nsec=$(sed -n "${idx}p" "${lab}" | awk '{print $1}')
+        #         break
+        #     fi
+        #     idx=${prev_idx}
+        # done
+        # start_sec=$(echo "${start_nsec}*0.0000001" | bc | sed "s/^\./0./")
+        # end_sec=$(echo "${end_nsec}*0.0000001" | bc | sed "s/^\./0./")
+        #echo "${id} ${id} ${start_sec} ${end_sec}" >> "${segments}"
     done
 
     # split

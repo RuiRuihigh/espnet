@@ -80,6 +80,14 @@ if [ ! -f $data/$part.tar ]; then
   fi
 fi
 
+echo "$0: verifying archive integrity of $data/$part.tar before extracting..."
+if ! tar -tf $data/$part.tar >/dev/null; then
+  echo "$0: $data/$part.tar is corrupt or truncated even though its size matched;"
+  echo "removing it so the next run re-downloads it from scratch."
+  rm $data/$part.tar
+  exit 1
+fi
+
 if ! tar -C $data -xvf $data/$part.tar; then
   echo "$0: error un-tarring archive $data/$part.tar"
   exit 1

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-#SBATCH --job-name=librilight_download
+#SBATCH --job-name=stage3
 #SBATCH --partition=RM-shared
 #SBATCH --account=cis210027p
 #SBATCH --nodes=1
@@ -9,10 +9,10 @@
 #SBATCH --output=/ocean/projects/cis210027p/mliang4/dailytalk_tts/espnet/egs2/voxtlm_v2/lm1/log/myrun.%j.out
 #SBATCH --error=/ocean/projects/cis210027p/mliang4/dailytalk_tts/espnet/egs2/voxtlm_v2/lm1/log/myrun.%j.err
 
-# Resumes/continues the LibriLight download + VAD-cut + data-prep
-# (local/data_librilight.sh is idempotent per-part: small is already done,
-# medium's tar is fully downloaded but not yet extracted, large hasn't
-# started -- this will pick up from wherever it left off).
+# Runs Stage3 (Phonological Tokenizer discretization). This job itself
+# only needs CPU: cmd_backend=slurm means perform_kmeans.sh's actual
+# feature-extraction/labeling work submits its own GPU array jobs to
+# GPU-shared via cuda_cmd, so this job just orchestrates and blocks on them.
 set -e
 set -u
 set -o pipefail
@@ -22,4 +22,8 @@ cd /ocean/projects/cis210027p/mliang4/dailytalk_tts/espnet/egs2/voxtlm_v2/lm1
 . ./path.sh
 . ./cmd.sh
 
-./local/data_librilight.sh data/librilight
+# ./local/data_librilight.sh data/librilight
+# ./run.sh --stage 1 --stop_stage 1
+# ./run.sh --stage 1 --stop_stage 1 --local_data_opts "--stage 2"
+# ./run.sh --stage 2 --stop_stage 2
+./run.sh --stage 3 --stop_stage 3 --nj 1

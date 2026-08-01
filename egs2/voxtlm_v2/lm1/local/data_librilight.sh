@@ -16,7 +16,11 @@ stage=1
 stop_stage=3
 
 librilight_data_url="https://dl.fbaipublicfiles.com/librilight/data"
-librilight_parts="small medium large"
+# TEMPORARY: "large" is excluded while it's still being downloaded/verified
+# separately (repeatedly failed integrity checks after fully downloading,
+# see conversation history). Add it back to librilight_parts and to the
+# combine_data.sh call below once it's confirmed good, to stop skipping it.
+librilight_parts="small medium"
 train_set="train"
 train_dev="dev"
 train_eval="test"
@@ -84,7 +88,7 @@ if [ ${stage} -le 2 ] && [ ${stop_stage} -ge 2 ]; then
     done
 
     log "combine all training and development sets"
-    utils/combine_data.sh ${data_dir}/${train_set} ${data_dir}/librilight_small ${data_dir}/librilight_medium {data_dir}/librilight_large
+    utils/combine_data.sh ${data_dir}/${train_set} ${data_dir}/librilight_small ${data_dir}/librilight_medium
 
     # copy dev from Librispeech
     mkdir -p ${data_dir}/${train_dev}

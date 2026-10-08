@@ -363,6 +363,37 @@ class S3PRLFeatureReader(BaseFeatureReader):
         return feats, feats_lens
 
 
+class PhonologicalTokenizerFeatureReader(S3PRLFeatureReader):
+    """Fine-tuned WavLM-large released as the Phonological Tokenizer
+
+    (arXiv:2601.19781, https://huggingface.co/Sony/Phonological-Tokenizer).
+    Builds the standard S3PRL "wavlm_large" architecture, then overwrites its
+    upstream weights with the released fine-tuned checkpoint before
+    extracting the fixed layer used by the released codebook.
+    """
+
+    def __init__(
+        self,
+        ssl_model_path: str,
+        layer: int,
+        sample_rate: int = 16000,
+        audio_sample_rate: int = 16000,
+        download_dir: Optional[str] = None,
+        use_gpu: bool = True,
+    ):
+        super().__init__(
+            fs=sample_rate,
+            audio_sample_rate=audio_sample_rate,
+            s3prl_conf={"upstream": "wavlm_large"},
+            download_dir=download_dir,
+            multilayer_feature=False,
+            layer=layer,
+            use_gpu=use_gpu,
+        )
+        state_dict = torch.load(ssl_model_path, map_location="cpu")
+        self.model.upstream.load_state_dict(state_dict, strict=True)
+
+
 class MERTFeatureReader(BaseFeatureReader):
     def __init__(
         self,

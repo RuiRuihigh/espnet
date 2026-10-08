@@ -961,6 +961,27 @@ if [ ${stage} -le 9 ] && [ ${stop_stage} -ge 9 ] && ! [[ " ${skip_stages} " =~ [
             -h ${_scoredir}/hyp.trn trn \
             -i rm -o all stdout > ${_scoredir}/result.txt
 
+        # Also score librispeech's original test-clean/test-other subsets
+        # separately (data.sh's own combine_data.sh merges them into one
+        # data/test/speech/asr before this point, so this is the only place
+        # left that still knows the split). Guarded by the directories'
+        # existence so a future test_sets without librispeech just falls
+        # back to the combined score above instead of erroring out.
+        if [ -d data/librispeech/asr/test_clean ] && [ -d data/librispeech/asr/test_other ]; then
+            for split in test_clean test_other; do
+                mkdir -p "${_scoredir}/${split}"
+                awk '{print "(asr_"$1")"}' "data/librispeech/asr/${split}/text" | sort \
+                    > "${_scoredir}/${split}_ids.txt"
+                grep -F -f "${_scoredir}/${split}_ids.txt" "${_scoredir}/hyp.trn" \
+                    > "${_scoredir}/${split}/hyp.trn"
+                grep -F -f "${_scoredir}/${split}_ids.txt" "${_scoredir}/ref.trn" \
+                    > "${_scoredir}/${split}/ref.trn"
+                sclite -r "${_scoredir}/${split}/ref.trn" trn \
+                    -h "${_scoredir}/${split}/hyp.trn" trn \
+                    -i rm -o all stdout > "${_scoredir}/${split}/result.txt"
+            done
+        fi
+
     fi
 
 fi

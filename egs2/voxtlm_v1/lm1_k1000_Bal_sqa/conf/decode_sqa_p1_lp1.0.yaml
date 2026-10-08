@@ -1,0 +1,6 @@
+# Part I open-ended answers
+log_level: INFO
+beam_size: 5
+penalty: 1.0          # length bonus per generated token (favours longer answers)
+maxlen: 120
+minlen: 1

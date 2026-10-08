@@ -1,0 +1,66 @@
+Failed to import Flash Attention, using ESPnet default: No module named 'flash_attn_2_cuda'
+n	2620
+random 25.00 / always-c 32.14
+
+variant	scoring	acc	pred_distribution
+A	sum	32.14	{'a': 910, 'b': 615, 'c': 553, 'd': 542}
+A	norm	37.75	{'a': 672, 'b': 618, 'c': 664, 'd': 666}
+A	calib	36.79	{'a': 748, 'b': 630, 'c': 629, 'd': 613}
+A	nospeech	20.53	{'a': 903, 'b': 614, 'c': 577, 'd': 526}
+B	sum	27.44	{'a': 782, 'b': 609, 'c': 597, 'd': 632}
+B	norm	31.60	{'a': 513, 'b': 583, 'c': 698, 'd': 826}
+B	calib	32.60	{'a': 590, 'b': 635, 'c': 657, 'd': 738}
+B	nospeech	20.61	{'a': 850, 'b': 589, 'c': 580, 'd': 601}
+L	sum	27.10	{'a': 945, 'b': 264, 'c': 1217, 'd': 194}
+L	calib	25.57	{'a': 924, 'b': 693, 'c': 653, 'd': 350}
+L	nospeech	27.44	{'a': 579, 'b': 239, 'c': 1255, 'd': 547}
+Failed to import Flash Attention, using ESPnet default: No module named 'flash_attn_2_cuda'
+n	2620
+random 25.00 / always-c 32.14
+
+variant	scoring	acc	pred_distribution
+A	sum	35.15	{'a': 833, 'b': 618, 'c': 591, 'd': 578}
+A	norm	39.08	{'a': 632, 'b': 596, 'c': 673, 'd': 719}
+A	calib	41.11	{'a': 723, 'b': 625, 'c': 648, 'd': 624}
+A	nospeech	21.60	{'a': 787, 'b': 618, 'c': 604, 'd': 611}
+B	sum	23.78	{'a': 171, 'b': 156, 'c': 528, 'd': 1765}
+B	norm	27.18	{'a': 183, 'b': 185, 'c': 588, 'd': 1664}
+B	calib	28.02	{'a': 249, 'b': 517, 'c': 619, 'd': 1235}
+B	nospeech	20.88	{'a': 539, 'b': 269, 'c': 659, 'd': 1153}
+L	sum	35.73	{'a': 147, 'b': 1030, 'c': 907, 'd': 536}
+L	calib	28.66	{'a': 1117, 'b': 872, 'c': 69, 'd': 562}
+L	nospeech	32.06	{'b': 19, 'c': 2561, 'd': 40}
+==== exp/sqa_part2_ft/mc_loglik/23epoch
+      8 boundary_mismatch 0
+n	2620
+random 25.00 / always-c 32.14
+
+variant	scoring	acc	pred_distribution
+A	sum	35.15	{'a': 833, 'b': 618, 'c': 591, 'd': 578}
+A	norm	39.08	{'a': 632, 'b': 596, 'c': 673, 'd': 719}
+A	calib	41.11	{'a': 723, 'b': 625, 'c': 648, 'd': 624}
+A	nospeech	21.60	{'a': 787, 'b': 618, 'c': 604, 'd': 611}
+B	sum	23.78	{'a': 171, 'b': 156, 'c': 528, 'd': 1765}
+B	norm	27.18	{'a': 183, 'b': 185, 'c': 588, 'd': 1664}
+B	calib	28.02	{'a': 249, 'b': 517, 'c': 619, 'd': 1235}
+B	nospeech	20.88	{'a': 539, 'b': 269, 'c': 659, 'd': 1153}
+L	sum	35.73	{'a': 147, 'b': 1030, 'c': 907, 'd': 536}
+L	calib	28.66	{'a': 1117, 'b': 872, 'c': 69, 'd': 562}
+L	nospeech	32.06	{'b': 19, 'c': 2561, 'd': 40}
+==== exp/zeroshot_13epoch/mc_loglik/13epoch
+      8 boundary_mismatch 0
+n	2620
+random 25.00 / always-c 32.14
+
+variant	scoring	acc	pred_distribution
+A	sum	32.14	{'a': 910, 'b': 615, 'c': 553, 'd': 542}
+A	norm	37.75	{'a': 672, 'b': 618, 'c': 664, 'd': 666}
+A	calib	36.79	{'a': 748, 'b': 630, 'c': 629, 'd': 613}
+A	nospeech	20.53	{'a': 903, 'b': 614, 'c': 577, 'd': 526}
+B	sum	27.44	{'a': 782, 'b': 609, 'c': 597, 'd': 632}
+B	norm	31.60	{'a': 513, 'b': 583, 'c': 698, 'd': 826}
+B	calib	32.60	{'a': 590, 'b': 635, 'c': 657, 'd': 738}
+B	nospeech	20.61	{'a': 850, 'b': 589, 'c': 580, 'd': 601}
+L	sum	27.10	{'a': 945, 'b': 264, 'c': 1217, 'd': 194}
+L	calib	25.57	{'a': 924, 'b': 693, 'c': 653, 'd': 350}
+L	nospeech	27.44	{'a': 579, 'b': 239, 'c': 1255, 'd': 547}

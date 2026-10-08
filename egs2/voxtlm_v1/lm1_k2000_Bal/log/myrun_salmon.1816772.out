@@ -1,0 +1,34 @@
+stage 1: check /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v2/lm1_k2000_Bal/downloads/SALMon
+stage 2: datadirs
+bg_all_consistency: 200 pairs
+bg_domain_consistency: 200 pairs
+gender_consistency: 200 pairs
+rir_consistency: 200 pairs
+sentiment_consistency: 200 pairs
+speaker_consistency: 200 pairs
+salmon_consistency: 2400 utts -> exp/salmon_eval/audio_datadir/salmon_consistency
+bg_alignment: 200 pairs
+sentiment_alignment: 200 pairs
+salmon_alignment: 800 utts -> exp/salmon_eval/audio_datadir/salmon_alignment
+stage 3: hubert_base L6 + km2000 labels
+2026-10-07T15:52:49 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 1 --stop-stage 3 --skip_stages 1 2 --train_set salmon_consistency --dev_set salmon_alignment --other_sets  --datadir exp/salmon_eval/audio_datadir --featdir exp/salmon_eval/extracted_feats --audio_format wav --feature_type hubert_base --layer 6 --feature_conf {type=s3prl,conf={s3prl_conf={upstream=hubert_base},download_dir=ckpt,multilayer_feature=False,layer=6}} --km_dir exp/kmeans/hubert_base_6_2000clusters --nclusters 2000 --storage_save_mode true --use_gpu true --nj 8 --cpu_cmd slurm.pl --cuda_cmd slurm.pl --config conf/slurm.conf
+2026-10-07T15:52:52 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-10-07T15:52:52 (perform_kmeans.sh:230:main) Extract labels to exp/salmon_eval/extracted_feats/hubert_base/layer6/salmon_consistency
+utils/copy_data_dir.sh: copied data from exp/salmon_eval/audio_datadir/salmon_consistency to exp/salmon_eval/extracted_feats/hubert_base/layer6/salmon_consistency
+utils/validate_data_dir.sh: Successfully validated data-directory exp/salmon_eval/extracted_feats/hubert_base/layer6/salmon_consistency
+2026-10-07T15:55:40 (perform_kmeans.sh:230:main) Extract labels to exp/salmon_eval/extracted_feats/hubert_base/layer6/salmon_alignment
+utils/copy_data_dir.sh: copied data from exp/salmon_eval/audio_datadir/salmon_alignment to exp/salmon_eval/extracted_feats/hubert_base/layer6/salmon_alignment
+utils/validate_data_dir.sh: Successfully validated data-directory exp/salmon_eval/extracted_feats/hubert_base/layer6/salmon_alignment
+stage 4: speechLM log-likelihood
+exp/salmon_eval/lm/pseudo_labels_km2000.txt: wrote 3200 utterances to exp/salmon_eval/lm/text_speech.txt
+stage 5: accuracy
+part                      pairs  acc(sum)  acc(mean)
+sentiment_consistency       200      74.0       73.0
+speaker_consistency         200      68.0       74.5
+gender_consistency          200      82.0       85.0
+bg_domain_consistency       200      58.5       61.0
+bg_all_consistency          200      63.0       64.5
+rir_consistency             200      57.5       58.0
+sentiment_alignment         200      54.5       48.0
+bg_alignment                200      49.0       58.0
+results: exp/salmon_eval/results.tsv

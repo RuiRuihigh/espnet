@@ -1,0 +1,70 @@
+2026-09-14T11:56:53 (lm.sh:215:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir  --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 2 --stop_stage 2
+2026-09-14T11:56:58 (lm.sh:362:main) Skipped stages:  11 12 
+2026-09-14T11:56:58 (lm.sh:380:main) Stage 2: Format wav.scp: data/ -> dump/audio_raw
+train
+data/train/speech/asr
+data/train/speech/asr
+utils/copy_data_dir.sh: copied data from data/train/speech/asr to dump/audio_raw/asr/train/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/asr/train/
+2026-09-14T11:57:13 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/train/speech/asr/wav.scp dump/audio_raw/asr/train
+2026-09-14T11:57:16 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T12:16:57 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=1184s]
+data/train/speech/speechlm
+data/train/speech/speechlm
+utils/copy_data_dir.sh: copied data from data/train/speech/speechlm to dump/audio_raw/speechlm/train/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/speechlm/train/
+2026-09-14T12:17:10 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/train/speech/speechlm/wav.scp dump/audio_raw/speechlm/train
+2026-09-14T12:17:13 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T13:08:41 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=3091s]
+data/train/speech/tts
+data/train/speech/tts
+utils/copy_data_dir.sh: copied data from data/train/speech/tts to dump/audio_raw/tts/train/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/tts/train/
+2026-09-14T13:09:12 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/train/speech/tts/wav.scp dump/audio_raw/tts/train
+2026-09-14T13:09:15 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T14:39:05 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=5393s]
+dev
+data/dev/speech/asr
+data/dev/speech/asr
+utils/copy_data_dir.sh: copied data from data/dev/speech/asr to dump/audio_raw/asr/dev/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/asr/dev/
+2026-09-14T14:39:22 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/dev/speech/asr/wav.scp dump/audio_raw/asr/dev
+2026-09-14T14:39:29 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T14:41:31 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=129s]
+data/dev/speech/speechlm
+data/dev/speech/speechlm
+utils/copy_data_dir.sh: copied data from data/dev/speech/speechlm to dump/audio_raw/speechlm/dev/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/speechlm/dev/
+2026-09-14T14:41:42 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/dev/speech/speechlm/wav.scp dump/audio_raw/speechlm/dev
+2026-09-14T14:41:45 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T14:42:23 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=41s]
+data/dev/speech/tts
+data/dev/speech/tts
+utils/copy_data_dir.sh: copied data from data/dev/speech/tts to dump/audio_raw/tts/dev/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/tts/dev/
+2026-09-14T14:42:33 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/dev/speech/tts/wav.scp dump/audio_raw/tts/dev
+2026-09-14T14:42:35 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T14:45:49 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=197s]
+test
+data/test/speech/asr
+data/test/speech/asr
+utils/copy_data_dir.sh: copied data from data/test/speech/asr to dump/audio_raw/asr/test/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/asr/test/
+2026-09-14T14:46:01 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/test/speech/asr/wav.scp dump/audio_raw/asr/test
+2026-09-14T14:46:04 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T14:46:39 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=38s]
+data/test/speech/speechlm
+data/test/speech/speechlm
+utils/copy_data_dir.sh: copied data from data/test/speech/speechlm to dump/audio_raw/speechlm/test/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/speechlm/test/
+2026-09-14T14:46:51 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/test/speech/speechlm/wav.scp dump/audio_raw/speechlm/test
+2026-09-14T14:46:54 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T14:47:28 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=37s]
+data/test/speech/tts
+data/test/speech/tts
+utils/copy_data_dir.sh: copied data from data/test/speech/tts to dump/audio_raw/tts/test/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/tts/test/
+2026-09-14T14:47:45 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/test/speech/tts/wav.scp dump/audio_raw/tts/test
+2026-09-14T14:47:48 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-14T14:51:09 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=204s]
+2026-09-14T14:51:09 (lm.sh:1121:main) Successfully finished. [elapsed=10456s]

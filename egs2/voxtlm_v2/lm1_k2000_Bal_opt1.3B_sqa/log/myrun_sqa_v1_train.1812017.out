@@ -1,0 +1,12 @@
+2026-10-02T09:45:32 (lm.sh:215:main) ./lm.sh --stage 6 --stop_stage 6 --nj 16 --lang en --token_type bpe --nbpe 10000 --dumpdir dump/v1 --train_set train --valid_set dev --lm_config conf/tuning/finetune_sqa_v1_opt1.3b.yaml --lm_stats_dir exp/lm_stats_sqa_v1 --lm_exp exp/sqa_v1_ft
+2026-10-02T09:45:35 (lm.sh:362:main) Skipped stages:  11 12 
+2026-10-02T09:45:35 (lm.sh:695:main) Stage 6: LM collect stats: train_set=dump/v1/raw/lm_train.txt, dev_set=dump/v1/raw/dev/lm_text
+2026-10-02T09:45:42 (lm.sh:727:main) Generate 'exp/lm_stats_sqa_v1/run.sh'. You can resume the process from stage 6 using this script
+2026-10-02T09:45:43 (lm.sh:731:main) LM collect-stats started... log: 'exp/lm_stats_sqa_v1/logdir/stats.*.log'
+2026-10-02T09:52:05 (lm.sh:1142:main) Successfully finished. [elapsed=393s]
+2026-10-02T09:52:06 (lm.sh:215:main) ./lm.sh --stage 7 --stop_stage 7 --ngpu 1 --lang en --token_type bpe --nbpe 10000 --dumpdir dump/v1 --train_set train --valid_set dev --lm_config conf/tuning/finetune_sqa_v1_opt1.3b.yaml --lm_stats_dir exp/lm_stats_sqa_v1 --lm_exp exp/sqa_v1_ft --lm_args --init_param /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v2/lm1_k2000_Bal_opt1.3B/exp/lm_train_transformer_opt1.3b_en_bpe10000/7epoch.pth
+2026-10-02T09:52:10 (lm.sh:362:main) Skipped stages:  11 12 
+2026-10-02T09:52:10 (lm.sh:772:main) Stage 7: LM Training: train_set=dump/v1/raw/lm_train.txt, dev_set=dump/v1/raw/dev/lm_text
+2026-10-02T09:52:10 (lm.sh:809:main) Generate 'exp/sqa_v1_ft/run.sh'. You can resume the process from stage 7 using this script
+2026-10-02T09:52:10 (lm.sh:812:main) LM training started... log: 'exp/sqa_v1_ft/train.log'
+2026-10-02T14:02:48 (lm.sh:1142:main) Successfully finished. [elapsed=15042s]

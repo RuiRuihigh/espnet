@@ -1,0 +1,52 @@
+# V1: finetune VoxtLM k2000 / Phonological Tokenizer OPT-1.3B (lm1_k2000_Bal_opt1.3B, 7epoch.pth = valid.acc.best, 过拟合前最后一个最优点) on LibriSQA Part I + Part II
+# (Part II target = correct option text, prompt = question only) + rebalanced replay.
+# Same model/tokenizer as conf/tuning/train_transformer_opt350.yaml; the
+# checkpoint is loaded via --init_param in myrun_sqa_*.sh (optimizer starts fresh).
+num_workers: 8
+use_amp: true
+sharded_ddp: false
+num_att_plot: 0
+
+lm: transformer_opt
+lm_conf:
+    opt_name: facebook/opt-1.3b
+
+model: lm_multitask
+model_conf:
+    lsm_weight: 0.1
+    length_normalized_loss: true
+    sos_syms:   # loss is masked up to the first <generatetext> -> only the answer is trained
+    - "<generatetext>"
+    - "<generatespeech>"
+    eos_sym: "<sos/eos>"
+
+# optimization related
+grad_clip: 1.0
+batch_type: length
+batch_bins: 10000
+accum_grad: 20
+# ~100 updates per "epoch" (2000 minibatches x ~10k tokens)
+num_iters_per_epoch: 2000
+max_epoch: 30
+
+optim: adam
+optim_conf:
+   lr: 1.0e-4          # peak lr (pretraining used 3e-4)
+   weight_decay: 1.0e-06
+scheduler: warmuplr
+scheduler_conf:
+   warmup_steps: 300
+
+# dev = Part I + Part II answers of 17 held-out speakers (answer-token accuracy)
+best_model_criterion:
+-   - valid
+    - acc
+    - max
+early_stopping_criterion:
+    - valid
+    - loss
+    - min
+patience: 4
+# best checkpoint = valid.acc.best.pth directly, no post-hoc dev A-calib sweep.
+# ~1.3GB each.
+keep_nbest_models: 5

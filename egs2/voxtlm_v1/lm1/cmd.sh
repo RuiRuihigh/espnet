@@ -28,7 +28,7 @@
 
 
 # Select the backend used by run.sh from "local", "stdout", "sge", "slurm", or "ssh"
-cmd_backend='local'
+cmd_backend='slurm'
 
 # Local machine, without any Job scheduling system
 if [ "${cmd_backend}" = local ]; then
@@ -81,7 +81,7 @@ elif [ "${cmd_backend}" = slurm ]; then
     # The devices are allocated exclusively using "${CUDA_VISIBLE_DEVICES}".
 
     export train_cmd="slurm.pl"
-    export cuda_cmd="slurm.pl"
+    export cuda_cmd="slurm.pl --config conf/slurm_clsp_a100.conf"
     export decode_cmd="slurm.pl"
 
 elif [ "${cmd_backend}" = ssh ]; then

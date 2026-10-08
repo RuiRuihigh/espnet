@@ -1,0 +1,132 @@
+#!/usr/bin/env bash
+#SBATCH --job-name=sqa_v1_forget_resume2
+#SBATCH --partition=cpu
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem-per-cpu=1900M
+#SBATCH --output=/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v2/lm1_k2000_Bal_sqa/log/myrun_sqa_v1_forgetting_resume2.%j.out
+#SBATCH --error=/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v2/lm1_k2000_Bal_sqa/log/myrun_sqa_v1_forgetting_resume2.%j.err
+
+# 一次性续跑脚本: myrun_sqa_v1_forgetting.sh(job 1808223)的 PPL/ASR(Stage8/9)
+# 和 slm21 文本轨已经跑完了(结果都在磁盘上,没有被后面 downloads/sLM21/extracted
+# 误解压的问题影响到),被我手动 scancel 是因为发现 extracted/ 建成了本地空目录、
+# 导致要重新解压 13 万个 wav(已经改成软链接复用 lm1_k2000_Bal 现成的解压结果)。
+# 这个脚本从 slm21 语音轨开始跑,不重跑前面那 10.6 小时的 ASR beam search 解码。
+# 跑完之后 myrun_sqa_v1_forgetting.sh 本体已经修好,以后从头跑不会再犯这个错误,
+# 这个 resume 脚本用完即弃,不用留着。
+set -e
+set -u
+set -o pipefail
+
+cd /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v2/lm1_k2000_Bal_sqa
+. ./path.sh
+. ./cmd.sh
+export HF_HOME="${PWD}/hf_cache"
+export HF_HUB_OFFLINE=1
+
+SRC=/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v2/lm1_k2000_Bal
+LM_EXP=exp/sqa_v1_ft
+CKPT=18epoch.pth
+
+# 3) TTS: 三级回退解码 + vocoder + VERSA
+##############################################################################
+VOCODER_CKPT=/export/fs06/mliang17/phonologicaltokenizer_modify/ParallelWaveGAN/egs/ljspeech/phon_voc1/exp/train_nodev_ljspeech_hifigan_phon.v1/checkpoint-400000steps.pkl
+[ -f "${VOCODER_CKPT}" ] || { echo "vocoder checkpoint 不存在: ${VOCODER_CKPT}" >&2; exit 1; }
+
+MAXLEN=1200
+D=${LM_EXP}/decode_test_tts
+FB=dump/tts_fallback
+mkdir -p "${FB}"
+LM_CFG=conf/tuning/finetune_sqa_v1_opt350.yaml
+COMMON_TTS="--stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --dumpdir ${SRC}/dump --train_set train --valid_set dev --test_sets test --lm_config ${LM_CFG} --lm_exp ${LM_EXP} --inference_lm ${CKPT}"
+
+n1=0; [ -s "${D}/text.tts.rand100/score_tts/hyp.tok" ] && n1=$(wc -l < "${D}/text.tts.rand100/score_tts/hyp.tok")
+ml1=""; [ -f "${D}/text.tts.rand100/logdir/lm_inference.1.log" ] && ml1=$(grep -m1 -o "max output length: \[[0-9]*\]" "${D}/text.tts.rand100/logdir/lm_inference.1.log" || true)
+if [ "${n1}" -eq 100 ] && [ "${ml1}" = "max output length: [${MAXLEN}]" ]; then
+    echo "[L1] 复用已有的 beam5 结果 text.tts.rand100(${n1} 句, ${ml1})"
+else
+    echo "[L1] 没有可用的 beam5 结果(hyp.tok=${n1} 行, '${ml1}'),重新解码 100 句"
+    ./lm.sh ${COMMON_TTS} --python python3 \
+        --lm_inference_tts_config conf/decode_lm_tts_maxlen1200.yaml \
+        --lm_test_text_tts ${SRC}/dump/raw/test/text.tts.rand100
+fi
+
+python3 local/count_capped_steps.py "${D}/text.tts.rand100" ${MAXLEN}
+python3 local/fallback_select.py capped "${D}/text.tts.rand100" ${MAXLEN} > "${FB}/capped_L1.txt"
+echo "[L1] 撞满 $(wc -l < "${FB}/capped_L1.txt") 句"
+
+rm -rf "${D}/text.tts.fb_greedy" "${D}/text.tts.fb_topp" "${D}/text.tts.fb_final"
+LEVELS="${D}/text.tts.rand100"
+
+if [ -s "${FB}/capped_L1.txt" ]; then
+    python3 local/fallback_select.py make_text ${SRC}/dump/raw/test/text.tts.rand100 "${FB}/capped_L1.txt" "${FB}/text.tts.fb_greedy"
+    unset SAMPLE_MODE SAMPLE_TOP_P SAMPLE_TEMP SAMPLE_SEED SAMPLE_PER_UTT_SEED
+    ./lm.sh ${COMMON_TTS} --python local/python_sampling.sh \
+        --lm_inference_tts_config conf/decode_lm_tts_beam1_maxlen1200.yaml \
+        --lm_test_text_tts "${FB}/text.tts.fb_greedy"
+    python3 local/fallback_select.py capped "${D}/text.tts.fb_greedy" ${MAXLEN} > "${FB}/capped_L2.txt"
+    echo "[L2] 贪心后仍撞满 $(wc -l < "${FB}/capped_L2.txt") 句"
+    LEVELS="${LEVELS} ${D}/text.tts.fb_greedy"
+
+    if [ -s "${FB}/capped_L2.txt" ]; then
+        python3 local/fallback_select.py make_text ${SRC}/dump/raw/test/text.tts.rand100 "${FB}/capped_L2.txt" "${FB}/text.tts.fb_topp"
+        SAMPLE_MODE=topp SAMPLE_TOP_P=0.9 SAMPLE_TEMP=1.0 SAMPLE_SEED=0 SAMPLE_PER_UTT_SEED=1 \
+        ./lm.sh ${COMMON_TTS} --python local/python_sampling.sh \
+            --lm_inference_tts_config conf/decode_lm_tts_beam1_maxlen1200.yaml \
+            --lm_test_text_tts "${FB}/text.tts.fb_topp"
+        LEVELS="${LEVELS} ${D}/text.tts.fb_topp"
+    else
+        echo "[L3] 贪心已经解决了所有撞满的句子,不需要 top-p"
+    fi
+else
+    echo "[L2/L3] 第1级没有撞满的句子,不需要回退"
+fi
+
+python3 local/fallback_select.py assemble "${D}/text.tts.fb_final" ${MAXLEN} ${LEVELS}
+(
+    unset PYTHONPATH
+    export PATH="${PWD}/utils:${PATH}"
+    # shellcheck disable=SC1091
+    source /opt/slurm_files/software/conda25/2025-08-21/etc/profile.d/conda.sh
+    conda activate parallelwavegan
+    bash local/eval_tts_vocoder.sh "${VOCODER_CKPT}" text.tts.fb_final
+)
+python3 local/summarize_fallback.py
+
+##############################################################################
+# 汇总: finetune(${CKPT}) vs zero-shot(16epoch,finetune 之前)
+##############################################################################
+BASE=${SRC}/exp/lm_train_transformer_opt350_en_bpe10000
+sumavg() { grep "Sum/Avg" "$1" 2>/dev/null || echo "(找不到 $1)"; }
+
+echo "======================================================================"
+echo "==== 汇总: finetune(${CKPT}) vs zero-shot(16epoch) ===="
+echo "======================================================================"
+echo "---- textLM PPL ----"
+echo "finetune : $(cat ${LM_EXP}/perplexity_test_textlm/*/ppl)"
+echo "zero-shot: $(cat ${BASE}/perplexity_test_textlm/*/ppl)"
+echo "---- speechLM PPL ----"
+echo "finetune : $(cat ${LM_EXP}/perplexity_test_unitlm/*/ppl)"
+echo "zero-shot: $(cat ${BASE}/perplexity_test_unitlm/*/ppl)"
+echo "---- ASR WER(合并) ----"
+echo "finetune : $(sumavg ${LM_EXP}/decode_test_asr/decode_lm_asr/score_wer/result.txt)"
+echo "zero-shot: $(sumavg ${BASE}/decode_test_asr/decode_lm_asr/score_wer/result.txt)"
+for split in test_clean test_other; do
+    echo "---- ASR WER (${split}) ----"
+    echo "finetune : $(sumavg ${LM_EXP}/decode_test_asr/decode_lm_asr/score_wer/${split}/result.txt)"
+    echo "zero-shot: $(sumavg ${BASE}/decode_test_asr/decode_lm_asr/score_wer/${split}/result.txt)"
+done
+echo "---- sWUGGY/sBLIMP: finetune(${CKPT}) ----"
+cat "${LM_EXP}/slm21_score.txt"
+echo "---- sWUGGY/sBLIMP: zero-shot(16epoch,来自 ${SRC}/log/myrun_slm21.1801318.out) ----"
+cat <<'EOF'
+lexical (text): accuracy=82.16% (40000 pairs)
+lexical (speech): accuracy=66.98% (40000 pairs)
+syntactic (text): accuracy=68.83% (25200 pairs)
+syntactic (speech): accuracy=57.31% (25200 pairs)
+EOF
+echo "---- TTS: finetune(${CKPT}), 三级回退最终结果 ----"
+cat "${D}/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/versa_eval/avg_result.txt"
+echo "---- TTS: zero-shot(16epoch), 三级回退最终结果 ----"
+cat "${BASE}/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/versa_eval/avg_result.txt"
+echo "(逐句细节见上面 summarize_fallback.py 打印的完整对比表,含每一级回退用了几句)"

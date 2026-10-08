@@ -1,0 +1,26 @@
+Step 1: hyp.tok -> HDF5 feats
+wrote 20 feature files to exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.new20/vocoder_eval/checkpoint-400000steps/feats (0 out-of-range tokens dropped across 0 utterance(s))
+Step 2: parallel-wavegan-decode (regular gpu partition)
+Generated 20 wavs at exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.new20/vocoder_eval/checkpoint-400000steps/wav
+Step 3: VERSA scoring (whisper_wer -> CER/WER, pseudo_mos/utmos, mcd_f0, discrete_speech, speaker), on the A100
+Done. See exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.new20/vocoder_eval/checkpoint-400000steps/versa_eval/avg_result.txt
+
+==== avg_result.txt ====
+mcd: 11.629032439785206
+f0rmse: 87.67385404829813
+f0corr: 0.19006565675417922
+speech_bert: 0.7878661304712296
+speech_bleu: 0.4446860834033178
+speech_token_distance: 0.583012283597949
+utmos: 4.018170690536499
+whisper_wer_delete: 65
+whisper_wer_insert: 0
+whisper_wer_replace: 5
+whisper_wer_equal: 363
+whisper_cer_delete: 367
+whisper_cer_insert: 2
+whisper_cer_replace: 4
+whisper_cer_equal: 1921
+spk_similarity: 0.07772184875793756
+whisper_wer 0.16166281755196305
+whisper_cer 0.16273996509598604

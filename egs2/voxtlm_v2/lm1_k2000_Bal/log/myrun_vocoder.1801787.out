@@ -1,0 +1,17 @@
+Step 1: hyp.tok -> HDF5 feats
+1089_134691_000007_000001: dropped 9 out-of-range token(s) (valid range [0, 2000))
+3570_5695_000004_000013: dropped 9 out-of-range token(s) (valid range [0, 2000))
+3570_5696_000010_000003: dropped 9 out-of-range token(s) (valid range [0, 2000))
+4350_9170_000018_000002: dropped 9 out-of-range token(s) (valid range [0, 2000))
+5142_36600_000012_000002: dropped 9 out-of-range token(s) (valid range [0, 2000))
+533_131564_000035_000000: dropped 9 out-of-range token(s) (valid range [0, 2000))
+7176_88083_000019_000003: dropped 9 out-of-range token(s) (valid range [0, 2000))
+8461_278226_000010_000000: dropped 9 out-of-range token(s) (valid range [0, 2000))
+8463_294828_000054_000002: dropped 9 out-of-range token(s) (valid range [0, 2000))
+wrote 9957 feature files to exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts/vocoder_eval/checkpoint-400000steps/feats (81 out-of-range tokens dropped across 9 utterance(s))
+Step 2: parallel-wavegan-decode (regular gpu partition)
+Generated 9957 wavs at exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts/vocoder_eval/checkpoint-400000steps/wav
+Step 3: VERSA scoring (whisper_wer -> CER/WER, pseudo_mos/utmos, mcd_f0, discrete_speech, speaker), on the A100
+Failed to import Flash Attention, using ESPnet default: No module named 'flash_attn'
+Using a cache at /home/mliang17/.conda/envs/parallelwavegan/lib/python3.10/site-packages/discrete_speech_metrics/km/km200.bin
+Using a cache at /home/mliang17/.conda/envs/parallelwavegan/lib/python3.10/site-packages/discrete_speech_metrics/km/km200.bin

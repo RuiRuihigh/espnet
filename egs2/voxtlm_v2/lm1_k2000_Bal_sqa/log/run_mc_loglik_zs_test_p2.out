@@ -1,0 +1,19 @@
+Failed to import Flash Attention, using ESPnet default: No module named 'flash_attn_2_cuda'
+n	2620
+gold_distribution	{'a': 536, 'b': 761, 'c': 842, 'd': 481}
+
+variant	scoring	acc	pred_distribution
+A	sum	32.18	{'a': 900, 'b': 642, 'c': 546, 'd': 532}
+A	norm	38.44	{'a': 687, 'b': 649, 'c': 646, 'd': 638}
+A	calib	35.73	{'a': 795, 'b': 663, 'c': 593, 'd': 569}
+A	calib_rand	38.40	{'a': 652, 'b': 698, 'c': 622, 'd': 648}
+A	nospeech	21.83	{'a': 894, 'b': 617, 'c': 576, 'd': 533}
+B	sum	30.73	{'a': 859, 'b': 625, 'c': 571, 'd': 565}
+B	norm	35.84	{'a': 589, 'b': 627, 'c': 660, 'd': 744}
+B	calib	33.40	{'a': 845, 'b': 641, 'c': 551, 'd': 583}
+B	calib_rand	36.37	{'a': 645, 'b': 696, 'c': 628, 'd': 651}
+B	nospeech	21.68	{'a': 732, 'b': 630, 'c': 625, 'd': 633}
+L	sum	23.02	{'a': 1486, 'b': 166, 'c': 561, 'd': 407}
+L	calib	24.43	{'a': 652, 'b': 341, 'c': 876, 'd': 751}
+L	calib_rand	24.05	{'a': 700, 'b': 508, 'c': 474, 'd': 938}
+L	nospeech	21.49	{'a': 2220, 'b': 132, 'c': 135, 'd': 133}

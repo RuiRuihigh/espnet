@@ -1,0 +1,9 @@
+INFO:root:Aggregating results...
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 26780.13it/s]
+INFO:root:Done.
+Traceback (most recent call last):
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal_sqa/local/summarize_fallback.py", line 45, in <module>
+    plain, final = load("rand100"), load("fb_final")
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal_sqa/local/summarize_fallback.py", line 17, in load
+    for line in open(BASE / f"text.tts.{sub}" / VOC):
+FileNotFoundError: [Errno 2] No such file or directory: 'exp/sqa_v1_ft/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/versa_eval/result.1.txt'

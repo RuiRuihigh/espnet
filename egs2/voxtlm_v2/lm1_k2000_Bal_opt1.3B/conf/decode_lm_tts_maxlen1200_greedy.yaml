@@ -1,0 +1,5 @@
+log_level: INFO
+beam_size: 1
+penalty: 0
+maxlen: 1200
+minlen: 1

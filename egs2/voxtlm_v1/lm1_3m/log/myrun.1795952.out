@@ -1,0 +1,231 @@
+2026-09-15T10:47:51 (data.sh:31:main) ./local/data.sh --stage 2 --stop_stage 2 --data_config 3m
+2026-09-15T10:47:53 (data.sh:61:main) data_config=3m: speechlm_train_size=3000000 textlm_train_size=3000000
+2026-09-15T10:47:53 (data.sh:86:main) stage 2: Data Preparation
+utils/validate_data_dir.sh: Successfully validated data-directory data/librispeech/asr/train
+utils/combine_data.sh data/train/speech/asr data/librispeech/asr/train
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 281241 utterances.
+fix_data_dir.sh: old files are kept in data/train/speech/asr/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/libritts/tts/train
+utils/validate_data_dir.sh: Successfully validated data-directory data/vctk/tts/train
+utils/combine_data.sh data/train/speech/tts data/libritts/tts/train data/vctk/tts/train
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 398665 utterances.
+fix_data_dir.sh: old files are kept in data/train/speech/tts/.backup
+train: Combine text:  data/librispeech/textlm/train/text
+2026-09-15T10:50:52 (data.sh:160:main) Subsampling textlm train: 40418261 -> 3000000 lines
+utils/validate_data_dir.sh: Successfully validated data-directory data/librilight/speechlm/train
+utils/combine_data.sh data/.combine_speechlm_train data/librilight/speechlm/train
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh [info]: not combining text as it does not exist
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 17363872 utterances.
+fix_data_dir.sh: old files are kept in data/.combine_speechlm_train/.backup
+2026-09-15T11:02:48 (data.sh:127:main) Subsampling speechlm train: 17363872 -> 3000000 utts
+utils/subset_data_dir.sh: reducing #utt from 17363872 to 3000000
+utils/validate_data_dir.sh: Successfully validated data-directory data/librispeech/asr/dev
+utils/combine_data.sh data/dev/speech/asr data/librispeech/asr/dev
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 5567 utterances.
+fix_data_dir.sh: old files are kept in data/dev/speech/asr/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/libritts/tts/dev
+utils/combine_data.sh data/dev/speech/tts data/libritts/tts/dev
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 10349 utterances.
+fix_data_dir.sh: old files are kept in data/dev/speech/tts/.backup
+dev: Combine text:  data/librispeech/textlm/dev/text
+utils/validate_data_dir.sh: Successfully validated data-directory data/librilight/speechlm/dev
+utils/combine_data.sh data/dev/speech/speechlm data/librilight/speechlm/dev
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 5567 utterances.
+fix_data_dir.sh: old files are kept in data/dev/speech/speechlm/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/librispeech/asr/test
+utils/combine_data.sh data/test/speech/asr data/librispeech/asr/test
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 5559 utterances.
+fix_data_dir.sh: old files are kept in data/test/speech/asr/.backup
+utils/validate_data_dir.sh: Successfully validated data-directory data/libritts/tts/test
+utils/combine_data.sh data/test/speech/tts data/libritts/tts/test
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 9957 utterances.
+fix_data_dir.sh: old files are kept in data/test/speech/tts/.backup
+test: Combine text:  data/librispeech/textlm/test/text
+utils/validate_data_dir.sh: Successfully validated data-directory data/librilight/speechlm/test
+utils/combine_data.sh data/test/speech/speechlm data/librilight/speechlm/test
+utils/combine_data.sh [info]: not combining utt2uniq as it does not exist
+utils/combine_data.sh [info]: not combining segments as it does not exist
+utils/combine_data.sh: combined utt2spk
+utils/combine_data.sh [info]: not combining utt2lang as it does not exist
+utils/combine_data.sh [info]: not combining utt2dur as it does not exist
+utils/combine_data.sh [info]: not combining utt2num_frames as it does not exist
+utils/combine_data.sh [info]: not combining reco2dur as it does not exist
+utils/combine_data.sh [info]: not combining feats.scp as it does not exist
+utils/combine_data.sh: combined text
+utils/combine_data.sh [info]: not combining cmvn.scp as it does not exist
+utils/combine_data.sh [info]: not combining vad.scp as it does not exist
+utils/combine_data.sh [info]: not combining reco2file_and_channel as it does not exist
+utils/combine_data.sh: combined wav.scp
+utils/combine_data.sh [info]: not combining spk2gender as it does not exist
+fix_data_dir.sh: kept all 5559 utterances.
+fix_data_dir.sh: old files are kept in data/test/speech/speechlm/.backup
+2026-09-15T11:06:54 (data.sh:181:main) Successfully finished. [elapsed=1143s]
+2026-09-15T11:06:54 (lm.sh:215:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir  --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 2 --stop_stage 2
+2026-09-15T11:07:00 (lm.sh:362:main) Skipped stages:  11 12 
+2026-09-15T11:07:00 (lm.sh:380:main) Stage 2: Format wav.scp: data/ -> dump/audio_raw
+train
+data/train/speech/asr
+data/train/speech/asr
+utils/copy_data_dir.sh: copied data from data/train/speech/asr to dump/audio_raw/asr/train/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/asr/train/
+2026-09-15T11:07:14 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/train/speech/asr/wav.scp dump/audio_raw/asr/train
+2026-09-15T11:07:17 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-15T11:26:39 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=1165s]
+data/train/speech/speechlm
+data/train/speech/speechlm
+utils/copy_data_dir.sh: copied data from data/train/speech/speechlm to dump/audio_raw/speechlm/train/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/speechlm/train/
+2026-09-15T11:27:22 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/train/speech/speechlm/wav.scp dump/audio_raw/speechlm/train
+2026-09-15T11:27:26 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-16T00:58:43 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=48681s]
+dev
+data/dev/speech/asr
+data/dev/speech/asr
+utils/copy_data_dir.sh: copied data from data/dev/speech/asr to dump/audio_raw/asr/dev/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/asr/dev/
+2026-09-16T00:59:04 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/dev/speech/asr/wav.scp dump/audio_raw/asr/dev
+2026-09-16T00:59:08 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-16T01:00:40 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=96s]
+data/dev/speech/speechlm
+data/dev/speech/speechlm
+utils/copy_data_dir.sh: copied data from data/dev/speech/speechlm to dump/audio_raw/speechlm/dev/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/speechlm/dev/
+2026-09-16T01:00:50 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/dev/speech/speechlm/wav.scp dump/audio_raw/speechlm/dev
+2026-09-16T01:00:54 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-16T01:01:16 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=26s]
+test
+data/test/speech/asr
+data/test/speech/asr
+utils/copy_data_dir.sh: copied data from data/test/speech/asr to dump/audio_raw/asr/test/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/asr/test/
+2026-09-16T01:01:37 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/test/speech/asr/wav.scp dump/audio_raw/asr/test
+2026-09-16T01:01:40 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-16T01:02:41 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=64s]
+data/test/speech/speechlm
+data/test/speech/speechlm
+utils/copy_data_dir.sh: copied data from data/test/speech/speechlm to dump/audio_raw/speechlm/test/
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw/speechlm/test/
+2026-09-16T01:03:00 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k data/test/speech/speechlm/wav.scp dump/audio_raw/speechlm/test
+2026-09-16T01:03:04 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-16T01:03:44 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=44s]
+2026-09-16T01:03:44 (lm.sh:1121:main) Successfully finished. [elapsed=50210s]
+2026-09-16T01:03:44 (lm.sh:215:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir  --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 3 --stop_stage 3 --learn_kmeans false
+2026-09-16T01:03:47 (lm.sh:362:main) Skipped stages:  11 12 
+2026-09-16T01:03:47 (lm.sh:417:main) Stage 3a: Perform Kmeans using hubert_base features
+2026-09-16T01:03:47 (lm.sh:546:main) Stage 3a: asr already labeled (found dump/extracted/asr/.labeled_km1000_d6332e8e94092dd7d7b9718852f25ee0), skipping
+2026-09-16T01:03:47 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 3 --stop-stage 4 --train_set train --dev_set dev --other_sets test  --datadir dump/audio_raw/speechlm --featdir dump/extracted/speechlm --audio_format flac --feature_type hubert_base --layer 6 --feature_conf {type=s3prl,conf={s3prl_conf={upstream=hubert_base},download_dir=ckpt,multilayer_feature=False,layer=6}} --km_dir exp/kmeans/hubert_base_6_1000clusters --portion 0.1 --nclusters 1000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --cuda_cmd slurm.pl
+2026-09-16T01:03:50 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-09-16T01:03:50 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/speechlm/hubert_base/layer6/train
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/train to dump/extracted/speechlm/hubert_base/layer6/train
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/speechlm/hubert_base/layer6/train

@@ -1,0 +1,4 @@
+Sun Sep 27 17:02:11 EDT 2026 decoding dump/v1/raw/test_p1_sub500/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.3_sub500 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.3_sub500/logdir/lm_inference.*.log)
+Sun Sep 27 17:02:11 EDT 2026 decoding dump/v1/raw/test_p1_sub500/text.sqa -> exp/zeroshot_13epoch/decode_sqa/13epoch_decode_sqa_p1_lp0.3_sub500 (log: exp/zeroshot_13epoch/decode_sqa/13epoch_decode_sqa_p1_lp0.3_sub500/logdir/lm_inference.*.log)
+Sun Sep 27 17:02:11 EDT 2026 decoding dump/v1/raw/test_p1_sub500_rest/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_sub500rest (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_sub500rest/logdir/lm_inference.*.log)
+Sun Sep 27 17:02:11 EDT 2026 decoding dump/v1/raw/test_p1_sub500/text.sqa -> exp/zeroshot_13epoch/decode_sqa/13epoch_decode_sqa_p1_sub500 (log: exp/zeroshot_13epoch/decode_sqa/13epoch_decode_sqa_p1_sub500/logdir/lm_inference.*.log)

@@ -1,0 +1,117 @@
+2026-09-19T00:51:01 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 3 --stop_stage 3
+2026-09-19T00:51:10 (lm.sh:374:main) Skipped stages:  11 12 
+2026-09-19T00:51:10 (lm.sh:429:main) Stage 3a: Discretize speech with the Phonological Tokenizer (layer 21)
+2026-09-19T00:51:10 (download_phonological_tokenizer.sh:19:main) local/download_phonological_tokenizer.sh --download_dir downloads/phonological_tokenizer
+2026-09-19T00:51:10 (download_phonological_tokenizer.sh:25:main) downloads/phonological_tokenizer/.complete already exists. Skip downloading.
+exp/kmeans/phonological_tokenizer_2000clusters/km_2000.mdl already exists. Skip conversion.
+2026-09-19T00:52:57 (lm.sh:487:main) Stage 3a: asr already labeled (found dump/extracted/asr/.labeled_km2000_04db297ad7511fcbe9ef931b903a2648), skipping
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/train to dump/audio_raw_filtered/speechlm/train
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw_filtered/speechlm/train
+fix_data_dir.sh: kept 299122 utterances out of 300000
+fix_data_dir.sh: old files are kept in dump/audio_raw_filtered/speechlm/train/.backup
+2026-09-19T00:54:20 (lm.sh:502:main) Stage 3a: speechlm/train: 300000 -> 299122 utts after max_wav_duration=120s filter
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/dev to dump/audio_raw_filtered/speechlm/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw_filtered/speechlm/dev
+fix_data_dir.sh: kept all 5567 utterances.
+fix_data_dir.sh: old files are kept in dump/audio_raw_filtered/speechlm/dev/.backup
+2026-09-19T00:54:31 (lm.sh:502:main) Stage 3a: speechlm/dev: 5567 -> 5567 utts after max_wav_duration=120s filter
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/test to dump/audio_raw_filtered/speechlm/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw_filtered/speechlm/test
+2026-09-19T00:54:38 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 1 --stop-stage 4 --train_set train --dev_set dev --other_sets test  --datadir dump/audio_raw_filtered/speechlm --featdir dump/extracted/speechlm --audio_format flac --feature_type phonological_tokenizer --layer 21 --feature_conf {type=phonological_tokenizer,conf={ssl_model_path=downloads/phonological_tokenizer/ssl.pth,layer=21}} --km_dir exp/kmeans/phonological_tokenizer_2000clusters --portion 0.1 --nclusters 2000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --cuda_cmd slurm.pl --skip_stages 1 2
+2026-09-19T00:54:42 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-09-19T00:54:42 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/speechlm/phonological_tokenizer/layer21/train
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/speechlm/train to dump/extracted/speechlm/phonological_tokenizer/layer21/train
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/speechlm/phonological_tokenizer/layer21/train
+2026-09-19T03:17:08 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/speechlm/phonological_tokenizer/layer21/dev
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/speechlm/dev to dump/extracted/speechlm/phonological_tokenizer/layer21/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/speechlm/phonological_tokenizer/layer21/dev
+2026-09-19T03:23:06 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/speechlm/phonological_tokenizer/layer21/test
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/speechlm/test to dump/extracted/speechlm/phonological_tokenizer/layer21/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/speechlm/phonological_tokenizer/layer21/test
+2026-09-19T03:24:54 (perform_kmeans.sh:302:main) Stage 4: Measure qualities of pseudo labels
+2026-09-19T03:24:54 (perform_kmeans.sh:327:main) Skipping quality measurement because no data/mfa_phoneme_alignment exists. You can specify the alignment by "--alignment_phoneme_dir". The alignment is in tsv file with format: "utt_id1 a1,a2,a3,..."
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/train to dump/audio_raw_filtered/tts/train
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw_filtered/tts/train
+fix_data_dir.sh: kept 398663 utterances out of 398665
+fix_data_dir.sh: old files are kept in dump/audio_raw_filtered/tts/train/.backup
+2026-09-19T03:25:35 (lm.sh:502:main) Stage 3a: tts/train: 398665 -> 398663 utts after max_wav_duration=120s filter
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/dev to dump/audio_raw_filtered/tts/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw_filtered/tts/dev
+fix_data_dir.sh: kept all 10349 utterances.
+fix_data_dir.sh: old files are kept in dump/audio_raw_filtered/tts/dev/.backup
+2026-09-19T03:25:44 (lm.sh:502:main) Stage 3a: tts/dev: 10349 -> 10349 utts after max_wav_duration=120s filter
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/test to dump/audio_raw_filtered/tts/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/audio_raw_filtered/tts/test
+2026-09-19T03:25:51 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 1 --stop-stage 4 --train_set train --dev_set dev --other_sets test  --datadir dump/audio_raw_filtered/tts --featdir dump/extracted/tts --audio_format flac --feature_type phonological_tokenizer --layer 21 --feature_conf {type=phonological_tokenizer,conf={ssl_model_path=downloads/phonological_tokenizer/ssl.pth,layer=21}} --km_dir exp/kmeans/phonological_tokenizer_2000clusters --portion 0.1 --nclusters 2000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --cuda_cmd slurm.pl --skip_stages 1 2
+2026-09-19T03:25:55 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-09-19T03:25:55 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/tts/phonological_tokenizer/layer21/train
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/tts/train to dump/extracted/tts/phonological_tokenizer/layer21/train
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/tts/phonological_tokenizer/layer21/train
+2026-09-19T04:39:33 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/tts/phonological_tokenizer/layer21/dev
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/tts/dev to dump/extracted/tts/phonological_tokenizer/layer21/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/tts/phonological_tokenizer/layer21/dev
+2026-09-19T04:49:18 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/tts/phonological_tokenizer/layer21/test
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/tts/test to dump/extracted/tts/phonological_tokenizer/layer21/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/tts/phonological_tokenizer/layer21/test
+2026-09-19T04:51:29 (perform_kmeans.sh:302:main) Stage 4: Measure qualities of pseudo labels
+2026-09-19T04:51:29 (perform_kmeans.sh:327:main) Skipping quality measurement because no data/mfa_phoneme_alignment exists. You can specify the alignment by "--alignment_phoneme_dir". The alignment is in tsv file with format: "utt_id1 a1,a2,a3,..."
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/asr/train to dump/raw/train/speech/asr
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/train/speech/asr
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/speechlm/train to dump/raw/train/speech/speechlm
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/train/speech/speechlm
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/tts/train to dump/raw/train/speech/tts
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/train/speech/tts
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/asr/dev to dump/raw/dev/speech/asr
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dev/speech/asr
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/speechlm/dev to dump/raw/dev/speech/speechlm
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dev/speech/speechlm
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/tts/dev to dump/raw/dev/speech/tts
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dev/speech/tts
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/asr/test to dump/raw/test/speech/asr
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/test/speech/asr
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/speechlm/test to dump/raw/test/speech/speechlm
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/test/speech/speechlm
+utils/copy_data_dir.sh: copied data from dump/audio_raw_filtered/tts/test to dump/raw/test/speech/tts
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/test/speech/tts
+dump/raw/train/text/textlm
+dump/raw/dev/text/textlm
+dump/raw/test/text/textlm
+2026-09-19T04:53:43 (lm.sh:1097:main) Successfully finished. [elapsed=14562s]
+2026-09-19T04:53:43 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 4 --stop_stage 5
+2026-09-19T04:53:47 (lm.sh:374:main) Skipped stages:  11 12 
+2026-09-19T04:53:47 (lm.sh:582:main) Stage 4a: Data filtering: dump/raw/org -> dump/raw
+train
+Opened file: dump/raw/train
+textlm: dump/raw/train/text/textlm/text
+Creating textlm:  dump/raw/train/lm_text
+Creating speechlm:  dump/raw/train/lm_text
+Creating asr:  dump/raw/train/lm_text
+Creating tts:  dump/raw/train/lm_text
+dev
+Opened file: dump/raw/dev
+textlm: dump/raw/dev/text/textlm/text
+Creating textlm:  dump/raw/dev/lm_text
+Creating speechlm:  dump/raw/dev/lm_text
+Creating asr:  dump/raw/dev/lm_text
+Creating tts:  dump/raw/dev/lm_text
+test
+Opened file: dump/raw/test
+textlm: dump/raw/test/text/textlm/text
+Creating textlm:  dump/raw/test/lm_text
+Creating speechlm:  dump/raw/test/lm_text
+Creating asr:  dump/raw/test/lm_text
+Creating tts:  dump/raw/test/lm_text
+Successfully created BPE training file
+2026-09-19T05:01:57 (lm.sh:606:main) Stage 5: Generate token_list from data/train/bpe_text using BPE
+2026-09-19T05:53:05 (lm.sh:1097:main) Successfully finished. [elapsed=3562s]
+2026-09-19T05:53:05 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 6 --stop_stage 6
+2026-09-19T05:53:22 (lm.sh:374:main) Skipped stages:  11 12 
+2026-09-19T05:53:22 (lm.sh:671:main) Stage 6: LM collect stats: train_set=dump/raw/lm_train.txt, dev_set=dump/raw/dev/lm_text
+2026-09-19T05:53:45 (lm.sh:703:main) Generate 'exp/lm_stats_en_bpe10000/run.sh'. You can resume the process from stage 6 using this script
+2026-09-19T05:53:45 (lm.sh:707:main) LM collect-stats started... log: 'exp/lm_stats_en_bpe10000/logdir/stats.*.log'
+2026-09-19T05:56:50 (lm.sh:1097:main) Successfully finished. [elapsed=225s]
+2026-09-19T05:56:54 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 7 --stop_stage 7 --ngpu 1 --lm_config conf/tuning/train_transformer_opt350.yaml
+2026-09-19T05:56:58 (lm.sh:374:main) Skipped stages:  11 12 
+2026-09-19T05:56:58 (lm.sh:748:main) Stage 7: LM Training: train_set=dump/raw/lm_train.txt, dev_set=dump/raw/dev/lm_text
+2026-09-19T05:56:58 (lm.sh:785:main) Generate 'exp/lm_train_transformer_opt350_en_bpe10000/run.sh'. You can resume the process from stage 7 using this script
+2026-09-19T05:56:58 (lm.sh:788:main) LM training started... log: 'exp/lm_train_transformer_opt350_en_bpe10000/train.log'

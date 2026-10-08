@@ -1,0 +1,12 @@
+Step 1: hyp.tok -> HDF5 feats
+wrote 100 feature files to exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/feats (0 out-of-range tokens dropped across 0 utterance(s))
+Step 2: parallel-wavegan-decode (regular gpu partition)
+Generated 100 wavs at exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/wav
+Step 3: VERSA scoring (whisper_wer -> CER/WER, pseudo_mos/utmos, mcd_f0, discrete_speech, speaker), on the A100
+Done. See exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/versa_eval/avg_result.txt
+                               CER    CER(逐句均)     WER  UTMOS SpeechBERT
+plain beam-5                 8.14%       6.45%   9.96%   3.87      0.801
+beam -> greedy -> top-p      7.27%       5.62%   8.86%   3.89      0.804
+
+level used per sentence: {'beam5': 99, 'greedy': 1}   still at the cap after all levels: 0
+  fell back: 1995_1837_000011_000002  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '232'}  errors 74/89 -> 0/89

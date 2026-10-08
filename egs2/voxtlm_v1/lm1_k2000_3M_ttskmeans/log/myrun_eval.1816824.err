@@ -1,0 +1,1 @@
+/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k2000_3M_ttskmeans/utils/slurm.pl: job failed with status 1, log is in exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.subset100/vocoder_eval/checkpoint-400000steps/versa_eval/versa_eval.1.log

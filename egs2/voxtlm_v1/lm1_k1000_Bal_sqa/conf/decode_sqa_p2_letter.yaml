@@ -1,0 +1,6 @@
+# Part II accuracy: only "the answer is option X" (~7 BPE tokens) is needed
+log_level: INFO
+beam_size: 1
+penalty: 0.0
+maxlen: 12
+minlen: 1

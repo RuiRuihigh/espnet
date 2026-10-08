@@ -1,0 +1,10 @@
+/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v2/lm1_k2000_Bal_opt1.3B_sqa/utils/slurm.pl: Error: Job 1811576 seems to no longer exists:
+'squeue -j 1811576' returned error code 1 and said:
+  slurm_load_jobs error: Invalid job id specified
+
+Syncfile exp/lm_stats_sqa_v1/logdir/q/done.2176922.8 does not exist, meaning that the job did not finish.
+Log is in exp/lm_stats_sqa_v1/logdir/stats.8.log. Last line '# Finished at Thu Oct 1 22:38:56 EDT 2026 with status 137' does not end in 'status 0'.
+Possible reasons:
+  a) Exceeded time limit? -> Use more jobs!
+  b) Shutdown/Frozen machine? -> Run again! squeue:
+slurm_load_jobs error: Invalid job id specified

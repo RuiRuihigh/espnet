@@ -1,0 +1,418 @@
+sentencepiece_trainer.cc(178) LOG(INFO) Running command: --input=data/en_token_list/bpe_unigram10000/train.txt --vocab_size=10000 --model_type=unigram --model_prefix=data/en_token_list/bpe_unigram10000/bpe --character_coverage=1.0 --input_sentence_size=100000000 --user_defined_symbols=<startoftext>,<generatetext>,<startofspeech>,<generatespeech>
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: data/en_token_list/bpe_unigram10000/train.txt
+  input_format: 
+  model_prefix: data/en_token_list/bpe_unigram10000/bpe
+  model_type: UNIGRAM
+  vocab_size: 10000
+  self_test_sample_size: 0
+  character_coverage: 1
+  input_sentence_size: 100000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 0
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 0
+  user_defined_symbols: <startoftext>
+  user_defined_symbols: <generatetext>
+  user_defined_symbols: <startofspeech>
+  user_defined_symbols: <generatespeech>
+  required_chars: 
+  byte_fallback: 0
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 0
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 1
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(355) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(186) LOG(INFO) Loading corpus: data/en_token_list/bpe_unigram10000/train.txt
+trainer_interface.cc(382) LOG(WARNING) Found too long line (5015 > 4192).
+trainer_interface.cc(384) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(385) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(411) LOG(INFO) Loaded all 679109 sentences
+trainer_interface.cc(418) LOG(INFO) Skipped 797 too long sentences.
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <startoftext>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <generatetext>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <startofspeech>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <generatespeech>
+trainer_interface.cc(432) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(541) LOG(INFO) all chars count=366143305
+trainer_interface.cc(552) LOG(INFO) Done: 100% characters are covered.
+trainer_interface.cc(562) LOG(INFO) Alphabet size=1047
+trainer_interface.cc(563) LOG(INFO) Final character coverage=1
+trainer_interface.cc(594) LOG(INFO) Done! preprocessed 679109 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=184847261
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1001047 seed sentencepieces
+trainer_interface.cc(600) LOG(INFO) Tokenizing input sentences with whitespace: 679109
+trainer_interface.cc(611) LOG(INFO) Done! 873115
+unigram_model_trainer.cc(602) LOG(INFO) Using 873115 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=981892 obj=64.9562 num_tokens=66047756 num_tokens/piece=67.2658
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=967092 obj=61.026 num_tokens=66031250 num_tokens/piece=68.2781
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=725319 obj=61.0146 num_tokens=66764707 num_tokens/piece=92.0487
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=725318 obj=60.8256 num_tokens=66791428 num_tokens/piece=92.0857
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=543988 obj=61.435 num_tokens=68412243 num_tokens/piece=125.761
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=543988 obj=61.1848 num_tokens=68426327 num_tokens/piece=125.786
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=407991 obj=62.0602 num_tokens=70606340 num_tokens/piece=173.059
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=407990 obj=61.7822 num_tokens=70618471 num_tokens/piece=173.089
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=305992 obj=62.8107 num_tokens=73235293 num_tokens/piece=239.337
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=305992 obj=62.4384 num_tokens=73245892 num_tokens/piece=239.372
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=229494 obj=63.6727 num_tokens=76206078 num_tokens/piece=332.061
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=229494 obj=63.2662 num_tokens=76215061 num_tokens/piece=332.1
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=172120 obj=64.654 num_tokens=79474406 num_tokens/piece=461.738
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=172120 obj=64.2204 num_tokens=79480907 num_tokens/piece=461.776
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=129090 obj=65.7495 num_tokens=83032738 num_tokens/piece=643.216
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=129090 obj=65.2947 num_tokens=83038265 num_tokens/piece=643.259
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=96817 obj=66.9703 num_tokens=86858230 num_tokens/piece=897.138
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=96817 obj=66.4944 num_tokens=86861783 num_tokens/piece=897.175
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=72612 obj=68.3103 num_tokens=90983886 num_tokens/piece=1253.01
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=72612 obj=67.8119 num_tokens=90985414 num_tokens/piece=1253.04
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=54459 obj=69.7898 num_tokens=95379392 num_tokens/piece=1751.4
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=54459 obj=69.2701 num_tokens=95380201 num_tokens/piece=1751.41
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=40844 obj=71.4196 num_tokens=100078154 num_tokens/piece=2450.25
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=40844 obj=70.8756 num_tokens=100078201 num_tokens/piece=2450.25
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=30633 obj=73.2134 num_tokens=105123170 num_tokens/piece=3431.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=30633 obj=72.6402 num_tokens=105122810 num_tokens/piece=3431.69
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=22974 obj=75.2083 num_tokens=110590394 num_tokens/piece=4813.72
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=22974 obj=74.592 num_tokens=110590213 num_tokens/piece=4813.71
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=17230 obj=77.4338 num_tokens=116572859 num_tokens/piece=6765.69
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=17230 obj=76.7737 num_tokens=116572731 num_tokens/piece=6765.68
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=12922 obj=79.9333 num_tokens=123065019 num_tokens/piece=9523.68
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=12922 obj=79.214 num_tokens=123064546 num_tokens/piece=9523.65
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=11000 obj=81.0956 num_tokens=126923152 num_tokens/piece=11538.5
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=11000 obj=80.6844 num_tokens=126923037 num_tokens/piece=11538.5
+trainer_interface.cc(689) LOG(INFO) Saving model: data/en_token_list/bpe_unigram10000/bpe.model
+trainer_interface.cc(701) LOG(INFO) Saving vocabs: data/en_token_list/bpe_unigram10000/bpe.vocab
+/export/fs06/mliang17/espnet/tools/venv/envs/espnet/bin/python3 /export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/aggregate_stats_dirs.py --input_dir exp/lm_stats_en_bpe10000/logdir/stats.1 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.2 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.3 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.4 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.5 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.6 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.7 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.8 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.9 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.10 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.11 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.12 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.13 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.14 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.15 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.16 --output_dir exp/lm_stats_en_bpe10000
+2026-09-19 05:04:33,406 (launch:94) INFO: /export/fs06/mliang17/espnet/tools/venv/envs/espnet/bin/python3 /export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/launch.py --cmd 'slurm.pl --config conf/slurm_clsp_a100.conf --name exp/lm_train_transformer_opt350_en_bpe10000/train.log' --log exp/lm_train_transformer_opt350_en_bpe10000/train.log --ngpu 1 --num_nodes 1 --init_file_prefix exp/lm_train_transformer_opt350_en_bpe10000/.dist_init_ --multiprocessing_distributed true -- python3 -m espnet2.bin.lm_train --ngpu 1 --use_preprocessor true --bpemodel data/en_token_list/bpe_unigram10000/bpe.model --token_type bpe --token_list data/en_token_list/bpe_unigram10000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/lm_text,text,text --valid_shape_file exp/lm_stats_en_bpe10000/valid/text_shape.bpe --fold_length 150 --resume true --output_dir exp/lm_train_transformer_opt350_en_bpe10000 --config conf/tuning/train_transformer_opt350.yaml --train_data_path_and_name_and_type dump/raw/lm_train.txt,text,text --train_shape_file exp/lm_stats_en_bpe10000/train/text_shape.bpe
+2026-09-19 05:04:33,519 (launch:348) INFO: log file: exp/lm_train_transformer_opt350_en_bpe10000/train.log
+/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/utils/slurm.pl: job failed with status 1, log is in exp/lm_train_transformer_opt350_en_bpe10000/train.log
+Command '['slurm.pl', '--config', 'conf/slurm_clsp_a100.conf', '--name', 'exp/lm_train_transformer_opt350_en_bpe10000/train.log', '--gpu', '1', 'exp/lm_train_transformer_opt350_en_bpe10000/train.log', 'python3', '-m', 'espnet2.bin.lm_train', '--ngpu', '1', '--use_preprocessor', 'true', '--bpemodel', 'data/en_token_list/bpe_unigram10000/bpe.model', '--token_type', 'bpe', '--token_list', 'data/en_token_list/bpe_unigram10000/tokens.txt', '--non_linguistic_symbols', 'none', '--cleaner', 'none', '--g2p', 'none', '--valid_data_path_and_name_and_type', 'dump/raw/dev/lm_text,text,text', '--valid_shape_file', 'exp/lm_stats_en_bpe10000/valid/text_shape.bpe', '--fold_length', '150', '--resume', 'true', '--output_dir', 'exp/lm_train_transformer_opt350_en_bpe10000', '--config', 'conf/tuning/train_transformer_opt350.yaml', '--train_data_path_and_name_and_type', 'dump/raw/lm_train.txt,text,text', '--train_shape_file', 'exp/lm_stats_en_bpe10000/train/text_shape.bpe', '--ngpu', '1', '--multiprocessing_distributed', 'True']' returned non-zero exit status 1.
+Traceback (most recent call last):
+  File "/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/launch.py", line 384, in <module>
+    main()
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/launch.py", line 375, in main
+    raise RuntimeError(
+RuntimeError: 
+################### The last 1000 lines of exp/lm_train_transformer_opt350_en_bpe10000/train.log ###################
+# Running on e01
+# Started at Sat Sep 19 05:04:41 EDT 2026
+# SLURMD_NODENAME=e01
+# SLURM_CLUSTER_NAME=clsp
+# SLURM_CONF=/var/spool/slurmd/conf-cache/slurm.conf
+# SLURM_CPUS_ON_NODE=4
+# SLURM_CPUS_PER_TASK=1
+# SLURM_GPUS=1
+# SLURM_GPUS_ON_NODE=1
+# SLURM_GTIDS=0
+# SLURM_JOBID=1800774
+# SLURM_JOB_ACCOUNT=a100acct
+# SLURM_JOB_CPUS_PER_NODE=4
+# SLURM_JOB_END_TIME=1821344679
+# SLURM_JOB_GID=21
+# SLURM_JOB_GPUS=6
+# SLURM_JOB_ID=1800774
+# SLURM_JOB_NAME=exp/lm_train_transformer_opt350_en_bpe10000/train.log
+# SLURM_JOB_NODELIST=e01
+# SLURM_JOB_NUM_NODES=1
+# SLURM_JOB_PARTITION=gpu-a100
+# SLURM_JOB_QOS=base_qos
+# SLURM_JOB_START_TIME=1789808679
+# SLURM_JOB_UID=61845
+# SLURM_JOB_USER=mliang17
+# SLURM_LOCALID=0
+# SLURM_MEM_PER_CPU=1900
+# SLURM_MEM_PER_NODE=8192
+# SLURM_NNODES=1
+# SLURM_NODEID=0
+# SLURM_NODELIST=e01
+# SLURM_NPROCS=1
+# SLURM_NTASKS=1
+# SLURM_NTASKS_PER_NODE=1
+# SLURM_OPEN_MODE=a
+# SLURM_PRIO_PROCESS=0
+# SLURM_PROCID=0
+# SLURM_SUBMIT_DIR=/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal
+# SLURM_SUBMIT_HOST=c11
+# SLURM_TASKS_PER_NODE=1
+# SLURM_TASK_PID=2410213
+# SLURM_TOPOLOGY_ADDR=e01
+# SLURM_TOPOLOGY_ADDR_PATTERN=node
+# SLURM_TRES_PER_TASK=cpu:8
+# python3 -m espnet2.bin.lm_train --ngpu 1 --use_preprocessor true --bpemodel data/en_token_list/bpe_unigram10000/bpe.model --token_type bpe --token_list data/en_token_list/bpe_unigram10000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/lm_text,text,text --valid_shape_file exp/lm_stats_en_bpe10000/valid/text_shape.bpe --fold_length 150 --resume true --output_dir exp/lm_train_transformer_opt350_en_bpe10000 --config conf/tuning/train_transformer_opt350.yaml --train_data_path_and_name_and_type dump/raw/lm_train.txt,text,text --train_shape_file exp/lm_stats_en_bpe10000/train/text_shape.bpe --ngpu 1 --multiprocessing_distributed True 
+/export/fs06/mliang17/espnet/tools/venv/envs/espnet/bin/python3 /export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/lm_train.py --ngpu 1 --use_preprocessor true --bpemodel data/en_token_list/bpe_unigram10000/bpe.model --token_type bpe --token_list data/en_token_list/bpe_unigram10000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/lm_text,text,text --valid_shape_file exp/lm_stats_en_bpe10000/valid/text_shape.bpe --fold_length 150 --resume true --output_dir exp/lm_train_transformer_opt350_en_bpe10000 --config conf/tuning/train_transformer_opt350.yaml --train_data_path_and_name_and_type dump/raw/lm_train.txt,text,text --train_shape_file exp/lm_stats_en_bpe10000/train/text_shape.bpe --ngpu 1 --multiprocessing_distributed True
+[e01] 2026-09-19 05:04:58,509 (lm:198) INFO: Vocabulary size: 10000
+Failed to import Flash Attention, using ESPnet default: No module named 'flash_attn_2_cuda'
+
+Loading weights:   0%|          | 0/388 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 388/388 [00:00<00:00, 30969.59it/s]
+[e01] 2026-09-19 05:05:22,308 (huggingface_pretrained_opt_lm:152) INFO: Pretrained OPT model parameters reloaded!
+[e01] 2026-09-19 05:05:22,683 (abs_task:1454) INFO: pytorch.version=2.9.1+cu126, cuda.available=True, cudnn.version=91002, cudnn.benchmark=False, cudnn.deterministic=True
+[e01] 2026-09-19 05:05:22,686 (abs_task:1455) INFO: Model structure:
+ESPnetMultitaskLanguageModel(
+  (lm): HuggingfaceOPTModel(
+    (decoder): OPTModel(
+      (decoder): OPTDecoder(
+        (embed_tokens): Embedding(10000, 512, padding_idx=0)
+        (embed_positions): OPTLearnedPositionalEmbedding(2050, 1024)
+        (project_out): Linear(in_features=1024, out_features=512, bias=False)
+        (project_in): Linear(in_features=512, out_features=1024, bias=False)
+        (layers): ModuleList(
+          (0-23): 24 x OPTDecoderLayer(
+            (self_attn): OPTAttention(
+              (k_proj): Linear(in_features=1024, out_features=1024, bias=True)
+              (v_proj): Linear(in_features=1024, out_features=1024, bias=True)
+              (q_proj): Linear(in_features=1024, out_features=1024, bias=True)
+              (out_proj): Linear(in_features=1024, out_features=1024, bias=True)
+            )
+            (activation_fn): ReLU()
+            (self_attn_layer_norm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+            (fc1): Linear(in_features=1024, out_features=4096, bias=True)
+            (fc2): Linear(in_features=4096, out_features=1024, bias=True)
+            (final_layer_norm): LayerNorm((1024,), eps=1e-05, elementwise_affine=True)
+          )
+        )
+      )
+    )
+    (lm_head): Linear(in_features=512, out_features=10000, bias=False)
+  )
+  (criterion_att): LabelSmoothingLoss(
+    (criterion): KLDivLoss()
+  )
+)
+
+Model summary:
+    Class Name: ESPnetMultitaskLanguageModel
+    Total Number of model parameters: 315.70 M
+    Number of trainable parameters: 315.70 M (100.0%)
+    Size: 1.26 GB
+    Type: torch.float32
+[e01] 2026-09-19 05:05:22,686 (abs_task:1458) INFO: Optimizer:
+Adam (
+Parameter Group 0
+    amsgrad: False
+    betas: (0.9, 0.999)
+    capturable: False
+    decoupled_weight_decay: False
+    differentiable: False
+    eps: 1e-08
+    foreach: None
+    fused: None
+    initial_lr: 0.0003
+    lr: 1.2e-07
+    maximize: False
+    weight_decay: 1e-06
+)
+[e01] 2026-09-19 05:05:22,686 (abs_task:1459) INFO: Scheduler: WarmupLR(warmup_steps=2500)
+[e01] 2026-09-19 05:05:22,687 (abs_task:1468) INFO: Saving the configuration in exp/lm_train_transformer_opt350_en_bpe10000/config.yaml
+[e01] 2026-09-19 05:05:27,470 (abs_task:1887) INFO: [train] Batch sampler: LengthBatchSampler(N-batch=25783, batch_bins=10000, sort_in_batch=descending, sort_batch=descending)
+[e01] 2026-09-19 05:05:27,473 (abs_task:1888) INFO: [train] mini-batch sizes summary: N-batch=25783, mean=49.5, min=2, max=1667
+[e01] 2026-09-19 05:05:27,653 (read_text:31) INFO: keys_to_load is not None, only loading 1276237 keys from dump/raw/lm_train.txt
+[e01] 2026-09-19 05:05:34,540 (abs_task:1912) INFO: [train] dataset:
+ESPnetDataset(
+  text: {"path": "dump/raw/lm_train.txt", "type": "text"}
+  preprocess: <espnet2.train.preprocessor.CommonPreprocessor object at 0x7943f400f310>)
+[e01] 2026-09-19 05:05:34,590 (abs_task:1887) INFO: [valid] Batch sampler: LengthBatchSampler(N-batch=371, batch_bins=10000, sort_in_batch=descending, sort_batch=descending)
+[e01] 2026-09-19 05:05:34,590 (abs_task:1888) INFO: [valid] mini-batch sizes summary: N-batch=371, mean=72.9, min=3, max=735
+[e01] 2026-09-19 05:05:34,591 (read_text:31) INFO: keys_to_load is not None, only loading 27050 keys from dump/raw/dev/lm_text
+[e01] 2026-09-19 05:05:34,683 (abs_task:1912) INFO: [valid] dataset:
+ESPnetDataset(
+  text: {"path": "dump/raw/dev/lm_text", "type": "text"}
+  preprocess: <espnet2.train.preprocessor.CommonPreprocessor object at 0x7943f3d859c0>)
+[e01] 2026-09-19 05:05:34,687 (trainer:323) INFO: 1/250epoch started
+/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/site-packages/torch/utils/data/dataloader.py:627: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+[e01] 2026-09-19 05:05:42,405 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 05:05:47,740 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 05:05:50,017 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 05:05:52,671 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 05:05:53,924 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 05:06:02,134 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 05:06:06,022 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 05:06:29,488 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 05:09:27,841 (trainer:799) INFO: 1epoch:train:1-1250batch: iter_time=5.842e-04, forward_time=0.073, loss=0.432, acc=0.006, backward_time=0.059, grad_norm=21.891, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.022, optim0_lr0=3.900e-06, train_time=3.732
+[e01] 2026-09-19 05:13:09,690 (trainer:799) INFO: 1epoch:train:1251-2500batch: iter_time=2.655e-04, forward_time=0.068, loss=0.366, acc=0.020, backward_time=0.058, grad_norm=1.647, clip=93.651, loss_scale=6.554e+04, optim_step_time=0.007, optim0_lr0=1.140e-05, train_time=3.549
+[e01] 2026-09-19 05:16:52,299 (trainer:799) INFO: 1epoch:train:2501-3750batch: iter_time=2.594e-04, forward_time=0.068, loss=0.334, acc=0.033, backward_time=0.058, grad_norm=1.428, clip=95.161, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=1.890e-05, train_time=3.563
+[e01] 2026-09-19 05:20:36,909 (trainer:799) INFO: 1epoch:train:3751-5000batch: iter_time=2.839e-04, forward_time=0.069, loss=0.305, acc=0.061, backward_time=0.058, grad_norm=1.749, clip=98.413, loss_scale=6.554e+04, optim_step_time=0.007, optim0_lr0=2.640e-05, train_time=3.592
+[e01] 2026-09-19 05:24:20,503 (trainer:799) INFO: 1epoch:train:5001-6250batch: iter_time=2.996e-04, forward_time=0.069, loss=0.288, acc=0.083, backward_time=0.057, grad_norm=2.211, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.007, optim0_lr0=3.390e-05, train_time=3.579
+[e01] 2026-09-19 05:28:03,845 (trainer:799) INFO: 1epoch:train:6251-7500batch: iter_time=2.892e-04, forward_time=0.069, loss=0.266, acc=0.112, backward_time=0.057, grad_norm=2.730, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=4.140e-05, train_time=3.572
+[e01] 2026-09-19 05:31:46,704 (trainer:799) INFO: 1epoch:train:7501-8750batch: iter_time=2.948e-04, forward_time=0.068, loss=0.235, acc=0.136, backward_time=0.057, grad_norm=2.706, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=4.890e-05, train_time=3.567
+[e01] 2026-09-19 05:35:28,423 (trainer:799) INFO: 1epoch:train:8751-10000batch: iter_time=2.598e-04, forward_time=0.068, loss=0.218, acc=0.146, backward_time=0.057, grad_norm=2.428, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=5.640e-05, train_time=3.547
+[e01] 2026-09-19 05:39:10,337 (trainer:799) INFO: 1epoch:train:10001-11250batch: iter_time=2.754e-04, forward_time=0.068, loss=0.206, acc=0.159, backward_time=0.057, grad_norm=2.296, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=6.390e-05, train_time=3.551
+[e01] 2026-09-19 05:42:52,769 (trainer:799) INFO: 1epoch:train:11251-12500batch: iter_time=2.860e-04, forward_time=0.068, loss=0.202, acc=0.158, backward_time=0.057, grad_norm=1.823, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=7.140e-05, train_time=3.559
+[e01] 2026-09-19 05:46:34,470 (trainer:799) INFO: 1epoch:train:12501-13750batch: iter_time=2.761e-04, forward_time=0.067, loss=0.195, acc=0.171, backward_time=0.057, grad_norm=1.837, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=7.890e-05, train_time=3.548
+[e01] 2026-09-19 05:50:16,764 (trainer:799) INFO: 1epoch:train:13751-15000batch: iter_time=2.754e-04, forward_time=0.068, loss=0.193, acc=0.173, backward_time=0.057, grad_norm=1.838, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=8.640e-05, train_time=3.556
+[e01] 2026-09-19 05:53:59,673 (trainer:799) INFO: 1epoch:train:15001-16250batch: iter_time=2.798e-04, forward_time=0.068, loss=0.191, acc=0.175, backward_time=0.058, grad_norm=1.726, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.007, optim0_lr0=9.390e-05, train_time=3.567
+[e01] 2026-09-19 05:57:43,318 (trainer:799) INFO: 1epoch:train:16251-17500batch: iter_time=1.606e-04, forward_time=0.069, loss=0.187, acc=0.186, backward_time=0.058, grad_norm=1.714, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.007, optim0_lr0=1.014e-04, train_time=3.577
+[e01] 2026-09-19 06:01:25,416 (trainer:799) INFO: 1epoch:train:17501-18750batch: iter_time=1.292e-04, forward_time=0.068, loss=0.182, acc=0.200, backward_time=0.058, grad_norm=2.121, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=1.089e-04, train_time=3.555
+[e01] 2026-09-19 06:05:07,672 (trainer:799) INFO: 1epoch:train:18751-20000batch: iter_time=1.291e-04, forward_time=0.068, loss=0.179, acc=0.214, backward_time=0.058, grad_norm=2.737, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=1.164e-04, train_time=3.555
+[e01] 2026-09-19 06:08:50,833 (trainer:799) INFO: 1epoch:train:20001-21250batch: iter_time=1.272e-04, forward_time=0.069, loss=0.174, acc=0.228, backward_time=0.059, grad_norm=2.924, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=1.239e-04, train_time=3.572
+[e01] 2026-09-19 06:12:34,695 (trainer:799) INFO: 1epoch:train:21251-22500batch: iter_time=1.288e-04, forward_time=0.069, loss=0.167, acc=0.250, backward_time=0.058, grad_norm=2.384, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=1.314e-04, train_time=3.580
+[e01] 2026-09-19 06:16:18,069 (trainer:799) INFO: 1epoch:train:22501-23750batch: iter_time=1.297e-04, forward_time=0.069, loss=0.162, acc=0.273, backward_time=0.058, grad_norm=2.333, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=1.389e-04, train_time=3.575
+[e01] 2026-09-19 06:20:00,130 (trainer:799) INFO: 1epoch:train:23751-25000batch: iter_time=1.251e-04, forward_time=0.068, loss=0.158, acc=0.285, backward_time=0.058, grad_norm=2.080, clip=100.000, loss_scale=6.554e+04, optim_step_time=0.006, optim0_lr0=1.464e-04, train_time=3.552
+[e01] 2026-09-19 06:20:02,067 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:20:02,190 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:20:02,190 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:20:02,192 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:20:02,187 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:20:02,190 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:20:02,202 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:20:02,203 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:20:48,464 (trainer:381) INFO: 1epoch results: [train] iter_time=2.429e-04, forward_time=0.069, loss=0.232, acc=0.154, backward_time=0.058, grad_norm=3.122, clip=99.360, loss_scale=6.554e+04, optim_step_time=0.007, optim0_lr0=7.518e-05, train_time=3.572, time=1 hour, 14 minutes and 26.36 seconds, total_count=25000, gpu_max_cached_mem_GB=17.123, [valid] loss=4.012, acc=0.134, time=47.2 seconds, total_count=371, gpu_max_cached_mem_GB=17.123
+[e01] 2026-09-19 06:21:16,985 (trainer:449) INFO: The best model has been updated: valid.acc
+[e01] 2026-09-19 06:21:16,985 (trainer:311) INFO: 2/250epoch started. Estimated time to finish: 1 week, 6 days and 2 hours
+/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/site-packages/torch/utils/data/dataloader.py:627: UserWarning: This DataLoader will create 8 worker processes in total. Our suggested max number of worker in current system is 4, which is smaller than what this DataLoader is going to create. Please be aware that excessive worker creation might get DataLoader running slow or even freeze, lower the worker number to avoid potential slowness/freeze if necessary.
+  warnings.warn(
+[e01] 2026-09-19 06:21:17,782 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:21:17,797 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:21:17,840 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:21:17,841 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:21:17,842 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:21:17,843 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:21:17,893 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+[e01] 2026-09-19 06:21:18,322 (preprocessor:498) WARNING: The length of the text output exceeds 500, which may cause OOM on the GPU. Please ensure that the data processing is correct and verify it. Adjust the threshold with preprocessor_conf.text_length_warning_thres, or silence this message alone with logging.getLogger('espnet2.train.preprocessor').
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [192,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [193,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [194,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [195,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [196,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [197,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [198,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [199,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [200,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [201,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [202,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [203,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [204,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [205,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [206,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [207,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [208,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [209,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [210,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [211,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [212,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [213,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [214,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [215,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [216,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [217,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [218,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [219,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [220,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [221,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [222,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [223,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [96,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [97,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [98,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [99,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [100,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [101,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [102,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [103,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [104,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [105,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [106,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [107,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [108,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [109,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [110,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [111,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [112,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [113,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [114,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [115,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [116,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [117,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [118,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [119,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [120,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [121,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [122,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [123,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [124,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [125,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [126,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+/pytorch/aten/src/ATen/native/cuda/IndexKernelUtils.cu:16: vectorized_gather_kernel: block: [2196,0,0], thread: [127,0,0] Assertion `ind >=0 && ind < ind_dim_size && "vectorized gather kernel index out of bounds"` failed.
+Traceback (most recent call last):
+  File "/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/runpy.py", line 196, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/runpy.py", line 86, in _run_code
+    exec(code, run_globals)
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/lm_train.py", line 22, in <module>
+    main()
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/lm_train.py", line 18, in main
+    LMTask.main(cmd=cmd)
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/tasks/abs_task.py", line 1280, in main
+    cls.main_worker(args)
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/tasks/abs_task.py", line 1640, in main_worker
+    cls.trainer.run(
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/train/trainer.py", line 330, in run
+    all_steps_are_invalid = cls.train_one_epoch(
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/train/trainer.py", line 631, in train_one_epoch
+    retval = model(**batch)
+  File "/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/lm/espnet_model_multitask.py", line 192, in forward
+    loss, acc = self._calc_att_loss(text, text_lengths)
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/lm/espnet_model_multitask.py", line 176, in _calc_att_loss
+    loss = self.criterion_att(pred, target)
+  File "/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1775, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+  File "/export/fs06/mliang17/espnet/tools/venv/envs/espnet/lib/python3.10/site-packages/torch/nn/modules/module.py", line 1786, in _call_impl
+    return forward_call(*args, **kwargs)
+  File "/export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/legacy/nets/pytorch_backend/transformer/label_smoothing_loss.py", line 58, in forward
+    total = len(target) - ignore.sum().item()
+torch.AcceleratorError: CUDA error: device-side assert triggered
+Search for `cudaErrorAssert' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+[W919 06:21:25.841897319 AllocatorConfig.cpp:28] Warning: PYTORCH_CUDA_ALLOC_CONF is deprecated, use PYTORCH_ALLOC_CONF instead (function operator())
+# Accounting: begin_time=1789808681
+# Accounting: end_time=1789813303
+# Accounting: time=4622 threads=1
+# Finished at Sat Sep 19 06:21:43 EDT 2026 with status 1
+

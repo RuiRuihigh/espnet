@@ -22,7 +22,7 @@ train_dev="dev"
 train_eval="test"
 
 segment_dir=        # output dir of LibriLight VAD segmentation
-nj=32
+nj=16
 
 log "$0 $*"
 . utils/parse_options.sh

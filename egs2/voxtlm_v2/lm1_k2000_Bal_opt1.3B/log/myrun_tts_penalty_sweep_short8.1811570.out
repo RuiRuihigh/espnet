@@ -1,0 +1,149 @@
+==== baseline: penalty=0(已有的 text.tts.rand100 解码,这8句的子集) ====
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.rand100: n=100  median_steps=113  max_steps=1200  capped(>= 1199)=1
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	114
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== penalty=0.02 ====
+2026-10-01T22:27:44 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 1 --lm_config conf/tuning/train_transformer_opt1.3b.yaml --inference_lm valid.acc.best.pth --lm_inference_tts_config conf/decode_lm_tts_maxlen1200_p0.02.yaml --lm_test_text_tts exp/penalty_sweep/text.tts.short8_p0.02
+2026-10-01T22:27:47 (lm.sh:374:main) Skipped stages:  11 12 
+2026-10-01T22:27:47 (lm.sh:967:main) Stage 10: LM decoding for TTS: exp/penalty_sweep/text.tts.short8_p0.02
+2026-10-01T22:27:47 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.02/logdir/lm_inference.*.log'
+2026-10-01T23:42:43 (lm.sh:1118:main) Successfully finished. [elapsed=4499s]
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.02: n=8  median_steps=702  max_steps=1099  capped(>= 1199)=0
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	114
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== penalty=0.05 ====
+2026-10-01T23:42:43 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 1 --lm_config conf/tuning/train_transformer_opt1.3b.yaml --inference_lm valid.acc.best.pth --lm_inference_tts_config conf/decode_lm_tts_maxlen1200_p0.05.yaml --lm_test_text_tts exp/penalty_sweep/text.tts.short8_p0.05
+2026-10-01T23:42:48 (lm.sh:374:main) Skipped stages:  11 12 
+2026-10-01T23:42:48 (lm.sh:967:main) Stage 10: LM decoding for TTS: exp/penalty_sweep/text.tts.short8_p0.05
+2026-10-01T23:42:48 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.05/logdir/lm_inference.*.log'
+2026-10-02T00:51:38 (lm.sh:1118:main) Successfully finished. [elapsed=4135s]
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.05: n=8  median_steps=702  max_steps=1099  capped(>= 1199)=0
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	114
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== penalty=0.1 ====
+2026-10-02T00:51:38 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 1 --lm_config conf/tuning/train_transformer_opt1.3b.yaml --inference_lm valid.acc.best.pth --lm_inference_tts_config conf/decode_lm_tts_maxlen1200_p0.1.yaml --lm_test_text_tts exp/penalty_sweep/text.tts.short8_p0.1
+2026-10-02T00:51:43 (lm.sh:374:main) Skipped stages:  11 12 
+2026-10-02T00:51:43 (lm.sh:967:main) Stage 10: LM decoding for TTS: exp/penalty_sweep/text.tts.short8_p0.1
+2026-10-02T00:51:43 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.1/logdir/lm_inference.*.log'
+2026-10-02T02:00:56 (lm.sh:1118:main) Successfully finished. [elapsed=4158s]
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.1: n=8  median_steps=702  max_steps=1099  capped(>= 1199)=0
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	114
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== penalty=0.15 ====
+2026-10-02T02:00:56 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 1 --lm_config conf/tuning/train_transformer_opt1.3b.yaml --inference_lm valid.acc.best.pth --lm_inference_tts_config conf/decode_lm_tts_maxlen1200_p0.15.yaml --lm_test_text_tts exp/penalty_sweep/text.tts.short8_p0.15
+2026-10-02T02:01:02 (lm.sh:374:main) Skipped stages:  11 12 
+2026-10-02T02:01:02 (lm.sh:967:main) Stage 10: LM decoding for TTS: exp/penalty_sweep/text.tts.short8_p0.15
+2026-10-02T02:01:02 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.15/logdir/lm_inference.*.log'
+2026-10-02T03:14:28 (lm.sh:1118:main) Successfully finished. [elapsed=4412s]
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.15: n=8  median_steps=702  max_steps=1099  capped(>= 1199)=0
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	114
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== penalty=0.2 ====
+2026-10-02T03:14:28 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 1 --lm_config conf/tuning/train_transformer_opt1.3b.yaml --inference_lm valid.acc.best.pth --lm_inference_tts_config conf/decode_lm_tts_maxlen1200_p0.2.yaml --lm_test_text_tts exp/penalty_sweep/text.tts.short8_p0.2
+2026-10-02T03:14:33 (lm.sh:374:main) Skipped stages:  11 12 
+2026-10-02T03:14:33 (lm.sh:967:main) Stage 10: LM decoding for TTS: exp/penalty_sweep/text.tts.short8_p0.2
+2026-10-02T03:14:33 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.2/logdir/lm_inference.*.log'
+2026-10-02T04:37:11 (lm.sh:1118:main) Successfully finished. [elapsed=4963s]
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.2: n=8  median_steps=702  max_steps=1099  capped(>= 1199)=0
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	114
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== penalty=0.3 ====
+2026-10-02T04:37:11 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 1 --lm_config conf/tuning/train_transformer_opt1.3b.yaml --inference_lm valid.acc.best.pth --lm_inference_tts_config conf/decode_lm_tts_maxlen1200_p0.3.yaml --lm_test_text_tts exp/penalty_sweep/text.tts.short8_p0.3
+2026-10-02T04:37:16 (lm.sh:374:main) Skipped stages:  11 12 
+2026-10-02T04:37:16 (lm.sh:967:main) Stage 10: LM decoding for TTS: exp/penalty_sweep/text.tts.short8_p0.3
+2026-10-02T04:37:16 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.3/logdir/lm_inference.*.log'
+2026-10-02T05:45:59 (lm.sh:1118:main) Successfully finished. [elapsed=4128s]
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.3: n=8  median_steps=702  max_steps=1099  capped(>= 1199)=0
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	114
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== penalty=0.5 ====
+2026-10-02T05:45:59 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 1 --lm_config conf/tuning/train_transformer_opt1.3b.yaml --inference_lm valid.acc.best.pth --lm_inference_tts_config conf/decode_lm_tts_maxlen1200_p0.5.yaml --lm_test_text_tts exp/penalty_sweep/text.tts.short8_p0.5
+2026-10-02T05:46:11 (lm.sh:374:main) Skipped stages:  11 12 
+2026-10-02T05:46:11 (lm.sh:967:main) Stage 10: LM decoding for TTS: exp/penalty_sweep/text.tts.short8_p0.5
+2026-10-02T05:46:11 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.5/logdir/lm_inference.*.log'
+2026-10-02T07:28:38 (lm.sh:1118:main) Successfully finished. [elapsed=6159s]
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p0.5: n=8  median_steps=702  max_steps=1099  capped(>= 1199)=0
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	114
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== penalty=1.0 ====
+2026-10-02T07:28:38 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --gpu_inference true --inference_nj 1 --lm_config conf/tuning/train_transformer_opt1.3b.yaml --inference_lm valid.acc.best.pth --lm_inference_tts_config conf/decode_lm_tts_maxlen1200_p1.0.yaml --lm_test_text_tts exp/penalty_sweep/text.tts.short8_p1.0
+2026-10-02T07:28:42 (lm.sh:374:main) Skipped stages:  11 12 
+2026-10-02T07:28:42 (lm.sh:967:main) Stage 10: LM decoding for TTS: exp/penalty_sweep/text.tts.short8_p1.0
+2026-10-02T07:28:42 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p1.0/logdir/lm_inference.*.log'
+2026-10-02T08:51:39 (lm.sh:1118:main) Successfully finished. [elapsed=4981s]
+exp/lm_train_transformer_opt1.3b_en_bpe10000/decode_test_tts/text.tts.short8_p1.0: n=8  median_steps=942  max_steps=1200  capped(>= 1199)=1
+known-short keys (steps at this penalty):
+  121_121726_000004_000003	479
+  1580_141083_000061_000001	497
+  1995_1837_000021_000002	702
+  237_126133_000002_000003	1024
+  4294_14317_000018_000001	1099
+  5442_41169_000022_000000	1200
+  7127_75947_000065_000000	942
+  7902_96592_000029_000002	492
+
+==== 全部跑完,对照每个 penalty 下这8句的步数变化、以及有没有新撞maxlen的 ====

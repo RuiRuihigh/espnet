@@ -1,0 +1,49 @@
+# Finetune VoxtLM k1000 (lm1_k1000_Bal, 13epoch.pth) on LibriSQA + replay.
+# Same model/tokenizer as conf/tuning/train_transformer_opt350.yaml; the
+# checkpoint is loaded via --init_param in myrun_sqa_*.sh (optimizer starts fresh).
+num_workers: 8
+use_amp: true
+sharded_ddp: false
+num_att_plot: 0
+
+lm: transformer_opt
+lm_conf:
+    opt_name: facebook/opt-350m
+
+model: lm_multitask
+model_conf:
+    lsm_weight: 0.1
+    length_normalized_loss: true
+    sos_syms:   # loss is masked up to the first <generatetext> -> only the answer is trained
+    - "<generatetext>"
+    - "<generatespeech>"
+    eos_sym: "<sos/eos>"
+
+# optimization related
+grad_clip: 1.0
+batch_type: length
+batch_bins: 10000
+accum_grad: 20
+# ~100 updates per "epoch"; one pass over SQA+replay is ~8.5k minibatches (~4 epochs)
+num_iters_per_epoch: 2000
+max_epoch: 30
+
+optim: adam
+optim_conf:
+   lr: 1.0e-4          # peak lr (pretraining used 3e-4)
+   weight_decay: 1.0e-06
+scheduler: warmuplr
+scheduler_conf:
+   warmup_steps: 300
+
+# dev set is SQA-only, so valid acc = answer-token accuracy on held-out speakers
+best_model_criterion:
+-   - valid
+    - acc
+    - max
+early_stopping_criterion:
+    - valid
+    - loss
+    - min
+patience: 4
+keep_nbest_models: 5

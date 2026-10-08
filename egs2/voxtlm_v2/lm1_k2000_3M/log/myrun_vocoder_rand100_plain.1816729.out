@@ -1,0 +1,24 @@
+Step 1: hyp.tok -> HDF5 feats
+wrote 100 feature files to exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/feats (0 out-of-range tokens dropped across 0 utterance(s))
+Step 2: parallel-wavegan-decode (regular gpu partition)
+Generated 100 wavs at exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/wav
+Step 3: VERSA scoring (whisper_wer -> CER/WER, pseudo_mos/utmos, mcd_f0, discrete_speech, speaker), on the A100
+Done. See exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/versa_eval/avg_result.txt
+                               CER    CER(逐句均)     WER  UTMOS SpeechBERT
+plain beam-5                13.00%      11.02%  14.15%   3.80      0.771
+beam -> greedy -> top-p      4.10%       3.92%   6.09%   3.99      0.809
+
+level used per sentence: {'beam5': 87, 'greedy': 7, 'top-p 0.9': 6}   still at the cap after all levels: 0
+  fell back: 121_121726_000004_000003  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '171', 'steps_top-p 0.9': '-'}  errors 65/104 -> 0/104
+  fell back: 1320_122612_000014_000000  -> top-p 0.9  steps {'steps_beam5': '1200', 'steps_greedy': '1200', 'steps_top-p 0.9': '267'}  errors 129/170 -> 12/170
+  fell back: 1580_141083_000061_000001  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '164', 'steps_top-p 0.9': '-'}  errors 99/118 -> 0/118
+  fell back: 1580_141084_000026_000000  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '42', 'steps_top-p 0.9': '-'}  errors 22/25 -> 1/25
+  fell back: 237_126133_000012_000000  -> top-p 0.9  steps {'steps_beam5': '1200', 'steps_greedy': '1200', 'steps_top-p 0.9': '358'}  errors 166/178 -> 45/178
+  fell back: 3080_5040_000009_000006  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '336', 'steps_top-p 0.9': '-'}  errors 136/163 -> 0/163
+  fell back: 4852_28312_000012_000003  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '101', 'steps_top-p 0.9': '-'}  errors 15/68 -> 1/68
+  fell back: 4970_29093_000017_000002  -> top-p 0.9  steps {'steps_beam5': '1200', 'steps_greedy': '1200', 'steps_top-p 0.9': '53'}  errors 0/36 -> 0/36
+  fell back: 5442_41168_000005_000001  -> top-p 0.9  steps {'steps_beam5': '1200', 'steps_greedy': '1200', 'steps_top-p 0.9': '27'}  errors 8/8 -> 2/8
+  fell back: 5764_299665_000134_000000  -> top-p 0.9  steps {'steps_beam5': '1200', 'steps_greedy': '1200', 'steps_top-p 0.9': '97'}  errors 10/51 -> 1/51
+  fell back: 7127_75946_000060_000001  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '243', 'steps_top-p 0.9': '-'}  errors 74/137 -> 18/137
+  fell back: 7127_75947_000065_000000  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '176', 'steps_top-p 0.9': '-'}  errors 15/107 -> 0/107
+  fell back: 7902_96592_000035_000000  -> top-p 0.9  steps {'steps_beam5': '1200', 'steps_greedy': '1200', 'steps_top-p 0.9': '211'}  errors 104/109 -> 5/109

@@ -1,0 +1,28 @@
+downloads/sLM21/extracted/lexical/dev/gold.csv: 80000 rows -> 20000 unique 'lexical' texts -> exp/slm21_eval/lexical_dev/text_dedup.txt, exp/slm21_eval/lexical_dev/filename_map.tsv
+exp/slm21_eval/lexical_dev/filename_map.tsv: wrote 80000 lines to exp/slm21_eval/submission/lexical/dev.txt
+downloads/sLM21/extracted/syntactic/dev/gold.csv: 50400 rows -> 12566 unique 'syntactic' texts -> exp/slm21_eval/syntactic_dev/text_dedup.txt, exp/slm21_eval/syntactic_dev/filename_map.tsv
+exp/slm21_eval/syntactic_dev/filename_map.tsv: wrote 50400 lines to exp/slm21_eval/submission/syntactic/dev.txt
+sLM21 text-track submission ready at exp/slm21_eval/submission/{lexical,syntactic}/dev.txt
+2026-09-20T11:23:18 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k exp/slm21_eval/audio_datadir/raw/syntactic_dev/wav.scp exp/slm21_eval/audio_datadir/syntactic_dev
+2026-09-20T11:23:25 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-20T11:31:39 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=501s]
+2026-09-20T11:38:36 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k exp/slm21_eval/audio_datadir/raw/lexical_dev/wav.scp exp/slm21_eval/audio_datadir/lexical_dev
+2026-09-20T11:38:48 (format_wav_scp.sh:118:main) [info]: without segments
+2026-09-20T11:46:11 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=455s]
+2026-09-20T11:46:11 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 1 --stop-stage 3 --skip_stages 1 2 --train_set lexical_dev --dev_set syntactic_dev --other_sets  --datadir exp/slm21_eval/audio_datadir --featdir exp/slm21_eval/extracted_feats --audio_format flac --feature_type phonological_tokenizer --layer 21 --feature_conf {type=phonological_tokenizer,conf={ssl_model_path=downloads/phonological_tokenizer/ssl.pth,layer=21}} --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --cuda_cmd slurm.pl
+2026-09-20T11:46:19 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-09-20T11:46:19 (perform_kmeans.sh:230:main) Extract labels to exp/slm21_eval/extracted_feats/phonological_tokenizer/layer21/lexical_dev
+utils/copy_data_dir.sh: copied data from exp/slm21_eval/audio_datadir/lexical_dev to exp/slm21_eval/extracted_feats/phonological_tokenizer/layer21/lexical_dev
+utils/validate_data_dir.sh: Successfully validated data-directory exp/slm21_eval/extracted_feats/phonological_tokenizer/layer21/lexical_dev
+2026-09-20T12:39:26 (perform_kmeans.sh:230:main) Extract labels to exp/slm21_eval/extracted_feats/phonological_tokenizer/layer21/syntactic_dev
+utils/copy_data_dir.sh: copied data from exp/slm21_eval/audio_datadir/syntactic_dev to exp/slm21_eval/extracted_feats/phonological_tokenizer/layer21/syntactic_dev
+utils/validate_data_dir.sh: Successfully validated data-directory exp/slm21_eval/extracted_feats/phonological_tokenizer/layer21/syntactic_dev
+exp/slm21_eval/extracted_feats/phonological_tokenizer/layer21/lexical_dev/pseudo_labels_km2000.txt: wrote 80000 utterances to exp/slm21_eval/lexical_dev_speech/text_speech.txt
+exp/slm21_eval/lexical_dev_speech/filename_map.tsv: wrote 80000 lines to exp/slm21_eval/submission/lexical/dev_speech.txt
+exp/slm21_eval/extracted_feats/phonological_tokenizer/layer21/syntactic_dev/pseudo_labels_km2000.txt: wrote 50400 utterances to exp/slm21_eval/syntactic_dev_speech/text_speech.txt
+exp/slm21_eval/syntactic_dev_speech/filename_map.tsv: wrote 50400 lines to exp/slm21_eval/submission/syntactic/dev_speech.txt
+sLM21 speech-track submission ready at exp/slm21_eval/submission/{lexical,syntactic}/dev_speech.txt
+lexical (text): accuracy=82.16% (40000 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+lexical (speech): accuracy=66.98% (40000 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+syntactic (text): accuracy=68.83% (25200 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+syntactic (speech): accuracy=57.31% (25200 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)

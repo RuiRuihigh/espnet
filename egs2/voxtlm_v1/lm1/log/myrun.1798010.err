@@ -1,0 +1,1 @@
+/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1/utils/slurm.pl: 6 / 8 failed, log is in exp/lm_train_transformer_opt350_en_bpe10000/decode_test_asr/decode_lm_asr/logdir/lm_inference.*.log

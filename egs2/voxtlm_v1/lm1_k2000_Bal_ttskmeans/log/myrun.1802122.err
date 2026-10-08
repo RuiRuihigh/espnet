@@ -1,0 +1,123 @@
+sentencepiece_trainer.cc(178) LOG(INFO) Running command: --input=data/en_token_list/bpe_unigram10000/train.txt --vocab_size=10000 --model_type=unigram --model_prefix=data/en_token_list/bpe_unigram10000/bpe --character_coverage=1.0 --input_sentence_size=100000000 --user_defined_symbols=<startoftext>,<generatetext>,<startofspeech>,<generatespeech>
+sentencepiece_trainer.cc(78) LOG(INFO) Starts training with : 
+trainer_spec {
+  input: data/en_token_list/bpe_unigram10000/train.txt
+  input_format: 
+  model_prefix: data/en_token_list/bpe_unigram10000/bpe
+  model_type: UNIGRAM
+  vocab_size: 10000
+  self_test_sample_size: 0
+  character_coverage: 1
+  input_sentence_size: 100000000
+  shuffle_input_sentence: 1
+  seed_sentencepiece_size: 1000000
+  shrinking_factor: 0.75
+  max_sentence_length: 4192
+  num_threads: 16
+  num_sub_iterations: 2
+  max_sentencepiece_length: 16
+  split_by_unicode_script: 1
+  split_by_number: 1
+  split_by_whitespace: 1
+  split_digits: 0
+  pretokenization_delimiter: 
+  treat_whitespace_as_suffix: 0
+  allow_whitespace_only_pieces: 0
+  user_defined_symbols: <startoftext>
+  user_defined_symbols: <generatetext>
+  user_defined_symbols: <startofspeech>
+  user_defined_symbols: <generatespeech>
+  required_chars: 
+  byte_fallback: 0
+  vocabulary_output_piece_score: 1
+  train_extremely_large_corpus: 0
+  seed_sentencepieces_file: 
+  hard_vocab_limit: 1
+  use_all_vocab: 0
+  unk_id: 0
+  bos_id: 1
+  eos_id: 2
+  pad_id: -1
+  unk_piece: <unk>
+  bos_piece: <s>
+  eos_piece: </s>
+  pad_piece: <pad>
+  unk_surface:  ⁇ 
+  enable_differential_privacy: 0
+  differential_privacy_noise_level: 0
+  differential_privacy_clipping_threshold: 0
+}
+normalizer_spec {
+  name: nmt_nfkc
+  add_dummy_prefix: 1
+  remove_extra_whitespaces: 1
+  escape_whitespaces: 1
+  normalization_rule_tsv: 
+}
+denormalizer_spec {}
+trainer_interface.cc(355) LOG(INFO) SentenceIterator is not specified. Using MultiFileSentenceIterator.
+trainer_interface.cc(186) LOG(INFO) Loading corpus: data/en_token_list/bpe_unigram10000/train.txt
+trainer_interface.cc(382) LOG(WARNING) Found too long line (5015 > 4192).
+trainer_interface.cc(384) LOG(WARNING) Too long lines are skipped in the training.
+trainer_interface.cc(385) LOG(WARNING) The maximum length can be changed with --max_sentence_length=<size> flag.
+trainer_interface.cc(411) LOG(INFO) Loaded all 679109 sentences
+trainer_interface.cc(418) LOG(INFO) Skipped 797 too long sentences.
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <unk>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <s>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: </s>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <startoftext>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <generatetext>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <startofspeech>
+trainer_interface.cc(427) LOG(INFO) Adding meta_piece: <generatespeech>
+trainer_interface.cc(432) LOG(INFO) Normalizing sentences...
+trainer_interface.cc(541) LOG(INFO) all chars count=366143305
+trainer_interface.cc(552) LOG(INFO) Done: 100% characters are covered.
+trainer_interface.cc(562) LOG(INFO) Alphabet size=2047
+trainer_interface.cc(563) LOG(INFO) Final character coverage=1
+trainer_interface.cc(594) LOG(INFO) Done! preprocessed 679109 sentences.
+unigram_model_trainer.cc(265) LOG(INFO) Making suffix array...
+unigram_model_trainer.cc(269) LOG(INFO) Extracting frequent sub strings... node_num=177543141
+unigram_model_trainer.cc(312) LOG(INFO) Initialized 1002047 seed sentencepieces
+trainer_interface.cc(600) LOG(INFO) Tokenizing input sentences with whitespace: 679109
+trainer_interface.cc(611) LOG(INFO) Done! 873115
+unigram_model_trainer.cc(602) LOG(INFO) Using 873115 sentences for EM training
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=979334 obj=73.227 num_tokens=76501373 num_tokens/piece=78.1157
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=965384 obj=69.0707 num_tokens=76510448 num_tokens/piece=79.2539
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=724038 obj=69.1704 num_tokens=77395828 num_tokens/piece=106.895
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=724036 obj=69.0008 num_tokens=77413509 num_tokens/piece=106.919
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=543027 obj=69.7654 num_tokens=79420492 num_tokens/piece=146.255
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=543027 obj=69.4726 num_tokens=79430642 num_tokens/piece=146.274
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=407270 obj=70.6197 num_tokens=82138383 num_tokens/piece=201.68
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=407270 obj=70.2439 num_tokens=82147101 num_tokens/piece=201.702
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=305452 obj=71.6355 num_tokens=85360715 num_tokens/piece=279.457
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=305452 obj=71.2106 num_tokens=85367818 num_tokens/piece=279.48
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=229089 obj=72.8005 num_tokens=88970832 num_tokens/piece=388.368
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=229089 obj=72.3353 num_tokens=88976206 num_tokens/piece=388.391
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=171816 obj=74.1152 num_tokens=92915220 num_tokens/piece=540.783
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=171816 obj=73.6228 num_tokens=92919346 num_tokens/piece=540.807
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=128862 obj=75.5769 num_tokens=97163905 num_tokens/piece=754.015
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=128862 obj=75.064 num_tokens=97167056 num_tokens/piece=754.04
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=96646 obj=77.2122 num_tokens=101781363 num_tokens/piece=1053.14
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=96646 obj=76.672 num_tokens=101783066 num_tokens/piece=1053.15
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=72484 obj=79.0163 num_tokens=106721001 num_tokens/piece=1472.34
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=72484 obj=78.4536 num_tokens=106721253 num_tokens/piece=1472.34
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=54363 obj=81.0318 num_tokens=112091057 num_tokens/piece=2061.9
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=54363 obj=80.4339 num_tokens=112090918 num_tokens/piece=2061.9
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=40772 obj=83.2641 num_tokens=117904221 num_tokens/piece=2891.79
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=40772 obj=82.6267 num_tokens=117903997 num_tokens/piece=2891.79
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=30579 obj=85.7464 num_tokens=124187014 num_tokens/piece=4061.19
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=30579 obj=85.0636 num_tokens=124186796 num_tokens/piece=4061.18
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=22934 obj=88.595 num_tokens=131258900 num_tokens/piece=5723.33
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=22934 obj=87.8448 num_tokens=131258208 num_tokens/piece=5723.3
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=17200 obj=91.8506 num_tokens=139169130 num_tokens/piece=8091.23
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=17200 obj=91.0231 num_tokens=139168876 num_tokens/piece=8091.21
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=12900 obj=95.576 num_tokens=148088184 num_tokens/piece=11479.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=12900 obj=94.6481 num_tokens=148087995 num_tokens/piece=11479.7
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=0 size=11000 obj=97.3733 num_tokens=153345659 num_tokens/piece=13940.5
+unigram_model_trainer.cc(618) LOG(INFO) EM sub_iter=1 size=11000 obj=96.8382 num_tokens=153345659 num_tokens/piece=13940.5
+trainer_interface.cc(689) LOG(INFO) Saving model: data/en_token_list/bpe_unigram10000/bpe.model
+trainer_interface.cc(701) LOG(INFO) Saving vocabs: data/en_token_list/bpe_unigram10000/bpe.vocab
+/export/fs06/mliang17/espnet/tools/venv/envs/espnet/bin/python3 /export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/aggregate_stats_dirs.py --input_dir exp/lm_stats_en_bpe10000/logdir/stats.1 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.2 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.3 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.4 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.5 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.6 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.7 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.8 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.9 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.10 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.11 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.12 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.13 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.14 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.15 --input_dir exp/lm_stats_en_bpe10000/logdir/stats.16 --output_dir exp/lm_stats_en_bpe10000
+2026-09-22 01:02:17,222 (launch:94) INFO: /export/fs06/mliang17/espnet/tools/venv/envs/espnet/bin/python3 /export/fs06/mliang17/voxtlm_officialtest/espnet/espnet2/bin/launch.py --cmd 'slurm.pl --config conf/slurm_clsp_a100.conf --name exp/lm_train_transformer_opt350_en_bpe10000/train.log' --log exp/lm_train_transformer_opt350_en_bpe10000/train.log --ngpu 1 --num_nodes 1 --init_file_prefix exp/lm_train_transformer_opt350_en_bpe10000/.dist_init_ --multiprocessing_distributed true -- python3 -m espnet2.bin.lm_train --ngpu 1 --use_preprocessor true --bpemodel data/en_token_list/bpe_unigram10000/bpe.model --token_type bpe --token_list data/en_token_list/bpe_unigram10000/tokens.txt --non_linguistic_symbols none --cleaner none --g2p none --valid_data_path_and_name_and_type dump/raw/dev/lm_text,text,text --valid_shape_file exp/lm_stats_en_bpe10000/valid/text_shape.bpe --fold_length 150 --resume true --output_dir exp/lm_train_transformer_opt350_en_bpe10000 --config conf/tuning/train_transformer_opt350.yaml --train_data_path_and_name_and_type dump/raw/lm_train.txt,text,text --train_shape_file exp/lm_stats_en_bpe10000/train/text_shape.bpe
+2026-09-22 01:02:17,400 (launch:348) INFO: log file: exp/lm_train_transformer_opt350_en_bpe10000/train.log
+slurmstepd: error: *** JOB 1802122 ON c09 CANCELLED AT 2026-09-23T09:46:12 ***

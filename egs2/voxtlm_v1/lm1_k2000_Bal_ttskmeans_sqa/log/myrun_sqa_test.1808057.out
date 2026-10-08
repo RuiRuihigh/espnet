@@ -1,0 +1,54 @@
+model=zs lm_exp=exp/zeroshot_17epoch ckpt=17epoch.pth
+Mon Sep 28 13:32:47 EDT 2026 decoding dump/v1/raw/test_p1_sub500/text.sqa -> exp/zeroshot_17epoch/decode_sqa/17epoch_decode_sqa_p1_lp0.3_sub500 (log: exp/zeroshot_17epoch/decode_sqa/17epoch_decode_sqa_p1_lp0.3_sub500/logdir/lm_inference.*.log)
+n_ref	500
+n_hyp	500
+missing_hyp	0
+bleu4	21.94
+rougeL_f1	41.60
+avg_hyp_words	19.0
+avg_ref_words	15.5
+baseline_transcript_bleu4	23.71
+baseline_transcript_rougeL_f1	43.54
+Failed to import Flash Attention, using ESPnet default: No module named 'flash_attn_2_cuda'
+n	2620
+gold_distribution	{'a': 536, 'b': 761, 'c': 842, 'd': 481}
+
+variant	scoring	acc	pred_distribution
+A	sum	30.65	{'a': 916, 'b': 608, 'c': 547, 'd': 549}
+A	norm	36.26	{'a': 662, 'b': 629, 'c': 643, 'd': 686}
+A	calib	34.81	{'a': 774, 'b': 634, 'c': 597, 'd': 615}
+A	calib_rand	37.37	{'a': 673, 'b': 648, 'c': 628, 'd': 671}
+A	nospeech	21.68	{'a': 893, 'b': 621, 'c': 565, 'd': 541}
+B	sum	28.21	{'a': 857, 'b': 627, 'c': 552, 'd': 584}
+B	norm	32.21	{'a': 566, 'b': 607, 'c': 670, 'd': 777}
+B	calib	31.26	{'a': 746, 'b': 664, 'c': 569, 'd': 641}
+B	calib_rand	32.56	{'a': 654, 'b': 660, 'c': 645, 'd': 661}
+B	nospeech	20.95	{'a': 782, 'b': 621, 'c': 599, 'd': 618}
+L	sum	22.67	{'a': 1801, 'b': 166, 'c': 385, 'd': 268}
+L	calib	25.69	{'a': 392, 'b': 741, 'c': 947, 'd': 540}
+L	calib_rand	23.05	{'a': 700, 'b': 513, 'c': 493, 'd': 914}
+L	nospeech	20.46	{'a': 2615, 'd': 5}
+==== zs (exp/zeroshot_17epoch/17epoch.pth)
+---- Part II test (2620 题; random 25 / always-c 32.14)
+n	2620
+gold_distribution	{'a': 536, 'b': 761, 'c': 842, 'd': 481}
+
+variant	scoring	acc	pred_distribution
+A	sum	30.65	{'a': 916, 'b': 608, 'c': 547, 'd': 549}
+A	norm	36.26	{'a': 662, 'b': 629, 'c': 643, 'd': 686}
+A	calib	34.81	{'a': 774, 'b': 634, 'c': 597, 'd': 615}
+A	calib_rand	37.37	{'a': 673, 'b': 648, 'c': 628, 'd': 671}
+A	nospeech	21.68	{'a': 893, 'b': 621, 'c': 565, 'd': 541}
+B	sum	28.21	{'a': 857, 'b': 627, 'c': 552, 'd': 584}
+B	norm	32.21	{'a': 566, 'b': 607, 'c': 670, 'd': 777}
+B	calib	31.26	{'a': 746, 'b': 664, 'c': 569, 'd': 641}
+B	calib_rand	32.56	{'a': 654, 'b': 660, 'c': 645, 'd': 661}
+B	nospeech	20.95	{'a': 782, 'b': 621, 'c': 599, 'd': 618}
+L	sum	22.67	{'a': 1801, 'b': 166, 'c': 385, 'd': 268}
+L	calib	25.69	{'a': 392, 'b': 741, 'c': 947, 'd': 540}
+L	calib_rand	23.05	{'a': 700, 'b': 513, 'c': 493, 'd': 914}
+L	nospeech	20.46	{'a': 2615, 'd': 5}
+---- Part I test (500 题, beam5, penalty 0.3; BERTScore rescaled)
+system	avg_words	BLEU4	ROUGE-L	BERTScore_P	BERTScore_R	BERTScore_F1	BERTScore_F1_raw	repeat%
+zs_17epoch	19.0	21.94	41.60	41.99	53.21	47.43	91.13	0.8
+transcript_as_answer	-	23.71	43.54	45.99	56.99	51.29	91.78	-

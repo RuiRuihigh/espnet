@@ -1,0 +1,25 @@
+Sun Sep 27 17:17:35 EDT 2026 decoding dump/v1/raw/test_p1_sub500/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.3_sub500 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.3_sub500/logdir/lm_inference.*.log)
+Sun Sep 27 17:17:35 EDT 2026 decoding dump/v1/raw/test_p1_sub500/text.sqa -> exp/zeroshot_13epoch/decode_sqa/13epoch_decode_sqa_p1_lp0.3_sub500 (log: exp/zeroshot_13epoch/decode_sqa/13epoch_decode_sqa_p1_lp0.3_sub500/logdir/lm_inference.*.log)
+n_ref	500
+n_hyp	500
+missing_hyp	0
+bleu4	21.34
+rougeL_f1	41.12
+avg_hyp_words	18.8
+avg_ref_words	15.5
+baseline_transcript_bleu4	23.71
+baseline_transcript_rougeL_f1	43.54
+n_ref	500
+n_hyp	500
+missing_hyp	0
+bleu4	29.54
+rougeL_f1	48.98
+avg_hyp_words	13.8
+avg_ref_words	15.5
+baseline_transcript_bleu4	23.71
+baseline_transcript_rougeL_f1	43.54
+==== Part I test (500 题), BERTScore = rescaled
+system                penalty  avg_words  BLEU4  ROUGE-L  BERTScore_P  BERTScore_R  BERTScore_F1  BERTScore_F1_raw  repeat%
+V1_15epoch            0.3      13.8       29.54  48.98    57.10        53.99        55.40         92.47             6.6
+zeroshot_13epoch      0.3      18.8       21.34  41.12    41.08        52.25        46.49         90.97             2.0
+transcript_as_answer  -        -          23.71  43.54    45.99        56.99        51.29         91.78             -

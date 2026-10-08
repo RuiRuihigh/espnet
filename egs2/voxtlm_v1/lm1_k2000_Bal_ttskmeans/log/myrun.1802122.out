@@ -1,0 +1,111 @@
+2026-09-21T17:39:12 (lm.sh:216:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir  --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 3 --stop_stage 3 --nclusters 2000 --learn_kmeans true --kmeans_train_task tts
+2026-09-21T17:39:15 (lm.sh:363:main) Skipped stages:  11 12 
+2026-09-21T17:39:15 (lm.sh:418:main) Stage 3a: Perform Kmeans using hubert_base features
+2026-09-21T17:39:15 (lm.sh:450:main) Stage 3a: Learning kmeans (k=2000) from task 'tts' only, portion=0.1 of dump/audio_raw/tts/train
+2026-09-21T17:39:15 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 1 --stop-stage 2 --train_set train --dev_set dev --other_sets test  --datadir dump/audio_raw/tts --featdir dump/extracted/tts --audio_format flac --feature_type hubert_base --layer 6 --feature_conf {type=s3prl,conf={s3prl_conf={upstream=hubert_base},download_dir=ckpt,multilayer_feature=False,layer=6}} --km_dir exp/kmeans/hubert_base_6_2000clusters --portion 0.1 --nclusters 2000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --config conf/slurm_kmeans.conf --cuda_cmd slurm.pl
+2026-09-21T17:39:21 (perform_kmeans.sh:95:main) stage 1: Dump hubert_base feature
+utils/subset_data_dir.sh: reducing #utt from 398665 to 39866
+2026-09-21T17:39:24 (perform_kmeans.sh:122:main) Subsampling 39866 utterances for feature dumping.
+Dump SSL train_subset0.1 features to dump/extracted/tts/hubert_base/layer6/train_subset0.1
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/train_subset0.1 to dump/extracted/tts/hubert_base/layer6/train_subset0.1
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/tts/hubert_base/layer6/train_subset0.1
+2026-09-21T17:49:54 (perform_kmeans.sh:182:main) stage 2: Learn K-means with hubert_base feature based on scikit-learn
+2026-09-21T19:44:36 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 3 --stop-stage 4 --train_set train --dev_set dev --other_sets test  --datadir dump/audio_raw/asr --featdir dump/extracted/asr --audio_format flac --feature_type hubert_base --layer 6 --feature_conf {type=s3prl,conf={s3prl_conf={upstream=hubert_base},download_dir=ckpt,multilayer_feature=False,layer=6}} --km_dir exp/kmeans/hubert_base_6_2000clusters --portion 0.1 --nclusters 2000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --config conf/slurm_kmeans.conf --cuda_cmd slurm.pl
+2026-09-21T19:44:54 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-09-21T19:44:54 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/asr/hubert_base/layer6/train
+utils/copy_data_dir.sh: copied data from dump/audio_raw/asr/train to dump/extracted/asr/hubert_base/layer6/train
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/asr/hubert_base/layer6/train
+2026-09-21T21:12:50 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/asr/hubert_base/layer6/dev
+utils/copy_data_dir.sh: copied data from dump/audio_raw/asr/dev to dump/extracted/asr/hubert_base/layer6/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/asr/hubert_base/layer6/dev
+2026-09-21T21:21:23 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/asr/hubert_base/layer6/test
+utils/copy_data_dir.sh: copied data from dump/audio_raw/asr/test to dump/extracted/asr/hubert_base/layer6/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/asr/hubert_base/layer6/test
+2026-09-21T21:23:26 (perform_kmeans.sh:302:main) Stage 4: Measure qualities of pseudo labels
+2026-09-21T21:23:26 (perform_kmeans.sh:327:main) Skipping quality measurement because no data/mfa_phoneme_alignment exists. You can specify the alignment by "--alignment_phoneme_dir". The alignment is in tsv file with format: "utt_id1 a1,a2,a3,..."
+2026-09-21T21:23:26 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 3 --stop-stage 4 --train_set train --dev_set dev --other_sets test  --datadir dump/audio_raw/speechlm --featdir dump/extracted/speechlm --audio_format flac --feature_type hubert_base --layer 6 --feature_conf {type=s3prl,conf={s3prl_conf={upstream=hubert_base},download_dir=ckpt,multilayer_feature=False,layer=6}} --km_dir exp/kmeans/hubert_base_6_2000clusters --portion 0.1 --nclusters 2000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --config conf/slurm_kmeans.conf --cuda_cmd slurm.pl
+2026-09-21T21:23:29 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-09-21T21:23:29 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/speechlm/hubert_base/layer6/train
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/train to dump/extracted/speechlm/hubert_base/layer6/train
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/speechlm/hubert_base/layer6/train
+2026-09-21T23:08:23 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/speechlm/hubert_base/layer6/dev
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/dev to dump/extracted/speechlm/hubert_base/layer6/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/speechlm/hubert_base/layer6/dev
+2026-09-21T23:10:26 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/speechlm/hubert_base/layer6/test
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/test to dump/extracted/speechlm/hubert_base/layer6/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/speechlm/hubert_base/layer6/test
+2026-09-21T23:11:34 (perform_kmeans.sh:302:main) Stage 4: Measure qualities of pseudo labels
+2026-09-21T23:11:34 (perform_kmeans.sh:327:main) Skipping quality measurement because no data/mfa_phoneme_alignment exists. You can specify the alignment by "--alignment_phoneme_dir". The alignment is in tsv file with format: "utt_id1 a1,a2,a3,..."
+2026-09-21T23:11:35 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 3 --stop-stage 4 --train_set train --dev_set dev --other_sets test  --datadir dump/audio_raw/tts --featdir dump/extracted/tts --audio_format flac --feature_type hubert_base --layer 6 --feature_conf {type=s3prl,conf={s3prl_conf={upstream=hubert_base},download_dir=ckpt,multilayer_feature=False,layer=6}} --km_dir exp/kmeans/hubert_base_6_2000clusters --portion 0.1 --nclusters 2000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --config conf/slurm_kmeans.conf --cuda_cmd slurm.pl
+2026-09-21T23:11:38 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-09-21T23:11:38 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/tts/hubert_base/layer6/train
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/train to dump/extracted/tts/hubert_base/layer6/train
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/tts/hubert_base/layer6/train
+2026-09-21T23:50:58 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/tts/hubert_base/layer6/dev
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/dev to dump/extracted/tts/hubert_base/layer6/dev
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/tts/hubert_base/layer6/dev
+2026-09-22T00:02:36 (perform_kmeans.sh:230:main) Extract labels to dump/extracted/tts/hubert_base/layer6/test
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/test to dump/extracted/tts/hubert_base/layer6/test
+utils/validate_data_dir.sh: Successfully validated data-directory dump/extracted/tts/hubert_base/layer6/test
+2026-09-22T00:05:41 (perform_kmeans.sh:302:main) Stage 4: Measure qualities of pseudo labels
+2026-09-22T00:05:41 (perform_kmeans.sh:327:main) Skipping quality measurement because no data/mfa_phoneme_alignment exists. You can specify the alignment by "--alignment_phoneme_dir". The alignment is in tsv file with format: "utt_id1 a1,a2,a3,..."
+utils/copy_data_dir.sh: copied data from dump/audio_raw/asr/train to dump/raw/train/speech/asr
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/train/speech/asr
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/train to dump/raw/train/speech/speechlm
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/train/speech/speechlm
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/train to dump/raw/train/speech/tts
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/train/speech/tts
+utils/copy_data_dir.sh: copied data from dump/audio_raw/asr/dev to dump/raw/dev/speech/asr
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dev/speech/asr
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/dev to dump/raw/dev/speech/speechlm
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dev/speech/speechlm
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/dev to dump/raw/dev/speech/tts
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/dev/speech/tts
+utils/copy_data_dir.sh: copied data from dump/audio_raw/asr/test to dump/raw/test/speech/asr
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/test/speech/asr
+utils/copy_data_dir.sh: copied data from dump/audio_raw/speechlm/test to dump/raw/test/speech/speechlm
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/test/speech/speechlm
+utils/copy_data_dir.sh: copied data from dump/audio_raw/tts/test to dump/raw/test/speech/tts
+utils/validate_data_dir.sh: Successfully validated data-directory dump/raw/test/speech/tts
+dump/raw/train/text/textlm
+dump/raw/dev/text/textlm
+dump/raw/test/text/textlm
+2026-09-22T00:08:13 (lm.sh:1111:main) Successfully finished. [elapsed=23341s]
+2026-09-22T00:08:13 (lm.sh:216:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir  --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 4 --stop_stage 5 --nclusters 2000
+2026-09-22T00:08:36 (lm.sh:363:main) Skipped stages:  11 12 
+2026-09-22T00:08:36 (lm.sh:575:main) Stage 4a: Data filtering: dump/raw/org -> dump/raw
+train
+Opened file: dump/raw/train
+textlm: dump/raw/train/text/textlm/text
+Creating textlm:  dump/raw/train/lm_text
+Creating speechlm:  dump/raw/train/lm_text
+Creating asr:  dump/raw/train/lm_text
+Creating tts:  dump/raw/train/lm_text
+dev
+Opened file: dump/raw/dev
+textlm: dump/raw/dev/text/textlm/text
+Creating textlm:  dump/raw/dev/lm_text
+Creating speechlm:  dump/raw/dev/lm_text
+Creating asr:  dump/raw/dev/lm_text
+Creating tts:  dump/raw/dev/lm_text
+test
+Opened file: dump/raw/test
+textlm: dump/raw/test/text/textlm/text
+Creating textlm:  dump/raw/test/lm_text
+Creating speechlm:  dump/raw/test/lm_text
+Creating asr:  dump/raw/test/lm_text
+Creating tts:  dump/raw/test/lm_text
+Successfully created BPE training file
+2026-09-22T00:14:41 (lm.sh:599:main) Stage 5: Generate token_list from data/train/bpe_text using BPE
+2026-09-22T00:51:58 (lm.sh:1111:main) Successfully finished. [elapsed=2625s]
+2026-09-22T00:51:58 (lm.sh:216:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir  --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 6 --stop_stage 6 --nclusters 2000
+2026-09-22T00:52:05 (lm.sh:363:main) Skipped stages:  11 12 
+2026-09-22T00:52:05 (lm.sh:664:main) Stage 6: LM collect stats: train_set=dump/raw/lm_train.txt, dev_set=dump/raw/dev/lm_text
+2026-09-22T00:52:26 (lm.sh:696:main) Generate 'exp/lm_stats_en_bpe10000/run.sh'. You can resume the process from stage 6 using this script
+2026-09-22T00:52:26 (lm.sh:700:main) LM collect-stats started... log: 'exp/lm_stats_en_bpe10000/logdir/stats.*.log'
+2026-09-22T01:02:07 (lm.sh:1111:main) Successfully finished. [elapsed=609s]
+2026-09-22T01:02:10 (lm.sh:216:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir  --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 7 --stop_stage 7 --ngpu 1 --nclusters 2000 --lm_config conf/tuning/train_transformer_opt350.yaml
+2026-09-22T01:02:16 (lm.sh:363:main) Skipped stages:  11 12 
+2026-09-22T01:02:16 (lm.sh:741:main) Stage 7: LM Training: train_set=dump/raw/lm_train.txt, dev_set=dump/raw/dev/lm_text
+2026-09-22T01:02:16 (lm.sh:778:main) Generate 'exp/lm_train_transformer_opt350_en_bpe10000/run.sh'. You can resume the process from stage 7 using this script
+2026-09-22T01:02:16 (lm.sh:781:main) LM training started... log: 'exp/lm_train_transformer_opt350_en_bpe10000/train.log'

@@ -1,0 +1,50 @@
+Sun Sep 27 14:50:36 EDT 2026 decoding dump/v1/raw/dev_p1_sub200/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.4_dev200 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.4_dev200/logdir/lm_inference.*.log)
+Sun Sep 27 14:50:36 EDT 2026 decoding dump/v1/raw/dev_p1_sub200/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.3_dev200 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.3_dev200/logdir/lm_inference.*.log)
+Sun Sep 27 14:50:36 EDT 2026 decoding dump/v1/raw/dev_p1_sub200/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.2_dev200 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.2_dev200/logdir/lm_inference.*.log)
+Sun Sep 27 14:50:36 EDT 2026 decoding dump/v1/raw/dev_p1_sub200/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.1_dev200 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.1_dev200/logdir/lm_inference.*.log)
+n_ref	200
+n_hyp	200
+missing_hyp	0
+bleu4	24.90
+rougeL_f1	39.85
+avg_hyp_words	16.4
+avg_ref_words	19.1
+baseline_transcript_bleu4	17.50
+baseline_transcript_rougeL_f1	35.17
+n_ref	200
+n_hyp	200
+missing_hyp	0
+bleu4	9.98
+rougeL_f1	31.86
+avg_hyp_words	9.3
+avg_ref_words	19.1
+baseline_transcript_bleu4	17.50
+baseline_transcript_rougeL_f1	35.17
+n_ref	200
+n_hyp	200
+missing_hyp	0
+bleu4	25.37
+rougeL_f1	40.77
+avg_hyp_words	21.3
+avg_ref_words	19.1
+baseline_transcript_bleu4	17.50
+baseline_transcript_rougeL_f1	35.17
+n_ref	200
+n_hyp	200
+missing_hyp	0
+bleu4	15.10
+rougeL_f1	36.36
+avg_hyp_words	11.2
+avg_ref_words	19.1
+baseline_transcript_bleu4	17.50
+baseline_transcript_rougeL_f1	35.17
+==== dev sweep (chosen penalty by BERTScore F1 rescaled: 0.4)
+penalty  avg_words  BLEU4  ROUGE-L  BERTScore_P_rescaled  BERTScore_R_rescaled  BERTScore_F1_rescaled  BERTScore_F1_raw
+0.0      8.3        7.43   29.86    49.42                 27.06                 37.88                  89.52
+0.1      9.3        9.98   31.86    50.87                 29.93                 40.08                  89.89
+0.2      11.2       15.10  36.36    52.60                 36.02                 44.02                  90.55
+0.3      16.4       24.90  39.85    49.77                 44.00                 46.66                  91.00
+0.4      21.3       25.37  40.77    45.45                 48.28                 46.71                  91.01
+0.5      27.4       20.48  37.80    37.77                 48.22                 42.81                  90.35
+1.0      53.8       11.13  26.76                                                                       
+1.5      56.9       10.61  25.64                                                                       

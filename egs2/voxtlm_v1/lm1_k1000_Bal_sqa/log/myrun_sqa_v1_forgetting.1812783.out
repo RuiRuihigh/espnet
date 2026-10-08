@@ -1,0 +1,50 @@
+2026-10-03T09:55:25 (lm.sh:215:main) ./lm.sh --stage 8 --stop_stage 9 --skip_train true --nclusters 1000 --lang en --token_type bpe --nbpe 10000 --dumpdir /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump --train_set train --valid_set dev --test_sets test --lm_exp exp/sqa_v1_ft --inference_lm 15epoch.pth --gpu_inference true --inference_nj 8 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_test_text_asr /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.asr --lm_test_text_textlm /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.textlm --lm_test_text_speechlm /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.speechlm
+2026-10-03T09:55:28 (lm.sh:362:main) Skipped stages:  2 4 5 6 7 11 12 
+2026-10-03T09:55:28 (lm.sh:849:main) Stage 8a: Calc perplexity for textlm: /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.textlm
+2026-10-03T09:55:28 (lm.sh:853:main) Perplexity calculation started... log: 'exp/sqa_v1_ft/perplexity_test_textlm/text.textlm/lm_calc_perplexity.log'
+2026-10-03T09:58:02 (lm.sh:863:main) PPL: /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.textlm: 30.276710917577837
+2026-10-03T09:58:02 (lm.sh:867:main) Stage 8b: Calc perplexity for unitlm: /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.speechlm
+2026-10-03T09:58:02 (lm.sh:871:main) Perplexity calculation started... log: 'exp/sqa_v1_ft/perplexity_test_unitlm/text.speechlm/lm_calc_perplexity.log'
+2026-10-03T10:01:25 (lm.sh:881:main) PPL: /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.speechlm: 49.70153110844992
+2026-10-03T10:01:25 (lm.sh:888:main) Stage 9: LM decoding for ASR: /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.asr
+2026-10-03T10:01:25 (lm.sh:918:main) Decoding started... log: 'exp/sqa_v1_ft/decode_test_asr/decode_lm_asr/logdir/lm_inference.*.log'
+2026-10-03T16:07:05 (lm.sh:1142:main) Successfully finished. [elapsed=22300s]
+downloads/sLM21/extracted/lexical/dev/gold.csv: 80000 rows -> 20000 unique 'lexical' texts -> exp/slm21_eval/lexical_dev/text_dedup.txt, exp/slm21_eval/lexical_dev/filename_map.tsv
+exp/slm21_eval/lexical_dev/filename_map.tsv: wrote 80000 lines to exp/slm21_eval/submission/lexical/dev.txt
+downloads/sLM21/extracted/syntactic/dev/gold.csv: 50400 rows -> 12566 unique 'syntactic' texts -> exp/slm21_eval/syntactic_dev/text_dedup.txt, exp/slm21_eval/syntactic_dev/filename_map.tsv
+exp/slm21_eval/syntactic_dev/filename_map.tsv: wrote 50400 lines to exp/slm21_eval/submission/syntactic/dev.txt
+sLM21 text-track submission ready at exp/slm21_eval/submission/{lexical,syntactic}/dev.txt
+2026-10-03T16:14:43 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k exp/slm21_eval/audio_datadir/raw/syntactic_dev/wav.scp exp/slm21_eval/audio_datadir/syntactic_dev
+2026-10-03T16:14:47 (format_wav_scp.sh:118:main) [info]: without segments
+2026-10-03T16:17:26 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=163s]
+2026-10-03T16:22:36 (format_wav_scp.sh:46:main) scripts/audio/format_wav_scp.sh --nj 16 --cmd slurm.pl --audio-format flac --fs 16k exp/slm21_eval/audio_datadir/raw/lexical_dev/wav.scp exp/slm21_eval/audio_datadir/lexical_dev
+2026-10-03T16:22:40 (format_wav_scp.sh:118:main) [info]: without segments
+2026-10-03T16:25:46 (format_wav_scp.sh:153:main) Successfully finished. [elapsed=190s]
+2026-10-03T16:25:47 (perform_kmeans.sh:57:main) scripts/feats/perform_kmeans.sh --stage 1 --stop-stage 3 --skip_train_kmeans true --train_set lexical_dev --dev_set syntactic_dev --other_sets  --datadir exp/slm21_eval/audio_datadir --featdir exp/slm21_eval/extracted_feats --audio_format flac --feature_type hubert_base --layer 6 --feature_conf {type=s3prl,conf={s3prl_conf={upstream=hubert_base},download_dir=ckpt,multilayer_feature=False,layer=6}} --km_dir /export/fs06/mliang17/shared_kmeans/hubert_base_l6_k1000_official --nclusters 1000 --storage_save_mode true --use_gpu true --nj 16 --cpu_cmd slurm.pl --cuda_cmd slurm.pl
+2026-10-03T16:25:58 (perform_kmeans.sh:95:main) stage 1: Dump hubert_base feature
+utils/subset_data_dir.sh: reducing #utt from 80000 to 8000
+2026-10-03T16:25:59 (perform_kmeans.sh:122:main) Subsampling 8000 utterances for feature dumping.
+Dump SSL lexical_dev_subset0.1 features to exp/slm21_eval/extracted_feats/hubert_base/layer6/lexical_dev_subset0.1
+utils/copy_data_dir.sh: copied data from exp/slm21_eval/audio_datadir/lexical_dev_subset0.1 to exp/slm21_eval/extracted_feats/hubert_base/layer6/lexical_dev_subset0.1
+utils/validate_data_dir.sh: Successfully validated data-directory exp/slm21_eval/extracted_feats/hubert_base/layer6/lexical_dev_subset0.1
+2026-10-03T16:28:00 (perform_kmeans.sh:221:main) stage 3: Generate K-means pseudo-labels
+2026-10-03T16:28:00 (perform_kmeans.sh:230:main) Extract labels to exp/slm21_eval/extracted_feats/hubert_base/layer6/lexical_dev
+utils/copy_data_dir.sh: copied data from exp/slm21_eval/audio_datadir/lexical_dev to exp/slm21_eval/extracted_feats/hubert_base/layer6/lexical_dev
+utils/validate_data_dir.sh: Successfully validated data-directory exp/slm21_eval/extracted_feats/hubert_base/layer6/lexical_dev
+2026-10-03T16:32:33 (perform_kmeans.sh:230:main) Extract labels to exp/slm21_eval/extracted_feats/hubert_base/layer6/syntactic_dev
+utils/copy_data_dir.sh: copied data from exp/slm21_eval/audio_datadir/syntactic_dev to exp/slm21_eval/extracted_feats/hubert_base/layer6/syntactic_dev
+utils/validate_data_dir.sh: Successfully validated data-directory exp/slm21_eval/extracted_feats/hubert_base/layer6/syntactic_dev
+exp/slm21_eval/extracted_feats/hubert_base/layer6/lexical_dev/pseudo_labels_km1000.txt: wrote 80000 utterances to exp/slm21_eval/lexical_dev_speech/text_speech.txt
+exp/slm21_eval/lexical_dev_speech/filename_map.tsv: wrote 80000 lines to exp/slm21_eval/submission/lexical/dev_speech.txt
+exp/slm21_eval/extracted_feats/hubert_base/layer6/syntactic_dev/pseudo_labels_km1000.txt: wrote 50400 utterances to exp/slm21_eval/syntactic_dev_speech/text_speech.txt
+exp/slm21_eval/syntactic_dev_speech/filename_map.tsv: wrote 50400 lines to exp/slm21_eval/submission/syntactic/dev_speech.txt
+sLM21 speech-track submission ready at exp/slm21_eval/submission/{lexical,syntactic}/dev_speech.txt
+lexical (text): accuracy=82.87% (40000 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+lexical (speech): accuracy=61.25% (40000 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+syntactic (text): accuracy=67.86% (25200 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+syntactic (speech): accuracy=54.51% (25200 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+[L1] 没有可用的 beam5 结果(hyp.tok=0 行, ''),重新解码 100 句
+2026-10-03T16:44:30 (lm.sh:215:main) ./lm.sh --stage 10 --stop_stage 10 --ngpu 1 --nclusters 1000 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --dumpdir /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump --train_set train --valid_set dev --test_sets test --lm_config conf/tuning/finetune_sqa_v1_opt350.yaml --lm_exp exp/sqa_v1_ft --inference_lm 15epoch.pth --python python3 --lm_inference_tts_config conf/decode_lm_tts_maxlen1200.yaml --lm_test_text_tts /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.tts.rand100
+2026-10-03T16:44:39 (lm.sh:362:main) Skipped stages:  11 12 
+2026-10-03T16:44:39 (lm.sh:991:main) Stage 10: LM decoding for TTS: /export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k1000_Bal/dump/raw/test/text.tts.rand100
+2026-10-03T16:44:39 (lm.sh:1022:main) Decoding started... log: 'exp/sqa_v1_ft/decode_test_tts/text.tts.rand100/logdir/lm_inference.*.log'

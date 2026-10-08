@@ -1,0 +1,60 @@
+Sat Sep 26 20:34:51 EDT 2026 decoding dump/part2/raw/test_nospeech/text.sqa -> exp/sqa_part2_ft/decode_sqa/23epoch_decode_sqa_p2_letter_nospeech (log: exp/sqa_part2_ft/decode_sqa/23epoch_decode_sqa_p2_letter_nospeech/logdir/lm_inference.*.log)
+Sat Sep 26 20:34:51 EDT 2026 decoding dump/part2/raw/test_transcript/text.sqa -> exp/sqa_part2_ft/decode_sqa/23epoch_decode_sqa_p2_letter_transcript (log: exp/sqa_part2_ft/decode_sqa/23epoch_decode_sqa_p2_letter_transcript/logdir/lm_inference.*.log)
+n_ref	2620
+n_hyp	2620
+missing_hyp	0
+accuracy	31.87	(835/2620)
+majority_baseline	32.14	(always 'c')
+random_baseline	25.00
+parse_fail	1
+pred_distribution	{'b': 18, 'c': 2523, 'd': 78, 'none': 1}
+gold_distribution	{'a': 536, 'b': 761, 'c': 842, 'd': 481}
+confusion (rows=gold, cols=pred a b c d none)
+a	0	6	508	22	0
+b	0	4	736	21	0
+c	0	3	817	21	1
+d	0	5	462	14	0
+n_ref	2620
+n_hyp	2620
+missing_hyp	0
+accuracy	32.25	(845/2620)
+majority_baseline	32.14	(always 'c')
+random_baseline	25.00
+parse_fail	0
+pred_distribution	{'a': 5, 'b': 7, 'c': 2587, 'd': 21}
+gold_distribution	{'a': 536, 'b': 761, 'c': 842, 'd': 481}
+confusion (rows=gold, cols=pred a b c d none)
+a	1	2	528	5	0
+b	0	3	750	8	0
+c	2	1	836	3	0
+d	2	1	473	5	0
+==== transcript
+n_ref	2620
+n_hyp	2620
+missing_hyp	0
+accuracy	32.25	(845/2620)
+majority_baseline	32.14	(always 'c')
+random_baseline	25.00
+parse_fail	0
+pred_distribution	{'a': 5, 'b': 7, 'c': 2587, 'd': 21}
+gold_distribution	{'a': 536, 'b': 761, 'c': 842, 'd': 481}
+confusion (rows=gold, cols=pred a b c d none)
+a	1	2	528	5	0
+b	0	3	750	8	0
+c	2	1	836	3	0
+d	2	1	473	5	0
+==== nospeech
+n_ref	2620
+n_hyp	2620
+missing_hyp	0
+accuracy	31.87	(835/2620)
+majority_baseline	32.14	(always 'c')
+random_baseline	25.00
+parse_fail	1
+pred_distribution	{'b': 18, 'c': 2523, 'd': 78, 'none': 1}
+gold_distribution	{'a': 536, 'b': 761, 'c': 842, 'd': 481}
+confusion (rows=gold, cols=pred a b c d none)
+a	0	6	508	22	0
+b	0	4	736	21	0
+c	0	3	817	21	1
+d	0	5	462	14	0

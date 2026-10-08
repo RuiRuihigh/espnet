@@ -1,0 +1,18 @@
+Step 1: hyp.tok -> HDF5 feats
+wrote 100 feature files to exp/sqa_v1_ft/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/feats (0 out-of-range tokens dropped across 0 utterance(s))
+Step 2: parallel-wavegan-decode (regular gpu partition)
+Generated 100 wavs at exp/sqa_v1_ft/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/wav
+Step 3: VERSA scoring (whisper_wer -> CER/WER, pseudo_mos/utmos, mcd_f0, discrete_speech, speaker), on the A100
+Done. See exp/sqa_v1_ft/decode_test_tts/text.tts.rand100/vocoder_eval/checkpoint-400000steps/versa_eval/avg_result.txt
+Step 1: hyp.tok -> HDF5 feats
+wrote 100 feature files to exp/sqa_v1_ft/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/feats (0 out-of-range tokens dropped across 0 utterance(s))
+Step 2: parallel-wavegan-decode (regular gpu partition)
+Generated 100 wavs at exp/sqa_v1_ft/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/wav
+Step 3: VERSA scoring (whisper_wer -> CER/WER, pseudo_mos/utmos, mcd_f0, discrete_speech, speaker), on the A100
+Done. See exp/sqa_v1_ft/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/versa_eval/avg_result.txt
+                               CER    CER(逐句均)     WER  UTMOS SpeechBERT
+plain beam-5                 1.61%       1.92%   3.87%   3.92      0.813
+beam -> greedy -> top-p      1.50%       1.49%   3.75%   3.93      0.815
+
+level used per sentence: {'beam5': 99, 'greedy': 1}   still at the cap after all levels: 0
+  fell back: 4350_9170_000028_000000  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '84'}  errors 9/21 -> 0/21

@@ -1,0 +1,1 @@
+/export/fs06/mliang17/voxtlm_officialtest/espnet/egs2/voxtlm_v1/lm1_k2000_Bal_ttskmeans_sqa/utils/slurm.pl: 2 / 2 failed, log is in exp/sqa_v1_ft/decode_test_tts/text.tts.fb_greedy/logdir/lm_inference.*.log

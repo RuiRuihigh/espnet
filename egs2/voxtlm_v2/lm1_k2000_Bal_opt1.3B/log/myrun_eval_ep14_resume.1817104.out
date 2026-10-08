@@ -1,0 +1,22 @@
+exp/slm21_eval_ep14/extracted_feats/phonological_tokenizer/layer21/lexical_dev/pseudo_labels_km2000.txt: wrote 80000 utterances to exp/slm21_eval_ep14/lexical_dev_speech/text_speech.txt
+exp/slm21_eval_ep14/lexical_dev_speech/filename_map.tsv: wrote 80000 lines to exp/slm21_eval_ep14/submission/lexical/dev_speech.txt
+exp/slm21_eval_ep14/extracted_feats/phonological_tokenizer/layer21/syntactic_dev/pseudo_labels_km2000.txt: wrote 50400 utterances to exp/slm21_eval_ep14/syntactic_dev_speech/text_speech.txt
+exp/slm21_eval_ep14/syntactic_dev_speech/filename_map.tsv: wrote 50400 lines to exp/slm21_eval_ep14/submission/syntactic/dev_speech.txt
+sLM21 speech-track submission ready at exp/slm21_eval_ep14/submission/{lexical,syntactic}/dev_speech.txt
+lexical (text): accuracy=82.86% (40000 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+lexical (speech): accuracy=67.67% (40000 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+syntactic (text): accuracy=70.98% (25200 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+syntactic (speech): accuracy=57.54% (25200 pairs, 0 incomplete pair groups skipped, 0 pairs missing a score skipped)
+[L1] 复用 14epoch 已经跑完的 beam5 结果(同一 checkpoint、同一配置、同一批 100 句)
+utts=100  generated BPE steps: median=109 max=903  (cap=1200)
+utts at the cap (steps>=1199): 0
+[L1] 撞满 0 句
+[L2/L3] 第1级没有撞满的句子,不需要回退
+assembled 100 sentences -> exp/lm_train_transformer_opt1.3b_en_bpe10000_ep14/decode_test_tts/text.tts.fb_final/score_tts/hyp.tok
+  level used: beam5=100
+  still at the length cap after all levels: 0
+Step 1: hyp.tok -> HDF5 feats
+wrote 100 feature files to exp/lm_train_transformer_opt1.3b_en_bpe10000_ep14/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/feats (0 out-of-range tokens dropped across 0 utterance(s))
+Step 2: parallel-wavegan-decode (regular gpu partition)
+Generated 100 wavs at exp/lm_train_transformer_opt1.3b_en_bpe10000_ep14/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/wav
+Step 3: VERSA scoring (whisper_wer -> CER/WER, pseudo_mos/utmos, mcd_f0, discrete_speech, speaker), on the A100

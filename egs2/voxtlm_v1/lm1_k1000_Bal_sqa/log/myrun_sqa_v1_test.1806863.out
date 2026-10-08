@@ -1,0 +1,20 @@
+Sun Sep 27 09:51:12 EDT 2026 decoding dump/v1/raw/test_p1/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1/logdir/lm_inference.*.log)
+Failed to import Flash Attention, using ESPnet default: No module named 'flash_attn_2_cuda'
+n	2620
+gold_distribution	{'a': 536, 'b': 761, 'c': 842, 'd': 481}
+
+variant	scoring	acc	pred_distribution
+A	sum	36.72	{'a': 833, 'b': 638, 'c': 606, 'd': 543}
+A	norm	39.89	{'a': 714, 'b': 614, 'c': 638, 'd': 654}
+A	calib	45.08	{'a': 681, 'b': 595, 'c': 702, 'd': 642}
+A	calib_rand	44.39	{'a': 638, 'b': 617, 'c': 699, 'd': 666}
+A	nospeech	21.03	{'a': 840, 'b': 632, 'c': 563, 'd': 585}
+B	sum	32.25	{'a': 1089, 'b': 646, 'c': 448, 'd': 437}
+B	norm	35.61	{'a': 911, 'b': 638, 'c': 554, 'd': 517}
+B	calib	40.50	{'a': 771, 'b': 725, 'c': 644, 'd': 480}
+B	calib_rand	42.10	{'a': 620, 'b': 586, 'c': 687, 'd': 727}
+B	nospeech	20.15	{'a': 976, 'b': 577, 'c': 448, 'd': 619}
+L	sum	20.88	{'a': 2546, 'b': 1, 'c': 48, 'd': 25}
+L	calib	25.27	{'a': 202, 'b': 1470, 'c': 323, 'd': 625}
+L	calib_rand	25.53	{'a': 515, 'b': 415, 'c': 730, 'd': 960}
+L	nospeech	20.38	{'a': 2602, 'c': 3, 'd': 15}

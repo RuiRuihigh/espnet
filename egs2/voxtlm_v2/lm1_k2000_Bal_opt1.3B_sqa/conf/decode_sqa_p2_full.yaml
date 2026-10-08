@@ -1,0 +1,6 @@
+# Part II with full analysis (analysis targets average ~150 BPE tokens)
+log_level: INFO
+beam_size: 5
+penalty: 0.0
+maxlen: 250
+minlen: 1

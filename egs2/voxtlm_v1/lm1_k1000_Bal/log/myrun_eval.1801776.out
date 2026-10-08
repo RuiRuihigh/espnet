@@ -1,0 +1,3 @@
+downloads/sLM21/extracted/lexical/dev/gold.csv: 80000 rows -> 20000 unique 'lexical' texts -> exp/slm21_eval/lexical_dev/text_dedup.txt, exp/slm21_eval/lexical_dev/filename_map.tsv
+exp/slm21_eval/lexical_dev/filename_map.tsv: wrote 80000 lines to exp/slm21_eval/submission/lexical/dev.txt
+downloads/sLM21/extracted/syntactic/dev/gold.csv: 50400 rows -> 12566 unique 'syntactic' texts -> exp/slm21_eval/syntactic_dev/text_dedup.txt, exp/slm21_eval/syntactic_dev/filename_map.tsv

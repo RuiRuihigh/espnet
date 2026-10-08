@@ -1,0 +1,46 @@
+[L1] 复用已有的 beam5 结果 text.tts.rand100(100 句, max output length: [1200])
+utts=100  generated BPE steps: median=123 max=1200  (cap=1200)
+utts at the cap (steps>=1199): 6
+  CAPPED: tts_1995_1837_000021_000002 1200
+  CAPPED: tts_2609_156975_000027_000013 1200
+  CAPPED: tts_3005_163390_000023_000019 1200
+  CAPPED: tts_4294_14317_000018_000001 1200
+  CAPPED: tts_7127_75947_000023_000007 1200
+  CAPPED: tts_8131_117029_000007_000000 1200
+[L1] 撞满 6 句
+dump/raw/test/text.tts.fb_greedy: 6 lines
+2026-09-26T11:35:08 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --inference_nj 8 --lm_config conf/tuning/train_transformer_opt350.yaml --inference_lm valid.acc.best.pth --python local/python_sampling.sh --lm_inference_tts_config conf/decode_lm_tts_beam1_maxlen1200.yaml --lm_test_text_tts dump/raw/test/text.tts.fb_greedy
+2026-09-26T11:35:10 (lm.sh:374:main) Skipped stages:  11 12 
+2026-09-26T11:35:10 (lm.sh:967:main) Stage 10: LM decoding for TTS: dump/raw/test/text.tts.fb_greedy
+2026-09-26T11:35:10 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.fb_greedy/logdir/lm_inference.*.log'
+2026-09-26T11:38:04 (lm.sh:1118:main) Successfully finished. [elapsed=176s]
+[L2] 贪心后仍撞满 1 句
+dump/raw/test/text.tts.fb_topp: 1 lines
+2026-09-26T11:38:05 (lm.sh:227:main) ./lm.sh --stage 1 --stop_stage 9 --num_splits_lm 1 --nj 16 --ngpu 4 --gpu_inference true --inference_nj 8 --lang en --token_type bpe --nbpe 10000 --max_wav_duration 120 --bpe_nlsyms data/nlsyms.txt --bpe_train_text data/train/bpe_text --lm_config conf/train.yaml --train_set train --valid_set dev --test_sets test --inference_lm valid.acc.ave.pth --km_dir exp/kmeans/phonological_tokenizer_2000clusters --nclusters 2000 --phonological_tokenizer_ssl_path downloads/phonological_tokenizer/ssl.pth --phonological_tokenizer_layer 21 --lm_inference_asr_config conf/decode_lm_asr.yaml --lm_inference_tts_config conf/decode_lm_tts.yaml --lm_test_text_asr dump/raw/test/text.asr --lm_test_text_tts dump/raw/test/text.tts --lm_test_text_textlm dump/raw/test/text.textlm --lm_test_text_speechlm dump/raw/test/text.speechlm --stage 10 --stop_stage 10 --ngpu 1 --inference_nj 8 --lm_config conf/tuning/train_transformer_opt350.yaml --inference_lm valid.acc.best.pth --python local/python_sampling.sh --lm_inference_tts_config conf/decode_lm_tts_beam1_maxlen1200.yaml --lm_test_text_tts dump/raw/test/text.tts.fb_topp
+2026-09-26T11:38:10 (lm.sh:374:main) Skipped stages:  11 12 
+2026-09-26T11:38:10 (lm.sh:967:main) Stage 10: LM decoding for TTS: dump/raw/test/text.tts.fb_topp
+2026-09-26T11:38:10 (lm.sh:998:main) Decoding started... log: 'exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.fb_topp/logdir/lm_inference.*.log'
+2026-09-26T11:39:05 (lm.sh:1118:main) Successfully finished. [elapsed=60s]
+assembled 100 sentences -> exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.fb_final/score_tts/hyp.tok
+  level used: beam5=94, greedy=5, top-p 0.9=1
+  still at the length cap after all levels: 0
+Step 1: hyp.tok -> HDF5 feats
+wrote 100 feature files to exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/feats (0 out-of-range tokens dropped across 0 utterance(s))
+Step 2: parallel-wavegan-decode (regular gpu partition)
+Generated 100 wavs at exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/wav
+Step 3: VERSA scoring (whisper_wer -> CER/WER, pseudo_mos/utmos, mcd_f0, discrete_speech, speaker), on the A100
+Done. See exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.fb_final/vocoder_eval/checkpoint-400000steps/versa_eval/avg_result.txt
+                               CER    CER(逐句均)     WER  UTMOS SpeechBERT
+plain beam-5                 5.20%       3.69%   7.13%   3.91      0.808
+beam -> greedy -> top-p      1.61%       1.55%   3.69%   3.98      0.821
+
+level used per sentence: {'beam5': 94, 'top-p 0.9': 1, 'greedy': 5}   still at the cap after all levels: 0
+  fell back: 1995_1837_000021_000002  -> top-p 0.9  steps {'steps_beam5': '1200', 'steps_greedy': '1200', 'steps_top-p 0.9': '165'}  errors 52/69 -> 22/69
+  fell back: 2609_156975_000027_000013  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '215', 'steps_top-p 0.9': '-'}  errors 43/128 -> 1/128
+  fell back: 3005_163390_000023_000019  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '59', 'steps_top-p 0.9': '-'}  errors 0/18 -> 0/18
+  fell back: 4294_14317_000018_000001  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '396', 'steps_top-p 0.9': '-'}  errors 85/229 -> 0/229
+  fell back: 7127_75947_000023_000007  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '364', 'steps_top-p 0.9': '-'}  errors 55/238 -> 4/238
+  fell back: 8131_117029_000007_000000  -> greedy     steps {'steps_beam5': '1200', 'steps_greedy': '197', 'steps_top-p 0.9': '-'}  errors 98/125 -> 0/125
+======================================================================
+两级回退跑完:exp/lm_train_transformer_opt350_en_bpe10000/decode_test_tts/text.tts.fb_final/(fallback_log.tsv 记录每句用了哪一级)
+======================================================================

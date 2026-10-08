@@ -1,0 +1,40 @@
+Sun Sep 27 13:21:32 EDT 2026 decoding dump/v1/raw/dev_p1_sub200/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp1.5_dev200 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp1.5_dev200/logdir/lm_inference.*.log)
+Sun Sep 27 13:21:32 EDT 2026 decoding dump/v1/raw/dev_p1_sub200/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.5_dev200 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp0.5_dev200/logdir/lm_inference.*.log)
+Sun Sep 27 13:21:32 EDT 2026 decoding dump/v1/raw/dev_p1_sub200/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_dev200 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_dev200/logdir/lm_inference.*.log)
+Sun Sep 27 13:21:32 EDT 2026 decoding dump/v1/raw/dev_p1_sub200/text.sqa -> exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp1.0_dev200 (log: exp/sqa_v1_ft/decode_sqa/15epoch_decode_sqa_p1_lp1.0_dev200/logdir/lm_inference.*.log)
+n_ref	200
+n_hyp	200
+missing_hyp	0
+bleu4	20.48
+rougeL_f1	37.80
+avg_hyp_words	27.4
+avg_ref_words	19.1
+baseline_transcript_bleu4	17.50
+baseline_transcript_rougeL_f1	35.17
+n_ref	200
+n_hyp	200
+missing_hyp	0
+bleu4	11.13
+rougeL_f1	26.76
+avg_hyp_words	53.8
+avg_ref_words	19.1
+baseline_transcript_bleu4	17.50
+baseline_transcript_rougeL_f1	35.17
+n_ref	200
+n_hyp	200
+missing_hyp	0
+bleu4	7.43
+rougeL_f1	29.86
+avg_hyp_words	8.3
+avg_ref_words	19.1
+baseline_transcript_bleu4	17.50
+baseline_transcript_rougeL_f1	35.17
+n_ref	200
+n_hyp	200
+missing_hyp	0
+bleu4	10.61
+rougeL_f1	25.64
+avg_hyp_words	56.9
+avg_ref_words	19.1
+baseline_transcript_bleu4	17.50
+baseline_transcript_rougeL_f1	35.17

@@ -1,0 +1,56 @@
+# Same as ../../../lm1_k2000_Bal/conf/tuning/train_transformer_opt350.yaml, only
+# opt_name changed -- everything else (batch_bins/accum_grad/lr/schedule) kept
+# identical on purpose, for a controlled comparison of backbone size alone.
+# facebook/opt-1.3b: hidden=2048 (vs 1024), 24 layers (same), ~1.3B params
+# (vs ~330M) -- word/positional embeddings and lm_head are always randomly
+# reinitialized against our own BPE vocab regardless of opt_name
+# (espnet2/lm/huggingface_pretrained_opt_lm.py pops decoder.embed_tokens.weight
+# before loading), so the pretrained OPT-350M checkpoint from lm1_k2000_Bal
+# CANNOT be reused as --init_param here -- this is a from-scratch Stage 7 run.
+#
+# Memory risk: OPT-350M under this exact config (batch_bins=10000, accum_grad=20,
+# ngpu=1) peaked at ~30GB on an 80GB A100 (observed in the SQA finetune run,
+# same batch_bins/accum_grad). OPT-1.3B has ~4x the params (bigger Adam
+# optimizer state) and 2x the hidden dim (bigger activations) -- untested
+# whether it still fits in 80GB at the same batch_bins. If it OOMs, first
+# thing to try is lowering batch_bins (e.g. halve it) while raising accum_grad
+# to compensate, to keep the effective batch size unchanged.
+num_workers: 8
+use_amp: true
+sharded_ddp: false
+num_att_plot: 0
+
+lm: transformer_opt
+lm_conf:
+    opt_name: facebook/opt-1.3b
+
+model: lm_multitask
+model_conf:
+    lsm_weight: 0.1
+    length_normalized_loss: true
+    sos_syms:   # multiple sos symbols are used
+    - "<generatetext>"
+    - "<generatespeech>"
+    eos_sym: "<sos/eos>"
+
+# optimization related
+grad_clip: 1.0
+batch_type: length
+batch_bins: 10000
+accum_grad: 20
+num_iters_per_epoch: 25000
+max_epoch: 250
+
+optim: adam
+optim_conf:
+   lr: 0.0003
+   weight_decay: 1.0e-06
+scheduler: warmuplr
+scheduler_conf:
+   warmup_steps: 2500
+
+best_model_criterion:
+-   - valid
+    - acc
+    - max
+keep_nbest_models: 10

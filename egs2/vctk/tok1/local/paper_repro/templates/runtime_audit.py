@@ -4,7 +4,7 @@ R=Path(__file__).resolve().parent
 print('RUNTIME_IMPORT_START',flush=True)
 import torch,numpy,soundfile,kaldiio,sentencepiece,sklearn
 import espnet2.tasks.gan_tok as task
-assert str(Path(task.__file__).resolve()).startswith(str(R/'espnet'))
+assert Path(task.__file__).resolve().is_relative_to((R/'espnet').resolve())
 parser=task.GANSpeechTokenizerTask.get_parser()
 args=parser.parse_args(['--config',str(R/'espnet/egs2/vctk/tok1/conf/train_paper.yaml')])
 versions={k:importlib.metadata.version(k) for k in ['torch','torchaudio','s3prl','numpy','scikit-learn','sentencepiece']}

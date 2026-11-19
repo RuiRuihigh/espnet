@@ -40,7 +40,7 @@ def run(target):
     started=time.time()
     subprocess.run([str(R/'recipe.sh'),'--stage','9','--stop_stage','9',
         '--python',str(R/'python.sh'),'--tok_args','--max_epoch '+str(target)],check=True)
-    ck=torch.load(R/'train/checkpoint.pth',map_location='@CPU_PARTITION@',mmap=True,weights_only=False)
+    ck=torch.load(R/'train/checkpoint.pth',map_location='cpu',mmap=True,weights_only=False)
     assert ck['reporter']['epoch']==target
     assert len(ck['optimizers'])==2 and all(o['state'] for o in ck['optimizers'])
     lrs=[[g['lr'] for g in o['param_groups']] for o in ck['optimizers']]

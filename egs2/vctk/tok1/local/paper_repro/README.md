@@ -102,9 +102,9 @@ eligible GPU** has enough memory; the old Delta model-name routing is not portab
 The reference preflight was requested on an 80 GB class A100. There is no measured
 minimum yet. Do not assume that any 16/24/40 GB GPU can run the unchanged batch.
 
-For non-Slurm clusters, port only the submission wrappers. Preserve four-rank
-batch sharding, optimizers, schedule and model settings. No such launcher is
-implemented here. Cluster migration does not justify shrinking the scientific batch.
+For Runpod single-node execution without Slurm, see the Runpod section below.
+The Slurm reference remains four-rank. Single/two-GPU runs record their changed
+world size; neither GPU count nor batch size is silently changed on resume.
 
 ## Build environments and fetch the pretrained frontend
 
@@ -251,3 +251,108 @@ paper-level reproduction. No MSP A/B/C result is evidence for this official run.
 6. Pass GPU preflight and verify actual four-rank training startup, then train 90 full epochs.
 7. Report job IDs, epoch/update progress, phase, checkpoint, finite losses, and
    remaining limitations. Never describe an unrun preflight or queued training as passed.
+
+
+## Runpod: single or dual GPU, no Slurm
+
+These commands operate **inside an already provisioned Linux Pod**. They never
+create resources, call Runpod APIs, submit Slurm jobs or stop a Pod. Billing does
+not stop just because Python exits. No GPU run has been validated by the CPU-only
+launcher tests in this repository.
+
+Keep the checkout, workspace, datasets, assets and checkpoints on persistent
+storage at the same absolute paths across Pod replacements. Use a dedicated
+checkout. Supply existing corpora; this package does not download them. Install
+Conda separately if the container does not provide it.
+
+From `egs2/vctk/tok1`:
+
+```bash
+python3 local/paper_repro/init_workspace.py --backend runpod \
+  --root /workspace/phonological_paper \
+  --base /workspace/phonological_assets \
+  --vctk /workspace/datasets/VCTK-Corpus-0.92 \
+  --libri /workspace/datasets/LibriSpeech/train-clean-100 \
+  --conda-sh /opt/conda/etc/profile.d/conda.sh
+
+# Run these only when environments/assets are not already installed.
+bash local/paper_repro/bootstrap_environment.sh /workspace/phonological_paper
+bash local/paper_repro/download_wavlm.sh /workspace/phonological_paper
+cd /workspace/phonological_paper
+source env.sh
+bash setup.sh
+
+# CPU preparation, GPU feature extraction, CPU clustering, GPU speaker features,
+# then CPU statistics. Can be continued on different Pods using the same paths.
+bash stage.sh data
+bash stage.sh subset
+bash stage.sh features
+bash stage.sh kmeans
+bash stage.sh speakers
+bash stage.sh stats
+```
+
+The environment bootstrap remains an unvalidated destination installation; its
+existing refusal to overwrite installed environments is intentional. The stage
+markers are shared with Slurm, but Runpod uses the launcher below, not
+`stage.sh preflight` (the latter retains the four-GPU reference default).
+
+Single-GPU example:
+
+```bash
+source env.sh
+"$PAPER_MAIN/bin/python" runpod.py preflight --ngpu 1
+# First validate a real full epoch, including validation and checkpoint saving.
+"$PAPER_MAIN/bin/python" runpod.py start --ngpu 1 --name single --target-epoch 1
+"$PAPER_MAIN/bin/python" runpod.py resume --ngpu 1 --name single --target-epoch 90
+```
+
+Two-GPU example (two visible GPUs on the same machine):
+
+```bash
+source env.sh
+"$PAPER_MAIN/bin/python" runpod.py preflight --ngpu 2
+"$PAPER_MAIN/bin/python" runpod.py start --ngpu 2 --name dual --target-epoch 1
+"$PAPER_MAIN/bin/python" runpod.py resume --ngpu 2 --name dual --target-epoch 90
+```
+
+Preflight tests representative frozen/unfrozen batches for **each rank**, on the
+corresponding visible GPU. It does not test NCCL communication or every batch;
+the first real training epoch validates DDP startup. Inspect logs and memory
+before continuing. Adapt `NCCL_SOCKET_IFNAME` in the recipe's `local/path.sh` for
+the Pod network if needed. Failures are propagated; no success is fabricated.
+
+Default global `batch_bins=16000000` is retained, so fewer GPUs increase memory
+per GPU. There is no promised single-GPU fit. An explicit `--batch-bins 8000000`
+on **every** preflight/start/resume command is an example adaptation if needed,
+not a measured safe setting or an exact four-GPU reproduction. The model,
+30/60 schedule, FP32 and `accum_grad=1` remain unchanged. GAN training does not
+support gradient accumulation. Different world sizes can also alter minimum
+batch grouping and numerical results. Use a new `--name` for a new experiment.
+
+Outputs live in `train_runs/NAME/`, separate from the Slurm `train/` directory.
+`--target-epoch` is an absolute final epoch. `resume` reads `checkpoint.pth` and
+lets the official trainer restore model, reporter, both optimizers and both
+schedulers. Interrupted epochs restart from the last **completed epoch**, not the
+last minibatch. The atomic save wrapper retains the previous checkpoint if a
+write is interrupted and is safe to import in spawned DDP workers.
+
+`RUNPOD_RUN.json` records code commit, config/data/codebook hashes, GPU count and
+batch budget. Resume refuses mismatched metadata or missing full trainer states.
+Do not use `start` to overwrite an existing run. If failure happened before the
+first checkpoint, inspect it and use a new name to start from scratch. Only load
+trusted checkpoints created by this experiment. After a successful epoch, the
+checkpoint is authoritative even if writing `PROGRESS.json` was interrupted.
+Keep environments and prepared data unchanged across resumes; the lightweight
+fingerprint does not hash every audio file or every installed package.
+
+Run commands in a persistent terminal such as tmux and inspect the run's
+`train.log`; the launcher stays in the foreground and never automatically restarts
+itself or shuts down compute. A workspace-wide lock prevents overlapping launcher
+jobs. `STOPPED_BY_USER.json` blocks future launches but does not kill an active run.
+
+CPU-only regression checks (no model downloads or scheduling):
+
+```bash
+python3 local/paper_repro/tests/test_launchers.py
+```

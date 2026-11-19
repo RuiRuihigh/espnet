@@ -1,16 +1,24 @@
 """Check the unchanged official model with actual paper-recipe batch sizes."""
-import gc,json,math,os,subprocess,time,collections,resource
+import argparse,gc,json,math,os,subprocess,time,collections,resource
 from pathlib import Path
 import numpy as np,soundfile as sf,kaldiio,torch
 from espnet2.tasks.gan_tok import GANSpeechTokenizerTask as Task
 from espnet2.samplers.num_elements_batch_sampler import NumElementsBatchSampler
 from espnet2.torch_utils.set_all_random_seed import set_all_random_seed
 R=Path(__file__).resolve().parent;recipe=R/'espnet/egs2/vctk/tok1'
+p=argparse.ArgumentParser()
+p.add_argument('--ngpu',type=int,choices=[1,2,4],default=4)
+p.add_argument('--rank',type=int,default=0)
+p.add_argument('--batch-bins',type=int,default=16000000)
+p.add_argument('--output',type=Path,default=R/'preflight')
+options=p.parse_args()
+assert 0 <= options.rank < options.ngpu and options.batch_bins > 0
 assert not (R/'STOPPED_BY_USER.json').exists()
 assert (R/'SETUP_OK.json').exists() and (R/'DATA_READY.json').exists()
 assert (R/'stages/stats.done').exists()
 subprocess.run(['git','diff','--exit-code','HEAD','--','espnet2','egs2/TEMPLATE'],cwd=R/'espnet',check=True)
-out=R/'preflight';out.mkdir(exist_ok=True)
+out=options.output;out.mkdir(parents=True,exist_ok=True)
+(out/'COMPLETE.json').unlink(missing_ok=True)
 set_all_random_seed(0);torch.set_num_threads(2)
 args=Task.get_parser().parse_args(['--config',str(recipe/'conf/train_paper.yaml'),
  '--token_list',str(recipe/'data/noinfo_token_list/bpe_unigram5000/tokens.txt'),
@@ -19,11 +27,12 @@ args=Task.get_parser().parse_args(['--config',str(recipe/'conf/train_paper.yaml'
 assert args.num_iters_per_epoch is None and args.max_epoch==90
 assert args.tokenizer_conf['freeze_epochs']==30 and args.batch_bins==16000000
 assert not hasattr(args,'prosody_conf')
+args.batch_bins=options.batch_bins
 torch.backends.cudnn.benchmark=args.cudnn_benchmark
 torch.backends.cudnn.deterministic=args.cudnn_deterministic
 shapes=[str(R/'stats/train'/name) for name in ['speech_shape','text_shape.bpe','spembs_shape']]
 sampler=list(NumElementsBatchSampler(batch_bins=args.batch_bins,shape_files=shapes,
- min_batch_size=4,sort_in_batch=args.sort_in_batch,sort_batch=args.sort_batch,drop_last=args.drop_last_iter))
+ min_batch_size=options.ngpu,sort_in_batch=args.sort_in_batch,sort_batch=args.sort_batch,drop_last=args.drop_last_iter))
 wav=dict(l.split(maxsplit=1) for l in (R/'dump/raw/tr_no_dev_sp/wav.scp').read_text().splitlines())
 texts=dict(l.split(maxsplit=1) for l in (R/'dump/raw/tr_no_dev_sp/text').read_text().splitlines())
 sp=kaldiio.load_scp(str(R/'dump/ecapa192/tr_no_dev_sp/ecapa192.scp'))
@@ -31,7 +40,7 @@ lengths={l.split()[0]:int(l.split()[1].split(',')[0]) for l in (R/'stats/train/s
 assert collections.Counter(u for b in sampler for u in b)==collections.Counter(wav.keys())
 # ESPnet shards each global batch across ranks, not the list of batches.
 global_sampler=sampler
-sampler=[b[0::4] for b in global_sampler]
+sampler=[b[options.rank::options.ngpu] for b in global_sampler]
 assert all(sampler)
 indices=sorted({max(range(len(sampler)),key=lambda i:max(lengths[u] for u in sampler[i])),
                 max(range(len(sampler)),key=lambda i:len(sampler[i])*max(lengths[u] for u in sampler[i])),
@@ -87,9 +96,9 @@ except Exception as e:
 peak=max(r['peak_reserved_gib'] for r in results)
 assert peak+3 < torch.cuda.get_device_properties(0).total_memory/2**30,'Insufficient DDP memory headroom; do not alter paper batch automatically'
 report={'passed':True,'official_batch_bins':args.batch_bins,'sampler_batches':len(sampler),'train_utterances':len(wav),
- 'num_iters_per_epoch':None,'training_gpus':4,'preflight_rank':0,'batch_sharding':'Official batch[rank::4]; one rank measured, DDP headroom reserved','gpu':torch.cuda.get_device_name(),'tests':results,
+ 'num_iters_per_epoch':None,'training_gpus':options.ngpu,'preflight_rank':options.rank,'batch_sharding':'Official batch[rank::ngpu]; one rank measured; does not test DDP','gpu':torch.cuda.get_device_name(),'tests':results,
  'host_peak_rss_gib':resource.getrusage(resource.RUSAGE_SELF).ru_maxrss/1024**2,
  'scratch_weights_discarded':True,'single_codebook':2000,'frozen_and_joint_backward_passed':True,
  'checkpoint_initialization':'Official pretrained WavLM + new Libri30h centroids; ASR/vocoder fresh, no MSP weights'}
 (out/'COMPLETE.json').write_text(json.dumps(report,indent=2));print('PREFLIGHT_COMPLETE',flush=True)
-print('PREFLIGHT PASSED. Review COMPLETE.json; then explicitly run: python train_chain.py submit 1', flush=True)
+print('PREFLIGHT PASSED. Review the report before explicitly starting training.', flush=True)

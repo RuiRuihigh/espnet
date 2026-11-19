@@ -10,14 +10,23 @@ from pathlib import Path
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--backend", choices=("slurm", "runpod"), default="slurm")
     names = (
         "root", "base", "vctk", "libri", "conda-sh", "cpu-account",
         "gpu-account", "cpu-partition", "gpu-partitions", "preflight-partition",
     )
     for name in names:
-        parser.add_argument("--" + name, required=True)
+        parser.add_argument("--" + name)
     args = parser.parse_args()
     values = vars(args)
+    cluster_keys = {"cpu_account", "gpu_account", "cpu_partition", "gpu_partitions", "preflight_partition"}
+    for key in names:
+        key = key.replace("-", "_")
+        if values[key] is None:
+            if args.backend == "runpod" and key in cluster_keys:
+                values[key] = "unused"
+            else:
+                parser.error("--" + key.replace("_", "-") + " is required")
     for key, value in values.items():
         if not re.fullmatch(r"[A-Za-z0-9_./,:+\-]+", value):
             parser.error(f"{key}: spaces and shell metacharacters are not supported")
@@ -33,6 +42,10 @@ def main():
         parser.error("run this helper inside the ESPnet checkout")
     rendered = {}
     for source in sorted((package / "templates").iterdir()):
+        if not source.is_file():
+            continue
+        if args.backend == "runpod" and source.name in {"train_chain.py", "submit_pipeline.py", "train_job.sh"}:
+            continue
         content = source.read_text()
         for key, value in values.items():
             content = content.replace("@" + key.upper() + "@", value)

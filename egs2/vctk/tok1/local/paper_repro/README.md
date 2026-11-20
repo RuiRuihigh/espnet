@@ -297,15 +297,30 @@ existing refusal to overwrite installed environments is intentional. The stage
 markers are shared with Slurm, but Runpod uses the launcher below, not
 `stage.sh preflight` (the latter retains the four-GPU reference default).
 
-Single-GPU example:
+Single RTX PRO 6000 Blackwell (96 GB), with a global batch budget of 8M,
+FP32, cuDNN autotuning disabled, and a first training stop at epoch 30:
 
 ```bash
 source env.sh
-"$PAPER_MAIN/bin/python" runpod.py preflight --ngpu 1
-# First validate a real full epoch, including validation and checkpoint saving.
-"$PAPER_MAIN/bin/python" runpod.py start --ngpu 1 --name single --target-epoch 1
-"$PAPER_MAIN/bin/python" runpod.py resume --ngpu 1 --name single --target-epoch 90
+# Prepare a CUDA 12.8 PyTorch overlay once if the workspace does not have it.
+blackwell_env="$PAPER_BASE/software/envs/phonological-cu128"
+"$PAPER_MAIN/bin/python" -m venv --without-pip --system-site-packages "$blackwell_env"
+"$PAPER_MAIN/bin/python" -m pip --python "$blackwell_env/bin/python" install \
+  --index-url https://download.pytorch.org/whl/cu128 \
+  'torch==2.10.0+cu128' 'torchaudio==2.10.0+cu128'
+
+python="$blackwell_env/bin/python"
+"$python" runpod.py preflight --ngpu 1 --batch-bins 8000000 --cudnn-benchmark false
+"$python" runpod.py start --ngpu 1 --batch-bins 8000000 --cudnn-benchmark false \
+  --name blackwell-single --target-epoch 30
+# When ready to run joint fine-tuning, continue the same experiment.
+"$python" runpod.py resume --ngpu 1 --batch-bins 8000000 --cudnn-benchmark false \
+  --name blackwell-single --target-epoch 90
 ```
+
+These commands assume launcher files rendered from this revision. Keep the
+original launcher and checkout with earlier runs so their checkpoint provenance
+can still be verified.
 
 Two-GPU example (two visible GPUs on the same machine):
 
@@ -322,13 +337,11 @@ the first real training epoch validates DDP startup. Inspect logs and memory
 before continuing. Adapt `NCCL_SOCKET_IFNAME` in the recipe's `local/path.sh` for
 the Pod network if needed. Failures are propagated; no success is fabricated.
 
-Default global `batch_bins=16000000` is retained, so fewer GPUs increase memory
-per GPU. There is no promised single-GPU fit. An explicit `--batch-bins 8000000`
-on **every** preflight/start/resume command is an example adaptation if needed,
-not a measured safe setting or an exact four-GPU reproduction. The model,
-30/60 schedule, FP32 and `accum_grad=1` remain unchanged. GAN training does not
-support gradient accumulation. Different world sizes can also alter minimum
-batch grouping and numerical results. Use a new `--name` for a new experiment.
+The launcher defaults to the reference global `batch_bins=16000000`. Use the
+same explicit batch budget, cuDNN option, and Python environment for preflight,
+start, and resume. Lowering the batch budget changes the number of optimizer
+updates per epoch. Different world sizes can also change batch grouping. The
+recipe uses the 30/60 schedule, FP32, and `accum_grad=1`.
 
 Outputs live in `train_runs/NAME/`, separate from the Slurm `train/` directory.
 `--target-epoch` is an absolute final epoch. `resume` reads `checkpoint.pth` and
@@ -338,7 +351,9 @@ last minibatch. The atomic save wrapper retains the previous checkpoint if a
 write is interrupted and is safe to import in spawned DDP workers.
 
 `RUNPOD_RUN.json` records code commit, config/data/codebook hashes, GPU count and
-batch budget. Resume refuses mismatched metadata or missing full trainer states.
+batch budget. An explicit cuDNN override also records its value and the PyTorch
+version used for both preflight and training. Resume refuses mismatched metadata
+or missing full trainer states.
 Do not use `start` to overwrite an existing run. If failure happened before the
 first checkpoint, inspect it and use a new name to start from scratch. Only load
 trusted checkpoints created by this experiment. After a successful epoch, the

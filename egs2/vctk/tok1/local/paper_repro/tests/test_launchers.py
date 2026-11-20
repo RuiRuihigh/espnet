@@ -103,6 +103,15 @@ class LauncherTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 launcher.check_resume('resume', Path(d), {}, None)
 
+    def test_blackwell_training_arguments(self):
+        root = Path('/workspace/phonological_paper')
+        cmd = launcher.train_command(root, 1, 8000000, 30, root / 'train_runs/single', 'false')
+        self.assertEqual(cmd[cmd.index('--ngpu') + 1], '1')
+        self.assertEqual(cmd[cmd.index('--tok_args') + 1].split(), [
+            '--max_epoch', '30', '--batch_bins', '8000000',
+            '--accum_grad', '1', '--cudnn_benchmark', 'false',
+        ])
+
     def test_reject_partial_training_state(self):
         for key in ['optimizers', 'schedulers']:
             ck = checkpoint(30)

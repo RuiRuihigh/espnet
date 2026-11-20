@@ -6,6 +6,7 @@ import hashlib
 import json
 import os
 import subprocess
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
@@ -50,11 +51,14 @@ def validate_checkpoint(checkpoint):
     return epoch
 
 
-def train_command(root, ngpu, batch_bins, target, output):
+def train_command(root, ngpu, batch_bins, target, output, cudnn_benchmark=None):
+    tok_args = f'--max_epoch {target} --batch_bins {batch_bins} --accum_grad 1'
+    if cudnn_benchmark is not None:
+        tok_args += f' --cudnn_benchmark {cudnn_benchmark}'
     return [str(root / 'recipe.sh'), '--stage', '9', '--stop_stage', '9',
             '--ngpu', str(ngpu), '--num_nodes', '1',
             '--python', str(root / 'python.sh'), '--tok_exp', str(output),
-            '--tok_args', f'--max_epoch {target} --batch_bins {batch_bins} --accum_grad 1']
+            '--tok_args', tok_args]
 
 
 def check_resume(action, output, expected, load):
@@ -77,6 +81,8 @@ def main():
     parser.add_argument('--ngpu', type=int, choices=[1, 2], required=True)
     parser.add_argument('--batch-bins', type=int, default=16000000,
                         help='Global batch budget; lowering it changes the experiment')
+    parser.add_argument('--cudnn-benchmark', choices=('true', 'false'),
+                        help='Override cuDNN convolution autotuning in preflight and training')
     parser.add_argument('--target-epoch', type=int, default=90,
                         help='Absolute last epoch, not number of additional epochs')
     parser.add_argument('--name', default='runpod', help='Separate output directory name')
@@ -105,7 +111,13 @@ def main():
         # Keep the lock alive in the subprocess if this wrapper is interrupted.
         pass_fds = (lock.fileno(),)
         expected = signature(ROOT, args.ngpu, args.batch_bins)
-        audit = ROOT / f'preflight_runpod_{args.ngpu}gpu_{args.batch_bins}'
+        audit_name = f'preflight_runpod_{args.ngpu}gpu_{args.batch_bins}'
+        preflight_flags = []
+        if args.cudnn_benchmark is not None:
+            expected.update(cudnn_benchmark=args.cudnn_benchmark == 'true', torch_version=str(torch.__version__))
+            audit_name += f'_cudnn_benchmark_{args.cudnn_benchmark}'
+            preflight_flags = ['--cudnn-benchmark', args.cudnn_benchmark]
+        audit = ROOT / audit_name
         if args.action == 'preflight':
             audit.mkdir(exist_ok=True)
             (audit / 'READY.json').unlink(missing_ok=True)
@@ -115,10 +127,10 @@ def main():
                 devices = visible.split(',') if visible else [str(i) for i in range(torch.cuda.device_count())]
                 env['CUDA_VISIBLE_DEVICES'] = devices[rank]
                 subprocess.run(
-                    [str(Path(os.environ['PAPER_MAIN']) / 'bin/python'),
+                    [sys.executable,
                      str(ROOT / 'preflight.py'), '--ngpu', str(args.ngpu),
                      '--rank', str(rank), '--batch-bins', str(args.batch_bins),
-                     '--output', str(audit / f'rank{rank}')],
+                     '--output', str(audit / f'rank{rank}'), *preflight_flags],
                     check=True, env=env, pass_fds=pass_fds,
                 )
                 report = json.loads((audit / f'rank{rank}/COMPLETE.json').read_text())
@@ -138,8 +150,10 @@ def main():
         if args.action == 'start':
             atomic_json(output / 'RUNPOD_RUN.json', expected)
         print(f'Training epochs {epoch + 1}..{args.target_epoch}; output: {output}', flush=True)
-        subprocess.run(train_command(ROOT, args.ngpu, args.batch_bins, args.target_epoch, output),
-                       check=True, pass_fds=pass_fds)
+        subprocess.run(train_command(ROOT, args.ngpu, args.batch_bins, args.target_epoch,
+                                     output, args.cudnn_benchmark),
+                       check=True, pass_fds=pass_fds,
+                       env={**os.environ, 'PAPER_TRAIN_PYTHON': sys.executable})
         completed = validate_checkpoint(load(output / 'checkpoint.pth'))
         if completed != args.target_epoch:
             raise RuntimeError(f'Expected epoch {args.target_epoch}, got {completed}')

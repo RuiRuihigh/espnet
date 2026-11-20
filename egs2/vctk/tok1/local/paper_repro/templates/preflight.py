@@ -10,6 +10,7 @@ p=argparse.ArgumentParser()
 p.add_argument('--ngpu',type=int,choices=[1,2,4],default=4)
 p.add_argument('--rank',type=int,default=0)
 p.add_argument('--batch-bins',type=int,default=16000000)
+p.add_argument('--cudnn-benchmark', choices=('true', 'false'))
 p.add_argument('--output',type=Path,default=R/'preflight')
 options=p.parse_args()
 assert 0 <= options.rank < options.ngpu and options.batch_bins > 0
@@ -28,6 +29,8 @@ assert args.num_iters_per_epoch is None and args.max_epoch==90
 assert args.tokenizer_conf['freeze_epochs']==30 and args.batch_bins==16000000
 assert not hasattr(args,'prosody_conf')
 args.batch_bins=options.batch_bins
+if options.cudnn_benchmark is not None:
+    args.cudnn_benchmark = options.cudnn_benchmark == 'true'
 torch.backends.cudnn.benchmark=args.cudnn_benchmark
 torch.backends.cudnn.deterministic=args.cudnn_deterministic
 shapes=[str(R/'stats/train'/name) for name in ['speech_shape','text_shape.bpe','spembs_shape']]

@@ -91,6 +91,7 @@ tok_exp=
 tok_stats_dir=
 tok_config=
 tok_args=
+prosody_dir=
 inference_model=valid.loss.ave.pth
 inference_tag=  # Output tag. If empty, derived from inference_model.
 inference_batch_size=1
@@ -624,6 +625,15 @@ if [ "${stage}" -le 9 ] && [ "${stop_stage}" -ge 9 ] \
     if "${use_default_centroid}"; then
         quantizer_opts+=(--quantizer_conf "centroid_path=${resolved_centroid_path}")
     fi
+    prosody_opts=()
+    if [ -n "${prosody_dir}" ]; then
+        test -s "${prosody_dir}/${effective_train_set}/prosody.scp"
+        test -s "${prosody_dir}/${valid_set}/prosody.scp"
+        prosody_opts+=(--train_data_path_and_name_and_type
+            "${prosody_dir}/${effective_train_set}/prosody.scp,prosody,kaldi_ark"
+            --valid_data_path_and_name_and_type
+            "${prosody_dir}/${valid_set}/prosody.scp,prosody,kaldi_ark")
+    fi
     jobname=${tok_exp}/train.log
     if echo "${cuda_cmd}" | grep -q -e queue.pl -e queue-freegpu.pl; then
         jobname=$(basename "${tok_exp}")
@@ -648,6 +658,7 @@ if [ "${stage}" -le 9 ] && [ "${stop_stage}" -ge 9 ] \
             --valid_data_path_and_name_and_type "${valid_dir}/text,text,text" \
             --train_data_path_and_name_and_type "${train_spemb},spembs,kaldi_ark" \
             --valid_data_path_and_name_and_type "${valid_spemb},spembs,kaldi_ark" \
+            "${prosody_opts[@]}" \
             --train_shape_file "${tok_stats_dir}/train/speech_shape" \
             --train_shape_file "${tok_stats_dir}/train/text_shape.${token_type}" \
             --valid_shape_file "${tok_stats_dir}/valid/speech_shape" \

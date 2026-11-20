@@ -12,6 +12,7 @@ from espnet2.asr.espnet_model import ESPnetASRModel
 from espnet2.tok.espnet_model import ESPnetGANSpeechTokenizerModel
 from espnet2.tok.modules.token_embedding import TokenEmbedding
 from espnet2.tok.objective.asr import ASRObjective
+from espnet2.tok.objective.prosody import ProsodyObjective
 from espnet2.tok.objective.reconstruction.hifigan import (
     HiFiGANReconstructionObjective,
 )
@@ -126,6 +127,8 @@ class GANSpeechTokenizerTask(AbsTask):
             "--asr_joint_net_conf", action=NestedDictAction, default=None
         )
         group.add_argument("--asr_init", type=str_or_none, default=None)
+        group.add_argument("--prosody_weight", type=float, default=0.0)
+        group.add_argument("--prosody_conf", action=NestedDictAction, default={})
         group.add_argument(
             "--model_conf",
             action=NestedDictAction,
@@ -188,7 +191,7 @@ class GANSpeechTokenizerTask(AbsTask):
     def optional_data_names(
         cls, train: bool = True, inference: bool = False
     ) -> Tuple[str, ...]:
-        return ()
+        return () if inference else ("prosody",)
 
     @staticmethod
     def _load_token_list(token_list) -> List[str]:
@@ -274,11 +277,22 @@ class GANSpeechTokenizerTask(AbsTask):
         reconstruction_objective = cls._build_reconstruction_objective(
             args, quantizer.num_clusters
         )
+        model_conf = dict(args.model_conf)
+        prosody_weight = getattr(args, 'prosody_weight', 0.0)
+        if not np.isfinite(prosody_weight) or prosody_weight < 0.0:
+            raise ValueError('prosody_weight must be finite and non-negative')
+        if prosody_weight:
+            objectives = dict(model_conf.get('additional_objectives') or {})
+            weights = dict(model_conf.get('additional_objective_weights') or {})
+            objectives['prosody'] = ProsodyObjective(quantizer.feature_dim, **args.prosody_conf)
+            weights['prosody'] = prosody_weight
+            model_conf.update(additional_objectives=objectives,
+                              additional_objective_weights=weights)
         return ESPnetGANSpeechTokenizerModel(
             tokenizer=tokenizer,
             asr_objective=asr_objective,
             reconstruction_objective=reconstruction_objective,
-            **args.model_conf,
+            **model_conf,
         )
 
     @classmethod

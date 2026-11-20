@@ -27,7 +27,7 @@ args=Task.get_parser().parse_args(['--config',str(recipe/'conf/train_paper.yaml'
  '--token_type','bpe','--use_preprocessor','true','--output_dir',str(out/'scratch')])
 assert args.num_iters_per_epoch is None and args.max_epoch==90
 assert args.tokenizer_conf['freeze_epochs']==30 and args.batch_bins==16000000
-assert not hasattr(args,'prosody_conf')
+assert args.prosody_weight == 0.0
 args.batch_bins=options.batch_bins
 if options.cudnn_benchmark is not None:
     args.cudnn_benchmark = options.cudnn_benchmark == 'true'

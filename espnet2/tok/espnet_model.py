@@ -112,6 +112,8 @@ class ESPnetGANSpeechTokenizerModel(AbsGANESPnetModel):
         text: torch.Tensor,
         text_lengths: torch.Tensor,
         spembs: torch.Tensor,
+        prosody: Optional[torch.Tensor] = None,
+        prosody_lengths: Optional[torch.Tensor] = None,
         **kwargs: torch.Tensor,
     ) -> Dict[str, Any]:
         """Compute the weighted ASR and reconstruction main loss."""
@@ -128,8 +130,17 @@ class ESPnetGANSpeechTokenizerModel(AbsGANESPnetModel):
         total_loss: Optional[torch.Tensor] = None
         stats: Dict[str, Any] = {}
         for name, objective in self.objectives.items():
+            objective_inputs = objective_batch
+            if name == 'prosody':
+                if prosody is None or prosody_lengths is None:
+                    raise ValueError('The enabled prosody objective requires aligned labels')
+                codebook = self.tokenizer.quantizer.centroids
+                if not self.training or self.tokenizer.is_frozen:
+                    codebook = codebook.detach()
+                objective_inputs = dict(objective_batch, codebook=codebook,
+                                        prosody=prosody, prosody_lengths=prosody_lengths)
             objective_loss, objective_stats, _ = objective(
-                tokenizer_output, **objective_batch
+                tokenizer_output, **objective_inputs
             )
             weighted_loss = self.objective_weights[name] * objective_loss
             total_loss = (

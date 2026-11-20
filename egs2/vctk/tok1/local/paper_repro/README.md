@@ -240,6 +240,52 @@ and UTMOS. That downstream training/evaluation pipeline is **not implemented in
 this package**. It must be separately specified and matched before claiming
 paper-level reproduction. No MSP A/B/C result is evidence for this official run.
 
+## Prosody experiment
+
+On the prosody branch, an opt-in objective predicts utterance-centered F0
+(semitones), energy (dB), and voicing from codebook vectors. Its single
+`kernel_size=11` convolution sees five tokens on each side. The target grid
+is tied to the WavLM convolution windows. Targets carry separate masks for
+pitch, voicing, and complete audio windows. Energy is divided by 3 for the
+Huber loss and reported in dB for evaluation. The original ASR and reconstruction
+weights are used in both arms of the experiment.
+
+### Frozen head warmup
+
+With the prosody checkout on `PYTHONPATH`, use the prepared 16 kHz manifests and
+the epoch-30 inference weights from the same training run:
+
+```bash
+python local/warmup_prosody.py \
+  --train-config "$baseline_run/config.yaml" --model-file "$baseline_run/30epoch.pth" \
+  --train-wav-scp "$PAPER_ROOT/dump/raw/tr_no_dev_sp/wav.scp" \
+  --valid-wav-scp "$PAPER_ROOT/dump/raw/dev/wav.scp" \
+  --output "$PAPER_ROOT/train_runs/prosody_warmup" \
+  --train-utterances 4096 --steps 500 --device cuda
+```
+
+The script extracts deterministic hard tokens and targets once, then optimizes
+only the head. It saves the head with the lowest masked validation loss, the
+validation history, constant and initial-head baselines, and the exact sample IDs.
+
+### Preparing joint training
+
+Use `local/prepare_prosody.py` on the materialized `tr_no_dev_sp` and `dev`
+waveforms. Write each output below the same directory, using the split name
+as the subdirectory. Each `prosody.scp` points at the resulting target archive.
+Use `local/init_prosody_joint.py --epoch30-run "$baseline_run" --head
+"$warmup/prosody_head.pth" --output "$joint_run" --prosody-weight WEIGHT` to
+prepare a separate resume checkpoint. Choose a positive auxiliary weight based
+on validation and gradient scale. The helper verifies the epoch-30 source and
+copies the baseline reporter and schedulers, with fresh optimizer moments for
+the new parameter layout. The first joint training update is in epoch 31.
+
+Run stage 9 from the prosody checkout, with `--tok_config
+"$joint_run/prosody_config.yaml" --tok_exp "$joint_run" --prosody_dir
+"$prosody_targets"`. The config uses a 500-update auxiliary loss ramp and the
+prepared stage-9 checkpoint. Use separate outputs for the baseline arm. Choose
+a target epoch and verify a real joint training batch before any long run.
+
 ## Instructions for the receiving agent
 
 1. Inspect this README, templates and upstream YAML before launching anything.

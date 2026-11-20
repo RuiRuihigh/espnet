@@ -49,6 +49,8 @@ class GANTrainerOptions(TrainerOptions):
 class GANTrainer(Trainer):
     """Trainer for GAN-based training."""
 
+    tensorboard_step_prefix: Optional[str] = None
+
     @classmethod
     @typechecked
     def build_options(cls, args: argparse.Namespace) -> TrainerOptions:
@@ -307,6 +309,13 @@ class GANTrainer(Trainer):
 
             # NOTE(kamo): Call log_message() after next()
             reporter.next()
+            if summary_writer is not None and cls.tensorboard_step_prefix is not None:
+                reporter.tensorboard_add_scalar(
+                    summary_writer,
+                    -1,
+                    key_prefix=cls.tensorboard_step_prefix,
+                    tag_prefix="step/",
+                )
             if iiter % log_interval == 0:
                 logging.info(reporter.log_message(-log_interval))
                 if summary_writer is not None:

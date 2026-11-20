@@ -286,6 +286,17 @@ Run stage 9 from the prosody checkout, with `--tok_config
 prepared stage-9 checkpoint. Use separate outputs for the baseline arm. Choose
 a target epoch and verify a real joint training batch before any long run.
 
+During joint training, the train log reports the prosody metrics at the regular
+`log_interval`. TensorBoard (`use_tensorboard: true`) also records the individual
+training-batch values under `step/prosody_pitch_loss`, `step/prosody_energy_loss`,
+and `step/prosody_voicing_loss` in `tensorboard/train/`. The unweighted total,
+weighted contribution, and ramp are available under the same `step/` group.
+With `use_matplotlib: true`, the regular epoch plots appear at
+`images/prosody_pitch_loss.png`, `images/prosody_energy_loss.png`, and
+`images/prosody_voicing_loss.png` with training and validation curves. The
+energy curve shows the Huber loss on normalized energy targets. Epoch plots are
+generated once the first prosody training epoch completes.
+
 ## Instructions for the receiving agent
 
 1. Inspect this README, templates and upstream YAML before launching anything.

@@ -33,6 +33,8 @@ class SpeechTokenizerGANTrainer(GANTrainer):
     model interfaces without assuming that the model owns a ``codec`` member.
     """
 
+    tensorboard_step_prefix = "prosody_"
+
     @classmethod
     @typechecked
     def build_options(

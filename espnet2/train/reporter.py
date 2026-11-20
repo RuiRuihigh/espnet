@@ -216,18 +216,27 @@ class SubReporter:
                 message += f"{key2}={v:.3e}"
         return message
 
-    def tensorboard_add_scalar(self, summary_writer, start: int = None):
+    def tensorboard_add_scalar(
+        self,
+        summary_writer,
+        start: int = None,
+        *,
+        key_prefix: str = "",
+        tag_prefix: str = "",
+    ):
         if start is None:
             start = 0
         if start < 0:
             start = self.count + start
 
         for key2, stats_list in self.stats.items():
+            if not key2.startswith(key_prefix):
+                continue
             assert len(stats_list) == self.count, (len(stats_list), self.count)
             # values: List[ReportValue]
             values = stats_list[start:]
             v = aggregate(values)
-            summary_writer.add_scalar(f"{key2}", v, self.total_count)
+            summary_writer.add_scalar(f"{tag_prefix}{key2}", v, self.total_count)
 
     def wandb_log(self, start: int = None):
         import wandb
